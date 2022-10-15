@@ -1,0 +1,18 @@
+module cpu (parameter SIZE=16, NUMREGS=16)
+	(input clk, reset,
+		input[SIZE-1:0] memdata, srcAddr, dstAddr, imm,
+		output memwrite,
+		output[SIZE-1:0] adr,
+		output[SIZE-1:0] wd);
+		
+	wire[SIZE-1:0] pcIn, pcOut, srcOut, dstOut, immOut;
+	
+	register #(SIZE) pcReg(reset, clk, pcIn, pcOut);
+	register #(SIZE) srcReg(reset, clk, srcAddr, dstOut);
+	register #(SIZE) dstReg(reset, clk, dstAddr, dstOut);
+	register #(SIZE) immReg(reset, clk, imm, immOut);
+	
+	registerFile #(SIZE, NUMREGS)
+	
+	
+endmodule 

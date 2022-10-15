@@ -1,0 +1,6 @@
+module mux2(
+	input s, in1, in2,
+	output out);
+	
+	assign out = s ? in2 : in1;
+endmodule 
