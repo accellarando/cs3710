@@ -18,18 +18,16 @@ module cpu #(parameter SIZE=16, NUMREGS=16)
 	register #(SIZE) dstReg(reset, clk, dstAddr, dstOut);
 	register #(SIZE) immReg(reset, clk, imm, immOut);
 	
-	registerFile #(SIZE, NUMREGS) rf(clk, reset, pcIn, srcOut, dstOut, d1, d2);
+	registerFile #(SIZE, NUMREGS) rf(clk, reset, pcIn, aluOut, srcOut, dstOut, d1, d2);
 	
 	mux2 #(SIZE) alu1(ctrlAlu1, pcOut, d1, aluIn1);
 	mux2 #(SIZE) alu2(ctrlAlu2, d2, immOut, aluIn2);
 	
 	ALU #(SIZE) alu(aluIn1, aluIn2, aluOp, carryIn, aluOut, conds, carryOut);
-	shifter #(SIZE) shift(clk, reset, aluIn1, shifterOut, shiftBits);
-	mux2 #(SIZE) shiftMux(ctrlShifter, shiftBits, aluOut, aluOutShifted);
 	
 	register #(SIZE) psrReg(clk, reset, conds, condsOut);
 	
-	register #(SIZE) outReg(reset, clk, aluOutShifted, aluFinal); 
+	register #(SIZE) outReg(reset, clk, aluOut, aluFinal); 
 	
 	
 endmodule 
