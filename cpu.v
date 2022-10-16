@@ -3,11 +3,14 @@ module cpu #(parameter SIZE=16, NUMREGS=16)
 		input[SIZE-1:0] memdata, srcAddr, dstAddr, imm,
 		output memwrite,
 		output[SIZE-1:0] adr,
-		output[SIZE-1:0] wd);
+		output[SIZE-1:0] wd,
+		output[SIZE-1:0] condsOut);
 		
 	wire[SIZE-1:0] pcIn, pcOut, srcOut, dstOut, immOut, 
 		d1, d2, aluIn1, aluIn2, aluOut, shifterOut, aluOutShifted, aluFinal;
-	wire ctrlAlu1, ctrlAlu2;
+	wire ctrlAlu1, ctrlAlu2, carryIn, carryOut;
+	wire[4:0] conds;
+	
 	wire[3:0] aluOp;
 	
 	register #(SIZE) pcReg(reset, clk, pcIn, pcOut);
@@ -20,9 +23,11 @@ module cpu #(parameter SIZE=16, NUMREGS=16)
 	mux2 #(SIZE) alu1(ctrlAlu1, pcOut, d1, aluIn1);
 	mux2 #(SIZE) alu2(ctrlAlu2, d2, immOut, aluIn2);
 	
-	ALU #(SIZE) alu(clk, reset, aluIn1, aluIn2, aluOp, aluOut);
+	ALU #(SIZE) alu(aluIn1, aluIn2, aluOp, carryIn, aluOut, conds, carryOut);
 	shifter #(SIZE) shift(clk, reset, aluIn1, shifterOut, shiftBits);
 	mux2 #(SIZE) shiftMux(ctrlShifter, shiftBits, aluOut, aluOutShifted);
+	
+	register #(SIZE) psrReg(clk, reset, conds, condsOut);
 	
 	register #(SIZE) outReg(reset, clk, aluOutShifted, aluFinal); 
 	
