@@ -1,7 +1,5 @@
 `timescale 1ns / 1ps
 
-`timescale 1ns / 1ns
-
 module aluTb();
 reg clk, reset;
 integer counter;
@@ -230,7 +228,15 @@ always@(posedge clk) begin
 		42: if(aluOut != 8'b0 || conds != 5'b01000)
 				$display("ERROR IN RSH: Expected aluOut = 00000000, conds = 01000, got %d, %d\n",
 					aluOut, conds);
-		43: counter <= 0;
+		43: begin
+			writeEn <= 1;
+			writeData <= 8'b10101010;
+			srcAddr <= 8'b1;
+			dstAddr <= 8'b1;
+		end
+		44: if(readData1 != 8'b10101010)
+			$display("ERROR IN RF: Expected readData1 = 10101010, got %d\n",readData1);
+		45: counter <= 0;
 		default: ;
 	endcase
 	

@@ -1,7 +1,6 @@
 // register for condition codes going into ALU with enable signal
 module PSR_reg
-	(
-	input reset, clk, en
+	(input reset, clk, en,
 	input [1:0] cond_group1, // 2 flags, C and F
 	input [2:0] cond_group2, // 3 flags, L, Z, and N
 	output reg [1:0] final_group1, 
