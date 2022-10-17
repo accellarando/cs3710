@@ -1,0 +1,59 @@
+`timescale 1ns / 1ps
+
+`timescale 1ns / 1ns
+
+module cpuTb();
+reg clk, reset;
+reg [15:0] memdata, srcAddr, dstAddr, imm;
+reg [5:0] ctrl;
+wire memwrite;
+wire [15:0] adr, wd, condsOut;
+integer counter;
+
+/*
+module cpu #(parameter SIZE=16, NUMREGS=16)
+	(input clk, reset,
+		input[5:0] ctrl, //for testing purposes only
+		input[SIZE-1:0] memdata, srcAddr, dstAddr, imm,
+		output memwrite,
+		output[SIZE-1:0] adr,
+		output[SIZE-1:0] wd,
+		output[4:0] condsOut);
+*/
+
+cpu uut(clk, reset, 
+	ctrl,
+	memdata, srcAddr, dstAddr, imm,
+	memwrite,
+	adr, wd, 
+	condsOut);
+
+initial begin
+	counter = 0;
+	clk = 1'b0;
+	reset = 1'b1; //remember it's active-low reset
+	#200;
+	reset = 1'b0;
+	#200;
+	reset = 1'b1;
+end
+
+always #50 begin
+	clk = !clk;
+end
+
+always@(posedge clk) begin
+	$display("AluOP: %b, ctrlAlu1: %b, ctrlAlu2: %b \n",
+		ctrl[5:2], ctrl[0], ctrl[1]);
+	case(counter)
+		0: begin
+			ctrl <= 6'b0;
+		end
+		1: begin
+			if(wd != 
+		end
+	endcase
+	counter <= counter + 1;
+end
+
+endmodule
