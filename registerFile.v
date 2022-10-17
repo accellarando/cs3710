@@ -45,15 +45,18 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 			registerFile[i] = 0;
 		end
 	endgenerate
-	
-	assign readData1 = registerFile[srcAddr];
-	assign readData2 = registerFile[dstAddr];
-
 
 	/* assigning */
-	//always @(posedge clk) begin
-		//if(reset) begin
-		//if (writeen) regfile[addr] <=readdata;?
+	always @(posedge clk) begin
+		if(reset) begin
+			assign test = 1'b0;
+		end
+		else begin	
+			if (writeEn)
+				assign readData1 = registerFile[srcAddr];
+				assign readData2 = registerFile[dstAddr];
+		end
+	end
 
 /*
    always @(posedge clk) begin
