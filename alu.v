@@ -1,12 +1,10 @@
 module alu #(parameter WIDTH = 16)
-            (	input      [WIDTH-9:0] aluIn1, aluIn2, 
-					input      [7:0]       aluCont, // 8 bit ALU opcode condition
+            (	input 		[WIDTH-9:0] aluOp,
+					input     	[WIDTH-9:0] aluIn1, aluIn2, 
 					input	cIn,
 					output reg [WIDTH-1:0] aluOut,
 					output reg [1:0] cond_group1,	
-					output reg [2:0] cond_group2,
-					output cOut;
-				
+					output reg [2:0] cond_group2,			
 	    );
 
 	// 	cond_codes --> condition codes
@@ -49,7 +47,7 @@ module alu #(parameter WIDTH = 16)
 	parameter AND 			= 	8'b00000001;
 	parameter ADD 			= 	8'b00000101;
 	parameter SUB 			= 	8'b00001001;
-	parameter MOV 			= 	 8'b00001101;
+	parameter MOV 			= 	8'b00001101;
 	parameter OR 			= 	8'b00000010;
 	parameter ADDU 			= 	8'b00000110;
 	parameter XOR 			= 	8'b00000011;
@@ -77,8 +75,8 @@ module alu #(parameter WIDTH = 16)
    // slt should be 1 if most significant bit of sum is 1
    //	assign slt = sum[WIDTH-1];
 
-   always@(*) begin // maybe always at ALUIn1, ALUIn2, cIn, and maybe aluCont? dependent on opcodes though
-      casex(aluCont) // case expression to allow for don't care values in case comparison
+   always@(*) begin // maybe always at ALUIn1, ALUIn2, cIn, and maybe aluOp? dependent on opcodes though
+      casex(aluOp) // case expression to allow for don't care values in case comparison
    //     	3'b000: aluResult <= a & b;  // logical AND
    //    	3'b001: aluResult <= a | b;  // logical OR
    //     	3'b010: aluResult <= sum;    // Add/Sub
@@ -348,23 +346,8 @@ module alu #(parameter WIDTH = 16)
 	 endcase
    end
 	
+	
+	// For Bcond and Jcond --> use aluCont for arith conditions???
+	
 endmodule
 
-// register for condition codes going into ALU with enable signal
-module alu_cond_reg #(parameter SIZE=5)
-	(input reset, clk, en
-	input [SIZE-1:0] d, 
-	output reg [SIZE-1:0] q);
-
-	always @(posedge clk) begin
-		if(reset)
-			q <= 0;
-		else
-			begin
-				if(en)
-					q <= d;
-				else
-					q <= q;
-			end
-	end
-endmodule 
