@@ -1,6 +1,6 @@
 module alu #(parameter WIDTH = 16)
             (	input 		[WIDTH-9:0] aluOp,
-					input     	[WIDTH-9:0] aluIn1, aluIn2, 
+					input     	[WIDTH-1:0] AluIn1, AluIn2, 
 					input	cIn,
 					output reg [WIDTH-1:0] aluOut,
 					output reg [1:0] cond_group1,	
@@ -39,7 +39,8 @@ module alu #(parameter WIDTH = 16)
 	parameter RSHI 			= 	8'b1000001x; // used for shifting -1
 	parameter RSH 			= 	8'b10000101; // used for shifting -1
 	parameter ARTH_LSHI 		=	8'b1000100x; 
-	parameter ARTH_LSH 		= 	8'b10000110; 
+	parameter ARTH_LSH 		= 	8'b10000110;
+	parameter ARTH_RSHI		=  8'b10001000;
 	parameter ARTH_RSH		= 	8'b10000111; 
 	
 	// Registers
@@ -103,7 +104,7 @@ module alu #(parameter WIDTH = 16)
 					begin
 						cond_group2[1] = 1'b0; // Else, Z bit set to 0
 					end
-				if ((~cIn[WIDTH-1] & aluIn1[WIDTH-1] & aluIn2[WIDTH-1]) | (cIn[WIDTH-1] & ~aluIn1[WIDTH-1] & ~aluIn2[WIDTH-1]))
+				if ((~cIn & AluIn1[WIDTH-1] & AluIn2[WIDTH-1]) | (cIn & ~AluIn1[WIDTH-1] & ~AluIn2[WIDTH-1]))
 					begin
 						cond_group1[1] = 1'b1; // F bit set to 1
 					end
@@ -127,7 +128,7 @@ module alu #(parameter WIDTH = 16)
 					begin
 						cond_group2[1] = 1'b0; // Else, Z bit set to 0
 					end
-				if ((cIn[WIDTH-1] & ~aluIn1[WIDTH-1] & ~aluIn1[WIDTH-1]) | (~cIn[WIDTH-1] & aluIn1[WIDTH-1] & aluIn1[WIDTH-1]))
+				if ((cIn & ~AluIn1[WIDTH-1] & ~AluIn1[WIDTH-1]) | (~cIn & AluIn1[WIDTH-1] & AluIn1[WIDTH-1]))
 					begin
 						cond_group1[1] = 1'b1; // F bit set to 1
 					end
@@ -175,7 +176,7 @@ module alu #(parameter WIDTH = 16)
 		XORI, XOR:
 			begin
 				aluOut = AluIn1 ^ AluIn2;
-				if (aluOut == {WIDTH{1'b0})
+				if (aluOut == {WIDTH{1'b0}})
 					begin
 						cond_group2[1] = 1'b1; // Z bit set to 1
 					end
@@ -192,7 +193,7 @@ module alu #(parameter WIDTH = 16)
 		MOVI, MOV: // need help with this one			--> understand if condition code bit reset necessary
 			begin
 				aluOut = AluIn2; // where AluIn2 used as Rdest and overwritten
-				if (aluOut == {WIDTH{1'b0})
+				if (aluOut == {WIDTH{1'b0}})
 					begin
 						cond_group2[1] = 1'b1; // Z bit set to 1
 					end
@@ -208,7 +209,8 @@ module alu #(parameter WIDTH = 16)
 		// Load upper immediate
 		LUI: // need help with this one					--> understand if condition code bit reset necessary
 			begin
-				aluOut = {AluIn1[WIDTH-9:0],8'b0}; // may need to adjust when WIDTH isn't 16-bit
+				aluOut = {{AluIn1[WIDTH-9:0]}, 8'b0};
+				//aluOut = ({AluIn1[WIDTH-9:0],8'b0}); // may need to adjust when WIDTH isn't 16-bit
 				if (aluOut == {WIDTH{1'b0}})
 					begin
 						cond_group2[1] = 1'b1; // Z bit set to 1
@@ -229,17 +231,17 @@ module alu #(parameter WIDTH = 16)
 				if ( $signed(AluIn1) > $signed(AluIn2))
 					begin
 						cond_group1[1:0] = 2'b00;  // Bits set to: C -> 0, F -> 0
-						cond_group2[0:2] = 3'b000; // Bits set to: L -> 0, Z -> 0, N -> 0
+						cond_group2[2:0] = 3'b000; // Bits set to: L -> 0, Z -> 0, N -> 0
 					end
 				else if ($signed(AluIn1) < $signed(AluIn2))
 					begin
 						cond_group1[1:0] = 2'b10;  // Bits set to: C -> 1, F -> 0
-						cond_group2[0:2] = 3'b010; // Bits set to: L -> 0, Z -> 1, N -> 0
+						cond_group2[2:0] = 3'b010; // Bits set to: L -> 0, Z -> 1, N -> 0
 					end
 				else // if equal
 					begin
 						cond_group1[1:0] = 2'b00;  // Bits set to: C -> 0, F -> 0
-						cond_group2[0:2] = 3'b001; // Bits set to: L -> 0, Z -> 0, N -> 1
+						cond_group2[2:0] = 3'b001; // Bits set to: L -> 0, Z -> 0, N -> 1
 					end
 				cond_group1[1:0] = 2'b00; // C and F bit to 0
 				cond_group2[0] = 1'b0; // L bit to 0

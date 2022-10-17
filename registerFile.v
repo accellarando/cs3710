@@ -23,13 +23,13 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 	input 							writeEn,						// enable signal
 	input[SIZE-1:0] 				writeData,					//	16-bit Data in
 	input[REGBITS-1:0]			srcAddr, dstAddr,			// 4-bit wide read addresses	
-	output[SIZE-1:0] 				readData1, readData2		// 16-bit Data out
+	output reg[SIZE-1:0] 		readData1, readData2		// 16-bit Data out
 	//	registerFile #(SIZE, REGBITS) rf(clk, reset, pcOut, aluOut, srcOut, dstOut, d1, d2);
 	);
 	
 	// ! Adding Decoder later assignment!
 	
-	reg [SIZE-1:0] registerFile [(1<<$clog2(NUMREGS))-1:0]; // Declare registers in register file 
+	reg [SIZE-1:0] registerFile [REGBITS-1:0]; // Declare registers in register file 
 	
 	/* Option: reading relative path*/
 	initial begin
@@ -51,12 +51,12 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 	/* assigning */
 	always @(posedge clk) begin
 		if(reset) begin
-			assign test = 1'b0;
+			; //do something here ig?
 		end
 		else begin	
 			if (writeEn) begin
-				assign readData1 = registerFile[srcAddr];
-				assign readData2 = registerFile[dstAddr];
+				readData1 <= registerFile[srcAddr];
+				readData2 <= registerFile[dstAddr];
 			end
 		end
 	end

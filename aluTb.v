@@ -72,7 +72,7 @@ always@(posedge clk) begin
 			aluOp <= 8'b00010000;
 			aluIn1 <= 8'b10101010;
 			aluIn2 <= 8'b11011101;
-			cin <= 8'b0;
+			//cin <= 8'b0;
 			$display("Testing AND...\n");
 		end
 		2: begin
