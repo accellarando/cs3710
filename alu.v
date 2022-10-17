@@ -1,217 +1,351 @@
 module alu #(parameter WIDTH = 16)
             (	input      [WIDTH-9:0] aluIn1, aluIn2, 
-					input      [3:0]       aluCont, 
-					input	cin,
+					input      [7:0]       aluCont, // 8 bit ALU opcode condition
+					input	cIn,
 					output reg [WIDTH-1:0] aluOut,
-					output reg [4:0] cond_codes,	// may not need to output condition code, but helpful
+					output reg [1:0] cond_group1,	
+					output reg [2:0] cond_group2,
 					output cOut;
 				
 	    );
 
-	// cond_codes --> condition codes
-	// 	cond_codes[0] --> carry-bit (1 if carry or borrowed occurred)
-	// 	cond_codes[1] --> low flag via comparison operations (1 if Rdest oper less than Rsrc oper when both unsigned integers)
-	// 	cond_codes[2] --> flag bit used by arith operations (aka V bit, 1 if signed overflow on signed add or sub)
-	// 	cond_codes[3] --> Z bit via comparison operation (1 if two operands equal, cleared otherwise)
-	// 	cond_codes[4] --> Negative bit via comparisopn operation (1 if Rdest oper less than Rsrc when both signed integers)
+	// 	cond_codes --> condition codes
+	// 	cond_group1[0] --> C carry-bit (1 if carry or borrowed occurred)
+	// 	cond_group1[1] --> F flag bit used by arith operations (aka V bit, 1 if signed overflow on signed add or sub)
+	
+	// 	cond_group2[0] --> L low flag via comparison operations (1 if Rdest oper less than Rsrc oper when both unsigned integers)
+	// 	cond_group2[1] --> Z bit via comparison operation (1 if two operands equal, cleared otherwise)
+	// 	cond_group2[2] --> N Negative bit via comparisopn operation (1 if Rdest oper less than Rsrc when both signed integers)
 		 
 		 
+		 
+	// rDest --> destination register
+	// rSrc --> source register
 		 
 	// Defining opcode via 8bit for processor
-	parameter def = 		8'b00000000;
+	parameter def 			= 	8'b00000000;
 	
-	parameter ANDI  = 		8'b0001xxxx;
-	parameter ADDI = 		8'b0101xxxx;
-	parameter SUBI = 		8'b1001xxxx;
-	parameter ORI = 		8'b0010xxxx;
-	parameter XORI = 		8'b0011xxxx;
-	parameter ADDCI = 		8'b0111xxxx;
-	parameter CMPI = 		8'b1011xxxx;
-	parameter CMPUI = 		8'b1100xxxx;
-	parameter ADDUI = 		8'b0110xxxx;
-	parameter ADDCUI = 		8'b1010xxxx;
+	parameter ANDI  		= 	8'b0001xxxx;
+	parameter ORI 			= 	8'b0010xxxx;
+	parameter XORI 		= 	8'b0011xxxx;
+	parameter ADDI 		= 	8'b0101xxxx;
+	parameter ADDUI 		= 	8'b0110xxxx;
+	parameter SUBI 		= 	8'b1001xxxx;
+	parameter CMPI 		= 	8'b1011xxxx;
+	parameter MOVI 		= 	8'b1101xxxx;
+	parameter LUI 			= 	8'b1111xxxx;
 	
 	// shift
-	parameter LSHI = 		8'b1000000x;
-	parameter LSH = 		8'b10000100;
-	parameter RSHI = 		8'b1000001x;
-	parameter RSH = 		8'b10000101;
-	parameter ALL_LSHI =		8'b1000100x;
-	parameter ALL_LSH = 		8'b10000110;
-	parameter ALL_RSHI = 		8'b1000101x;
-	parameter ALL_RSH = 		8'b10000111;
+	parameter LSHI 		= 	8'b1000000x; // used for shifting 1
+	parameter LSH 			= 	8'b10000100; // used for shifting 1
+	parameter RSHI 		= 	8'b1000001x; // used for shifting -1
+	parameter RSH 			= 	8'b10000101; // used for shifting -1
+	parameter ARTH_LSHI 	=	8'b1000100x; 
+	parameter ARTH_LSH 	= 	8'b10000110; 
+	parameter ARTH_RSH	= 	8'b10000111; 
 	
 	// Registers
-	parameter NOT =		8'b00001111;
-	parameter AND= 		8'b00000001;
-	parameter ADD = 	8'b00000101;
-	parameter SUB = 	8'b00001001;
-	parameter OR = 		8'b00000010;
-	parameter ADDU = 	8'b00000110;
-	parameter XOR = 	8'b00000011;
-	parameter ADDC =	8'b00000111;
-	parameter CMP = 	8'b00001011;
-	parameter ADDCU = 	8'b00000100;
+	parameter NOT 			=	8'b00001111;
+	parameter AND 			= 	8'b00000001;
+	parameter ADD 			= 	8'b00000101;
+	parameter SUB 			= 	8'b00001001;
+	parameter MOV 			=  8'b00001101;
+	parameter OR 			= 	8'b00000010;
+	parameter ADDU 		= 	8'b00000110;
+	parameter XOR 			= 	8'b00000011;
+	parameter CMP 			= 	8'b00001011;
+	parameter ADDCU 		= 	8'b00000100;
 	
 	// special
-	parameter LOAD = 	8'b00000000;
-	parameter STOR =	8'b00000000;
+	parameter LOAD 		= 	8'b01000000;
+	parameter STOR 		=	8'b01000100;
 	
-	// conditions
-	
+	parameter JAL 			=	8'b01001000;
+	parameter Bcond 		= 	8'b1100xxxx;
+	parameter Jcond 		= 	8'b01001100;
+					
 		 
-	// Doesn't include: 	MOVI, SUBCI, MULI, LUI,   
-	//								WAIT, MOV, SUBC, MUL, 
-	//								JAL, Jcond, LPR, SPR, RETX, Scond, SNXB, ZRXB, TBIT, TBITI, DI, EI, EXCP,
-	//								ASHUI, ASHU (split ASHU and ASHUI into all shift left, all shift right)						
-		 
-   wire     [WIDTH-9:0] b2, sum, slt, shift;
-   reg [15:0] aluResult;
+   //	wire     [WIDTH-9:0] b2, sum, slt, shift;
+   //	reg [15:0] aluResult;
 
-	assign b2 = aluCont[2] ? ~aluIn1 : aluIn2; 
-   assign sum = aluIn1 + b2 + aluCont[3];
+	//	assign b2 = aluCont[2] ? ~aluIn1 : aluIn2; 
+   //	assign sum = aluIn1 + b2 + aluCont[3];
 	//implement shifter inside ALU 
 	
-   assign aluOut = aluResult;
+   //	assign aluOut = aluResult;
 	
    // slt should be 1 if most significant bit of sum is 1
-   assign slt = sum[WIDTH-1];
+   //	assign slt = sum[WIDTH-1];
 
-   always@(*) begin // maybe always at ALUIn1, ALUIn2, cin, and maybe aluCont? dependent on opcodes though
-      case(aluCont[2:0])
-    //     3'b000: aluResult <= a & b;  // logical AND
-    //    3'b001: aluResult <= a | b;  // logical OR
-    //     3'b010: aluResult <= sum;    // Add/Sub
-    //     3'b011: aluResult <= slt;    // set-less-than
-	 //3'b100: aluResult <= shift; 	// shift left/shift right
+   always@(*) begin // maybe always at ALUIn1, ALUIn2, cIn, and maybe aluCont? dependent on opcodes though
+      casex(aluCont) // case expression to allow for don't care values in case comparison
+   //     	3'b000: aluResult <= a & b;  // logical AND
+   //    	3'b001: aluResult <= a | b;  // logical OR
+   //     	3'b010: aluResult <= sum;    // Add/Sub
+   //     	3'b011: aluResult <= slt;    // set-less-than
+	//			3'b100: aluResult <= shift; 	// shift left/shift right
 
-	// default aluResult <= aluIn1 & aluIn2;
+	// 		default aluResult <= aluIn1 & aluIn2;
 		
 		def:
 			begin
-			cond_codes = 5'b00000;
+			cond_group1 = 2'b00;
+			cond_group2 = 3'b000;
 			aluOut = {WIDTH{1'bx}}; // setting all bits to x of the variable pareter WIDTH
 			end
 			
 		ADDI, ADD: 
 			begin
-			aluOut = AluIn1 + AluIn2;
-			if (aluOut == {WIDTH{1'b0})
-				begin
-				cond_codes[3] = 1'b1;
-				else begin
-				cond_codes[3] = 1'b0;
-				end
-			if ((~cin[WIDTH-1] & aluIn1[WIDTH-1] & aluIn1[WIDTH-1]) | (cin[WIDTH-1] & ~aluIn1[WIDTH-1] & ~aluIn1[WIDTH-1]))
-				begin
-				cond_codes[2] = 1'b0; // flag bit for arith comparisons
-				else begin
-				cond_codes[3:0] = 4'b0000; // else set all condition codes to 0
-				end
+				aluOut = AluIn1 + AluIn2;
+				if (aluOut == {WIDTH{1'b0})
+					begin
+						cond_group2[1] = 1'b1; // Z bit set to 1
+					end
+				else 
+					begin
+						cond_group2[1] = 1'b0; // Else, Z bit set to 0
+					end
+				if ((~cIn[WIDTH-1] & aluIn1[WIDTH-1] & aluIn2[WIDTH-1]) | (cIn[WIDTH-1] & ~aluIn1[WIDTH-1] & ~aluIn2[WIDTH-1]))
+					begin
+						cond_group1[1] = 1'b1; // F bit set to 1
+					end
+				else 
+					begin
+						cond_group1[1] = 1'b1;	 // Else, F bit set to 0
+					end
+				cond_group1[0] = 1'b0; // C bit to 0
+				cond_group2[0] = 1'b0; // L bit to 0
+				cond_group2[2] = 1'b0; // N bit to 0			
 			end
 		
 		SUBI, SUB:
 			begin
-			aluOut = AluIn1 - AluIn2;
-			if ()
-				begin
-				else begin
-				end
-			if ()
-				begin
-				else begin
-				end
+				aluOut = AluIn1 - AluIn2;
+				if (aluOut == {WIDTH{1'b0})
+					begin
+						cond_group2[1] = 1'b1; // Z bit set to 1
+					end
+				else 
+					begin
+						cond_group2[1] = 1'b0; // Else, Z bit set to 0
+					end
+				if ((cIn[WIDTH-1] & ~aluIn1[WIDTH-1] & ~aluIn1[WIDTH-1]) | (~cIn[WIDTH-1] & aluIn1[WIDTH-1] & aluIn1[WIDTH-1]))
+					begin
+						cond_group1[1] = 1'b1; // F bit set to 1
+					end
+				else 
+					begin
+						cond_group1[1] = 1'b1;	 // Else, F bit set to 0
+					end
+				cond_group1[0] = 1'b0; // C bit to 0
+				cond_group2[0] = 1'b0; // L bit to 0
+				cond_group2[2] = 1'b0; // N bit to 0			
 			end
 			
 		ANDI, AND:
-		begin
-		aluOut = AluIn1 & AluIn2;
-		
-		// Fill in here
-		end
+			begin
+				aluOut = AluIn1 & AluIn2;
+				if (aluOut == {WIDTH{1'b0})
+					begin
+						cond_group2[1] = 1'b1; // Z bit set to 1
+					end
+				else 
+					begin
+						cond_group2[1] = 1'b0; // Else, Z bit set to 0
+					end
+				cond_group1[1:0] = 2'b00; // C and F bit to 0
+				cond_group2[0] = 1'b0; // L bit to 0
+				cond_group2[2] = 1'b0; // N bit to 0			
+			end
 		
 		ORI, OR:
-		begin
-		aluOut = AluIn1 | AluIn2;
-		
-		// Fill in here
-		end
+			begin
+				aluOut = AluIn1 | AluIn2;
+				if (aluOut == {WIDTH{1'b0})
+					begin
+						cond_group2[1] = 1'b1; // Z bit set to 1
+					end
+				else 
+					begin
+						cond_group2[1] = 1'b0; // Else, Z bit set to 0
+					end
+				cond_group1[1:0] = 2'b00; // C and F bit to 0
+				cond_group2[0] = 1'b0; // L bit to 0
+				cond_group2[2] = 1'b0; // N bit to 0			
+			end
 		
 		XORI, XOR:
-		begin
-		aluOut = AluIn1 ^ AluIn2;
+			begin
+				aluOut = AluIn1 ^ AluIn2;
+				if (aluOut == {WIDTH{1'b0})
+					begin
+						cond_group2[1] = 1'b1; // Z bit set to 1
+					end
+				else 
+					begin
+						cond_group2[1] = 1'b0; // Else, Z bit set to 0
+					end
+				cond_group1[1:0] = 2'b00; // C and F bit to 0
+				cond_group2[0] = 1'b0; // L bit to 0
+				cond_group2[2] = 1'b0; // N bit to 0			
+			end
 		
-		// Fill in here
-		end
+		// Move
+		MOVI, MOV: // need help with this one			--> understand if condition code bit reset necessary
+			begin
+				aluOut = AluIn2; // where AluIn2 used as Rdest and overwritten
+				if (aluOut == {WIDTH{1'b0})
+					begin
+						cond_group2[1] = 1'b1; // Z bit set to 1
+					end
+				else 
+					begin
+						cond_group2[1] = 1'b0; // Else, Z bit set to 0
+					end
+				cond_group1[1:0] = 2'b00; // C and F bit to 0
+				cond_group2[0] = 1'b0; // L bit to 0
+				cond_group2[2] = 1'b0; // N bit to 0	
+			end
 		
+		// Load upper immediate
+		LUI: // need help with this one					--> understand if condition code bit reset necessary
+			begin
+				aluOut = {AluIn[WIDTH-9:0], 8'b00000000}; // may need to adjust when WIDTH isn't 16-bit
+				if (aluOut == {WIDTH{1'b0})
+					begin
+						cond_group2[1] = 1'b1; // Z bit set to 1
+					end
+				else 
+					begin
+						cond_group2[1] = 1'b0; // Else, Z bit set to 0
+					end
+				cond_group1[1:0] = 2'b00; // C and F bit to 0
+				cond_group2[0] = 1'b0; // L bit to 0
+				cond_group2[2] = 1'b0; // N bit to 0	
+			// fill in here
+			end
+		
+		// Comparison
 		CMPI, CMP:
-		begin
-		
-		
-		// Fill in here
-		end
+			begin
+				if ( $signed(AluIn1) > $signed(AluIn2))
+					begin
+						cond_group1[1:0] = 2'b00;  // Bits set to: C -> 0, F -> 0
+						cond_group2[0:2] = 3'b000; // Bits set to: L -> 0, Z -> 0, N -> 0
+					end
+				else if ($signed(AluIn1) < $signed(AluIn2))
+					begin
+						cond_group1[1:0] = 2'b10;  // Bits set to: C -> 1, F -> 0
+						cond_group2[0:2] = 3'b010; // Bits set to: L -> 0, Z -> 1, N -> 0
+					end
+				else // if equal
+					begin
+						cond_group1[1:0] = 2'b00;  // Bits set to: C -> 0, F -> 0
+						cond_group2[0:2] = 3'b001; // Bits set to: L -> 0, Z -> 0, N -> 1
+					end
+				cond_group1[1:0] = 2'b00; // C and F bit to 0
+				cond_group2[0] = 1'b0; // L bit to 0
+				cond_group2[2] = 1'b0; // N bit to 0			
+			end
 		
 		NOT:
-		begin
-		aluOut = ~AluIn1;
-		
-		// Fill in here
-		end
-		
-		ADDUCI, ADDU:
-		begin
-		{cond_codes[0], cin} = AluIn1 + AluIn2 + cin; // carry-bit
-		
-		// Fill in here
-		end
-		
-		CMPUI, CMPU:
-		begin
-		
-		
-		// Fill in here
-		end
-		
-		ADDCI, ADDC:
-		begin
-		aluOut = AluIn1 + AluIn2 + cin;
-		
-		// Fill in here
-		end
+			begin
+				aluOut = ~AluIn1;
+				if (aluOut == {WIDTH{1'b0})
+					begin
+						cond_group2[1] = 1'b1; // Z bit set to 1
+					end
+				else 
+					begin
+						cond_group2[1] = 1'b0; // Else, Z bit set to 0
+					end
+				cond_group1[1:0] = 2'b00; // C and F bit to 0
+				cond_group2[0] = 1'b0; // L bit to 0
+				cond_group2[2] = 1'b0; // N bit to 0			
+			end
 		
 		RSHI, RSH:
-		begin
-		cond_codes[4:0] = 5'b00000;
-		aluOut = AluIn1 >> AluIn2;
-		end
+			begin
+				cond_group1[1:0] = 2'b00; // condition codes to 0
+				cond_group2[2:0] = 3'b000; // condition codes to 0
+				aluOut = AluIn1 >> AluIn2;
+			end
 		
 		LSHI, LSH:
-		begin
-		cond_codes[4:0] = 5'b00000;
-		aluOut = AluIn1 << AluIn2;
-		end
+			begin
+				cond_group1[1:0] = 2'b00; // condition codes to 0
+				cond_group2[2:0] = 3'b000; // condition codes to 0
+				aluOut = AluIn1 << AluIn2;
+			end
 		
-		ALL_RSHI, ALL_RSH:
-		begin
-		cond_codes[4:0] = 5'b00000;
-		aluOut = $signed(AluIn1) >>> $signed(AluIn2);
-		end
+		ARTH_RSHI, ARTH_RSH:
+			begin
+				cond_group1[1:0] = 2'b00; // condition codes to 0
+				cond_group2[2:0] = 3'b000; // condition codes to 0
+				aluOut = $signed(AluIn1) >>> $signed(AluIn2); // sign extension shift operator
+			end
 		
-		ALL_LSHI, ALL,LSH:
-		begin
-		cond_codes[4:0] = 5'b00000;
-		aluOut = $signed(AluIn1) <<< $signed(AluIn2);
-		end
+		ARTH_LSHI, ARTH,LSH:
+			begin
+				cond_group1[1:0] = 2'b00; // condition codes to 0
+				cond_group2[2:0] = 3'b000; // condition codes to 0
+				aluOut = $signed(AluIn1) <<< $signed(AluIn2); // sign extension shift operator
+			end
 		
+		
+		// Jump and Link:
+		//		Like Jcond (jump), but the PC + 1 value also written to a register (aka, the link register)
+		//		Function: jump to a subroutine, and return back to this point in code (where the subroutine was called)
+		//		How to do: Use a JUC (jump unconditional) Rlink instruction
+		//			--> Jump undonitional to the value that you stored in the Rlink register
+		JAL:
+			begin
 			
+				// fill in here
+			end
+		
+		// Implementing Branch and Jump Conditions:
+		//		Option 1: Using ALU to compute target address
+		//		Option 2: Design dedicated ADD/SUB unit for branch target address computations
+		
+		
+		// May be able to combine Bcond and Jcond, see after logic implemented
+		// Branch conditions: 
+		//		"sign-extended offset" in the immediate field (imm) of instruction is added to current PC and written
+		//		back to PC "if branch condition is true"	
+		//		immediate field (imm) only 8 bits of instruction coding
+		//			therefore: only can branch to -128 or 127 instructions past the current instruction (using baseline instruction set)
+		Bcond:
+			begin
+			
+				// fill in here
+			end
+		
+		// Jump Conditions:
+		//		Taken directly from register (check register.v to see if so)
+		//		If jump, register that holds jump condition is written directly to PC (if jump condition is true)	
+		Jcond:
+			begin
+			
+				// fill in here
+			end
+		
+		
+		// Load & STORE: needs to use values in registers as memory addresses (possibly w/ immediate values (imm) added)
+		//		Option 1: Separate path to MAR (memory address register)
+		//		Option 2: Put values through ALU (in some sore of "pass through" mode -- what we did)
+		//					Passed through, but no alteration occurs.
+		//		These register values must "somehow" be usable as memory addresses
+		//		Helpful to implement after MAR and MDR (memory data register) are completed
+		
 		default: 
 			begin
-			cond_codes = 5'b00000;
-			aluOut = {WIDTH{1'bx}}; // setting all bits to x of the variable pareter WIDTH
+				cond_group1[1:0] = 2'b00; // condition codes to 0
+				cond_group2[2:0] = 3'b000; // condition codes to 0
+				aluOut = {WIDTH{1'bx}}; // setting all bits to x of the variable pareter WIDTH
 			end
 		
 	 endcase
    end
 	
 endmodule
-
