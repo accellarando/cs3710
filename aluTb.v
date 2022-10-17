@@ -127,8 +127,13 @@ always@(posedge clk) begin
 					aluOut, conds);
 		13: begin
 			aluOp <= 8'b01010000;
-			$display("TESTING ADD");
+			$display("Testing ADD...\n");
 		end
+		14: if(aluOut != 8'b00010111 || conds != 5'b00010)
+				$display("ERROR IN XOR: Expected aluOut = 00010111, conds = 00010, got %d, %d\n",
+					aluOut, conds);
+		15: begin
+			aluIn1 <= 8'b
 		default: ;
 	endcase
 	
