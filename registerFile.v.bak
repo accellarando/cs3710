@@ -25,59 +25,47 @@ module registerFile #(parameter SIZE = 16, NUMREGS = 16) (
 	input[$clog2(NUMREGS)-1:0] srcAddr, dstAddr,			// 4-bit wide read addresses	
 	output[SIZE-1:0] 				readData1, readData2		// 16-bit Data out
 	);
+ 
+	// sixteen 16-bit registers
 	
-	// ! Adding Decoder later assignment!
-	
-	// intialize with all zeros
-	register[SIZE-1:0] registerFile [(1<<$clog2(NUMREGS))-1:0];
-	
-	
-	// data written to register when clock is enabled
-	// clock signal is ANDed w/ the enable signal -> How to WriteEn to write to reg
-	
-	assign enabledReg = {NUMREGS{writeEn}} & writeData; // -> need to put enableReg into registers? and clk?
-	
-	// sixteen 16-bit registers 
-	always @(posedge clk) begin
-		if(reset)
-			// registers = 0
-	
-	
-	//----
-	reg [31:0]    regfile [0:31];
-
-   assign rdDataA = regfile[rdAddrA];
-   assign rdDataB = regfile[rdAddrB];
-
-   integer   i;
-
-   always @(posedge clk) begin
-      if (reset) begin
-            for (i = 0; i < 8; i = i + 1) begin
-                regfile[i] <= 0;
-            end
-      end else begin
-            if (write) regfile[wrAddr] <= wrData;
-      end // else: !if(reset)
-   end
-			
-			
-	register #(SIZE) r(reset, clk, x, y);
-
-	// two 16:1 16-bit wide mux (mux for each read port)
+	// two 16:1 16-bit wide mux
 	//		read addrs (src/dst) are the mux's selector inputs
 	//		mux's output (readData1/2) is input for alu
-	mux2 #(
 	
+	// clock signal is ANDed w/ the enable signal
 	
-	
-	// OUTSIDE OF REG: mux for immediate extend
+	// OUTSIDE OF REG: 2 mux for immediate
 	
 	/*
 	REGISTER
 	@ Instantiate all 16-bit registers w/ the correct write-enable and reset inputs
 	*/
-	//d1 d2
-	assign register #(.SIZE(mine_var)) r
-	assign readData1 = 
+	register #(.SIZE(mine_var)) r
+	
 endmodule 
+
+
+//REFERENCE
+//----------------------------------------------------------------
+module register #(parameter SIZE=16)
+	(input reset, clk,
+	input [SIZE-1:0] d, //data in
+	output reg [SIZE-1:0] q); //data out
+
+	//data only written on posedge of clock
+	always @posedge(clk) begin //? @(posedge clk)
+		if(reset)
+			q = 0;	//active low?
+		else
+			q = d;	// data out = data in
+	end
+endmodule 
+
+//----------------------------------------------------------------
+module mux2 #(parameter WIDTH=16)(
+	input s, 
+	input [WIDTH-1:0] in1, in2,
+	output [WIDTH-1:0] out);
+	
+	assign out = s ? in2 : in1;
+endmodule
