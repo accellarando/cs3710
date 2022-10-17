@@ -208,7 +208,7 @@ module alu #(parameter WIDTH = 16)
 		// Load upper immediate
 		LUI: // need help with this one					--> understand if condition code bit reset necessary
 			begin
-				aluOut = {AluIn[WIDTH-9:0], 8'b00000000}; // may need to adjust when WIDTH isn't 16-bit
+				aluOut = {AluIn1[WIDTH-9:0], 8'b00000000}; // may need to adjust when WIDTH isn't 16-bit
 				if (aluOut == {WIDTH{1'b0})
 					begin
 						cond_group2[1] = 1'b1; // Z bit set to 1
