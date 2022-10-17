@@ -28,7 +28,7 @@ module cpu #(parameter SIZE=16, NUMREGS=16)
 	register #(SIZE) dstReg(reset, clk, dstAddr, dstOut);
 	register #(SIZE) immReg(reset, clk, imm, immOut);
 	
-	registerFile #(SIZE, NUMREGS) rf(clk, reset, pcOut, aluOut, srcOut, dstOut, d1, d2);
+	registerFile #(SIZE, REGBITS) rf(clk, reset, en, aluOut, srcOut, dstOut, d1, d2);
 	
 	mux2 #(SIZE) alu1(ctrlAlu1, pcOut, d1, aluIn1);
 	mux2 #(SIZE) alu2(ctrlAlu2, d2, immOut, aluIn2);

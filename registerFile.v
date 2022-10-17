@@ -18,39 +18,41 @@ REGISTER FILE: Provide arguments and hold results by instantiating 16 16-bit reg
 @ 2 addresses  [input]:		From decoded instruction word (mipscpu.v)
 									Do not need independent write addr, one of the read addr is also the write addr (dual-port, bram.v)
 */	
-module registerFile #(parameter SIZE = 16, NUMREGS = 16) (	
+module registerFile #(parameter SIZE = 16, REGBITS = 4) (	
 	input								clk, reset,
 	input 							writeEn,						// enable signal
 	input[SIZE-1:0] 				writeData,					//	16-bit Data in
-	input[$clog2(NUMREGS)-1:0] srcAddr, dstAddr,			// 4-bit wide read addresses	
+	input[REGBITS-1:0]			srcAddr, dstAddr,			// 4-bit wide read addresses	
 	output[SIZE-1:0] 				readData1, readData2		// 16-bit Data out
+	//	registerFile #(SIZE, REGBITS) rf(clk, reset, pcOut, aluOut, srcOut, dstOut, d1, d2);
 	);
 	
 	// ! Adding Decoder later assignment!
 	
-	// intialize with all zeros
-	register[SIZE-1:0] registerFile [(1<<$clog2(NUMREGS))-1:0];
+	reg [SIZE-1:0] registerFile [(1<<$clog2(NUMREGS))-1:0]; // Declare registers in register file 
+	
+	/* Option: reading relative path*/
+	initial begin
+	$display("Loading register file");
+	$readmemb("./reg.dat", registerFile); 
+	$display("done with RF load"); 
+	end
 	
 	
-	// data written to register when clock is enabled
-	// clock signal is ANDed w/ the enable signal -> How to WriteEn to write to reg
+	/* Option: manually initualized */
+	generate
+		for (genvar i = 0; i < SIZE; i++) begin
+			registerFile[i] = 0;
+		end
+	endgenerate
 	
-	assign enabledReg = {NUMREGS{writeEn}} & writeData; // -> need to put enableReg into registers? and clk?
-	
-	// sixteen 16-bit registers 
-	always @(posedge clk) begin
-		if(reset)
-			// registers = 0
-	
-	
-	//----
-	reg [31:0]    regfile [0:31];
 
-   assign rdDataA = regfile[rdAddrA];
-   assign rdDataB = regfile[rdAddrB];
+	/* assigning */
+	//always @(posedge clk) begin
+		//if(reset) begin
+		//if (writeen) regfile[addr] <=readdata;?
 
-   integer   i;
-
+/*
    always @(posedge clk) begin
       if (reset) begin
             for (i = 0; i < 8; i = i + 1) begin
@@ -60,7 +62,20 @@ module registerFile #(parameter SIZE = 16, NUMREGS = 16) (
             if (write) regfile[wrAddr] <= wrData;
       end // else: !if(reset)
    end
-			
+	
+	//assign enabledReg = {NUMREGS{writeEn}} & writeData; // -> need to put enableReg into registers? and clk?
+	
+	always @(posedge clk) begin
+		if(reset)
+			// registers = 0
+		else
+	
+
+	
+	always @(negedge clk) begin
+    rdDataA <= regfile[rdAddrA];
+    rdDataB <= regfile[rdAddrB];
+end
 			
 	register #(SIZE) r(reset, clk, x, y);
 
@@ -76,8 +91,8 @@ module registerFile #(parameter SIZE = 16, NUMREGS = 16) (
 	/*
 	REGISTER
 	@ Instantiate all 16-bit registers w/ the correct write-enable and reset inputs
-	*/
+	
 	//d1 d2
 	assign register #(.SIZE(mine_var)) r
-	assign readData1 = 
+	assign readData1 = */
 endmodule 

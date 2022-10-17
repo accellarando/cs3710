@@ -1,7 +1,7 @@
-Analysis & Synthesis Status : Failed - Mon Oct 17 04:34:58 2022
-Quartus Prime Version : 20.1.1 Build 720 11/11/2020 SJ Lite Edition
+Analysis & Synthesis Status : Failed - Mon Oct 17 13:02:41 2022
+Quartus Prime Version : 18.0.0 Build 614 04/24/2018 SJ Lite Edition
 Revision Name : cpu
-Top-level Entity Name : cpu
+Top-level Entity Name : mux2
 Family : Cyclone V
 Logic utilization (in ALMs) : N/A until Partition Merge
 Total registers : N/A until Partition Merge
