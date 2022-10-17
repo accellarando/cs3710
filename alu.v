@@ -110,7 +110,7 @@ module alu #(parameter WIDTH = 16)
 					end
 				else 
 					begin
-						cond_group1[1] = 1'b1;	 // Else, F bit set to 0
+						cond_group1[1] = 1'b0;	 // Else, F bit set to 0
 					end
 				cond_group1[0] = 1'b0; // C bit to 0
 				cond_group2[0] = 1'b0; // L bit to 0
@@ -134,7 +134,7 @@ module alu #(parameter WIDTH = 16)
 					end
 				else 
 					begin
-						cond_group1[1] = 1'b1;	 // Else, F bit set to 0
+						cond_group1[1] = 1'b0;	 // Else, F bit set to 0
 					end
 				cond_group1[0] = 1'b0; // C bit to 0
 				cond_group2[0] = 1'b0; // L bit to 0
