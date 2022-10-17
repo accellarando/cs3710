@@ -4,7 +4,7 @@ module alu #(parameter WIDTH = 16)
 					input	cIn,
 					output reg [WIDTH-1:0] aluOut,
 					output reg [1:0] cond_group1,	
-					output reg [2:0] cond_group2,			
+					output reg [2:0] cond_group2			
 	    );
 
 	// 	cond_codes --> condition codes
@@ -95,7 +95,7 @@ module alu #(parameter WIDTH = 16)
 		ADDI, ADD: 
 			begin
 				aluOut = AluIn1 + AluIn2;
-				if (aluOut == {WIDTH{1'b0})
+				if (aluOut == WIDTH{1'b0})
 					begin
 						cond_group2[1] = 1'b1; // Z bit set to 1
 					end
@@ -283,7 +283,7 @@ module alu #(parameter WIDTH = 16)
 				aluOut = $signed(AluIn1) >>> $signed(AluIn2); // sign extension shift operator
 			end
 		
-		ARTH_LSHI, ARTH,LSH:
+		ARTH_LSHI, ARTH_LSH:
 			begin
 				cond_group1[1:0] = 2'b00; // condition codes to 0
 				cond_group2[2:0] = 3'b000; // condition codes to 0

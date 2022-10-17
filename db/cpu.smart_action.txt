@@ -1,5 +1,1 @@
-<<<<<<< HEAD
 SOURCE
-=======
-SOURCE
->>>>>>> ba2780dc1106a4d288af64e47974e8442ecadd57

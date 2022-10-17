@@ -216,15 +216,14 @@ always@(posedge clk) begin
 		38: if(aluOut != 8'b10000000 || conds != 5'b00000)
 				$display("ERROR IN ARITH RSH: Expected aluOut = 10000000, conds = 00000, got %d, %d\n",
 					aluOut, conds);
-		end
 		39: begin
 			aluOp <= 8'b00001111;
 			$display("Testing NOT...\n");
 		end
-		40: if(aluOut != 8'01111110 || conds != 5'b00000)
+		40: if(aluOut != 8'b01111110 || conds != 5'b00000)
 				$display("ERROR IN NOT: Expected aluOut = 01111110, conds = 00000, got %d, %d\n",
 					aluOut, conds);
-		41: aluIn1 <= 8'11111111;
+		41: aluIn1 <= 8'b11111111;
 		42: if(aluOut != 8'b0 || conds != 5'b01000)
 				$display("ERROR IN RSH: Expected aluOut = 00000000, conds = 01000, got %d, %d\n",
 					aluOut, conds);
