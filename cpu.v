@@ -21,7 +21,7 @@ module cpu #(parameter SIZE=16, NUMREGS=16)
 	assign memdata = aluFinal;
 	assign ctrlAlu1 = ctrl[0];
 	assign ctrlAlu2 = ctrl[1];
-	assign aluOp = ctrl[9:2]
+	assign aluOp = ctrl[9:2];
 	
 	register #(SIZE) pcReg(reset, clk, pcIn, pcOut);
 	register #(SIZE) srcReg(reset, clk, srcAddr, srcOut);

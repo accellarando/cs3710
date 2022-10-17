@@ -14,12 +14,14 @@ module PSR_reg
 		end
 		else
 			begin
-				if(en)
+				if(en) begin
 					final_group1 <= cond_group1;
 					final_group2 <= cond_group2;
-				else
+				end
+				else begin
 					final_group1 <= final_group1;
 					final_group2 <= final_group2;
+				end
 			end
 	end
 endmodule 

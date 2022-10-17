@@ -95,7 +95,7 @@ module alu #(parameter WIDTH = 16)
 		ADDI, ADD: 
 			begin
 				aluOut = AluIn1 + AluIn2;
-				if (aluOut == WIDTH{1'b0})
+				if (aluOut == {WIDTH{1'b0}})
 					begin
 						cond_group2[1] = 1'b1; // Z bit set to 1
 					end
@@ -119,7 +119,7 @@ module alu #(parameter WIDTH = 16)
 		SUBI, SUB:
 			begin
 				aluOut = AluIn1 - AluIn2;
-				if (aluOut == {WIDTH{1'b0})
+				if (aluOut == {WIDTH{1'b0}})
 					begin
 						cond_group2[1] = 1'b1; // Z bit set to 1
 					end
@@ -143,7 +143,7 @@ module alu #(parameter WIDTH = 16)
 		ANDI, AND:
 			begin
 				aluOut = AluIn1 & AluIn2;
-				if (aluOut == {WIDTH{1'b0})
+				if (aluOut == {WIDTH{1'b0}})
 					begin
 						cond_group2[1] = 1'b1; // Z bit set to 1
 					end
@@ -159,7 +159,7 @@ module alu #(parameter WIDTH = 16)
 		ORI, OR:
 			begin
 				aluOut = AluIn1 | AluIn2;
-				if (aluOut == {WIDTH{1'b0})
+				if (aluOut == {WIDTH{1'b0}})
 					begin
 						cond_group2[1] = 1'b1; // Z bit set to 1
 					end
@@ -208,8 +208,8 @@ module alu #(parameter WIDTH = 16)
 		// Load upper immediate
 		LUI: // need help with this one					--> understand if condition code bit reset necessary
 			begin
-				aluOut = {AluIn1[WIDTH-9:0], 8'b00000000}; // may need to adjust when WIDTH isn't 16-bit
-				if (aluOut == {WIDTH{1'b0})
+				aluOut = {AluIn1[WIDTH-9:0],8'b0}; // may need to adjust when WIDTH isn't 16-bit
+				if (aluOut == {WIDTH{1'b0}})
 					begin
 						cond_group2[1] = 1'b1; // Z bit set to 1
 					end
@@ -249,7 +249,7 @@ module alu #(parameter WIDTH = 16)
 		NOT:
 			begin
 				aluOut = ~AluIn1;
-				if (aluOut == {WIDTH{1'b0})
+				if (aluOut == {WIDTH{1'b0}})
 					begin
 						cond_group2[1] = 1'b1; // Z bit set to 1
 					end

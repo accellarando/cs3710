@@ -40,11 +40,13 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 	
 	
 	/* Option: manually initualized */
+	/*
 	generate
 		for (genvar i = 0; i < SIZE; i++) begin
 			registerFile[i] = 0;
 		end
 	endgenerate
+	*/
 
 	/* assigning */
 	always @(posedge clk) begin
@@ -52,9 +54,10 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 			assign test = 1'b0;
 		end
 		else begin	
-			if (writeEn)
+			if (writeEn) begin
 				assign readData1 = registerFile[srcAddr];
 				assign readData2 = registerFile[dstAddr];
+			end
 		end
 	end
 

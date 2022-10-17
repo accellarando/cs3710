@@ -1,5 +1,5 @@
 Analysis & Synthesis report for cpu
-Mon Oct 17 13:08:54 2022
+Mon Oct 17 13:19:12 2022
 Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 
 
@@ -37,7 +37,7 @@ https://fpgasoftware.intel.com/eula.
 +---------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                              ;
 +-----------------------------+---------------------------------------------+
-; Analysis & Synthesis Status ; Failed - Mon Oct 17 13:08:54 2022           ;
+; Analysis & Synthesis Status ; Failed - Mon Oct 17 13:19:12 2022           ;
 ; Quartus Prime Version       ; 20.1.1 Build 720 11/11/2020 SJ Lite Edition ;
 ; Revision Name               ; cpu                                         ;
 ; Top-level Entity Name       ; cpu                                         ;
@@ -161,46 +161,31 @@ https://fpgasoftware.intel.com/eula.
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
-    Info: Processing started: Mon Oct 17 13:08:35 2022
+    Info: Processing started: Mon Oct 17 13:18:55 2022
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off cpu -c cpu
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 2 of the 2 processors detected
-Error (10170): Verilog HDL syntax error at PSR_reg.v(20) near text: "else";  expecting "end". Check for and fix any syntax errors that appear immediately before or at the specified keyword. The Intel FPGA Knowledge Database contains many articles with specific details on how to resolve this error. Visit the Knowledge Database at https://www.altera.com/support/support-resources/knowledge-base/search.html and search for this specific error message number. File: /home/ella/Documents/School/CS3710/cpu/PSR_reg.v Line: 20
-Error (10112): Ignored design unit "PSR_reg" at PSR_reg.v(2) due to previous errors File: /home/ella/Documents/School/CS3710/cpu/PSR_reg.v Line: 2
-Info (12021): Found 0 design units, including 0 entities, in source file PSR_reg.v
-Error (10170): Verilog HDL syntax error at registerFile.v(44) near text: "genvar";  expecting an identifier ("genvar" is a reserved keyword ). Check for and fix any syntax errors that appear immediately before or at the specified keyword. The Intel FPGA Knowledge Database contains many articles with specific details on how to resolve this error. Visit the Knowledge Database at https://www.altera.com/support/support-resources/knowledge-base/search.html and search for this specific error message number. File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 44
-Error (10170): Verilog HDL syntax error at registerFile.v(44) near text: "+";  expecting "=". Check for and fix any syntax errors that appear immediately before or at the specified keyword. The Intel FPGA Knowledge Database contains many articles with specific details on how to resolve this error. Visit the Knowledge Database at https://www.altera.com/support/support-resources/knowledge-base/search.html and search for this specific error message number. File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 44
-Error (10170): Verilog HDL syntax error at registerFile.v(45) near text: "=";  expecting ".", or an identifier. Check for and fix any syntax errors that appear immediately before or at the specified keyword. The Intel FPGA Knowledge Database contains many articles with specific details on how to resolve this error. Visit the Knowledge Database at https://www.altera.com/support/support-resources/knowledge-base/search.html and search for this specific error message number. File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 45
-Error (10644): Verilog HDL error at registerFile.v(47): this block requires a name File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 47
-Warning (10090): Verilog HDL syntax warning at registerFile.v(94): extra block comment delimiter characters /* within block comment File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 94
-Error (10112): Ignored design unit "registerFile" at registerFile.v(21) due to previous errors File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 21
-Info (12021): Found 0 design units, including 0 entities, in source file registerFile.v
+Info (12021): Found 1 design units, including 1 entities, in source file PSR_reg.v
+    Info (12023): Found entity 1: PSR_reg File: /home/ella/Documents/School/CS3710/cpu/PSR_reg.v Line: 2
+Warning (10090): Verilog HDL syntax warning at registerFile.v(100): extra block comment delimiter characters /* within block comment File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 100
+Info (12021): Found 1 design units, including 1 entities, in source file registerFile.v
+    Info (12023): Found entity 1: registerFile File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 21
 Info (12021): Found 1 design units, including 1 entities, in source file register.v
     Info (12023): Found entity 1: register File: /home/ella/Documents/School/CS3710/cpu/register.v Line: 1
-Error (10170): Verilog HDL syntax error at cpu.v(26) near text: "register";  expecting ";". Check for and fix any syntax errors that appear immediately before or at the specified keyword. The Intel FPGA Knowledge Database contains many articles with specific details on how to resolve this error. Visit the Knowledge Database at https://www.altera.com/support/support-resources/knowledge-base/search.html and search for this specific error message number. File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 26
-Error (10112): Ignored design unit "cpu" at cpu.v(1) due to previous errors File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 1
-Info (12021): Found 0 design units, including 0 entities, in source file cpu.v
+Info (12021): Found 1 design units, including 1 entities, in source file cpu.v
+    Info (12023): Found entity 1: cpu File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file mux2.v
     Info (12023): Found entity 1: mux2 File: /home/ella/Documents/School/CS3710/cpu/mux2.v Line: 1
-Error (10170): Verilog HDL syntax error at alu.v(8) near text: ")";  expecting a direction. Check for and fix any syntax errors that appear immediately before or at the specified keyword. The Intel FPGA Knowledge Database contains many articles with specific details on how to resolve this error. Visit the Knowledge Database at https://www.altera.com/support/support-resources/knowledge-base/search.html and search for this specific error message number. File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 8
-Error (10170): Verilog HDL syntax error at alu.v(98) near text: ")";  expecting "}". Check for and fix any syntax errors that appear immediately before or at the specified keyword. The Intel FPGA Knowledge Database contains many articles with specific details on how to resolve this error. Visit the Knowledge Database at https://www.altera.com/support/support-resources/knowledge-base/search.html and search for this specific error message number. File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 98
+Error (10170): Verilog HDL syntax error at alu.v(162) near text: ")";  expecting "}". Check for and fix any syntax errors that appear immediately before or at the specified keyword. The Intel FPGA Knowledge Database contains many articles with specific details on how to resolve this error. Visit the Knowledge Database at https://www.altera.com/support/support-resources/knowledge-base/search.html and search for this specific error message number. File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 162
 Error (10170): Verilog HDL syntax error at alu.v(211) near text: ";";  expecting "}". Check for and fix any syntax errors that appear immediately before or at the specified keyword. The Intel FPGA Knowledge Database contains many articles with specific details on how to resolve this error. Visit the Knowledge Database at https://www.altera.com/support/support-resources/knowledge-base/search.html and search for this specific error message number. File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 211
-Error (10170): Verilog HDL syntax error at alu.v(286) near text: ":";  expecting "}". Check for and fix any syntax errors that appear immediately before or at the specified keyword. The Intel FPGA Knowledge Database contains many articles with specific details on how to resolve this error. Visit the Knowledge Database at https://www.altera.com/support/support-resources/knowledge-base/search.html and search for this specific error message number. File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 286
 Error (10112): Ignored design unit "alu" at alu.v(1) due to previous errors File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 1
 Info (12021): Found 0 design units, including 0 entities, in source file alu.v
-Error (10170): Verilog HDL syntax error at aluTb.v(219) near text: "end";  expecting "endcase". Check for and fix any syntax errors that appear immediately before or at the specified keyword. The Intel FPGA Knowledge Database contains many articles with specific details on how to resolve this error. Visit the Knowledge Database at https://www.altera.com/support/support-resources/knowledge-base/search.html and search for this specific error message number. File: /home/ella/Documents/School/CS3710/cpu/aluTb.v Line: 219
-Error (10170): Verilog HDL syntax error at aluTb.v(224) near text: "'0";  expecting ")". Check for and fix any syntax errors that appear immediately before or at the specified keyword. The Intel FPGA Knowledge Database contains many articles with specific details on how to resolve this error. Visit the Knowledge Database at https://www.altera.com/support/support-resources/knowledge-base/search.html and search for this specific error message number. File: /home/ella/Documents/School/CS3710/cpu/aluTb.v Line: 224
-Error (10839): Verilog HDL error at aluTb.v(224): '0 is a SystemVerilog feature File: /home/ella/Documents/School/CS3710/cpu/aluTb.v Line: 224
-Error (10170): Verilog HDL syntax error at aluTb.v(226) near text: ")";  expecting ":", or ",". Check for and fix any syntax errors that appear immediately before or at the specified keyword. The Intel FPGA Knowledge Database contains many articles with specific details on how to resolve this error. Visit the Knowledge Database at https://www.altera.com/support/support-resources/knowledge-base/search.html and search for this specific error message number. File: /home/ella/Documents/School/CS3710/cpu/aluTb.v Line: 226
-Error (10170): Verilog HDL syntax error at aluTb.v(227) near text: "'1";  expecting ";". Check for and fix any syntax errors that appear immediately before or at the specified keyword. The Intel FPGA Knowledge Database contains many articles with specific details on how to resolve this error. Visit the Knowledge Database at https://www.altera.com/support/support-resources/knowledge-base/search.html and search for this specific error message number. File: /home/ella/Documents/School/CS3710/cpu/aluTb.v Line: 227
-Error (10839): Verilog HDL error at aluTb.v(227): '1 is a SystemVerilog feature File: /home/ella/Documents/School/CS3710/cpu/aluTb.v Line: 227
-Error (10170): Verilog HDL syntax error at aluTb.v(245) near text: "end"; "end" without "begin" . Check for and fix any syntax errors that appear immediately before or at the specified keyword. The Intel FPGA Knowledge Database contains many articles with specific details on how to resolve this error. Visit the Knowledge Database at https://www.altera.com/support/support-resources/knowledge-base/search.html and search for this specific error message number. File: /home/ella/Documents/School/CS3710/cpu/aluTb.v Line: 245
-Error (10170): Verilog HDL syntax error at aluTb.v(248) near text: "endmodule";  expecting "end". Check for and fix any syntax errors that appear immediately before or at the specified keyword. The Intel FPGA Knowledge Database contains many articles with specific details on how to resolve this error. Visit the Knowledge Database at https://www.altera.com/support/support-resources/knowledge-base/search.html and search for this specific error message number. File: /home/ella/Documents/School/CS3710/cpu/aluTb.v Line: 248
-Info (12021): Found 0 design units, including 0 entities, in source file aluTb.v
-Error: Quartus Prime Analysis & Synthesis was unsuccessful. 22 errors, 2 warnings
+Info (12021): Found 1 design units, including 1 entities, in source file aluTb.v
+    Info (12023): Found entity 1: aluTb File: /home/ella/Documents/School/CS3710/cpu/aluTb.v Line: 3
+Error: Quartus Prime Analysis & Synthesis was unsuccessful. 3 errors, 2 warnings
     Error: Peak virtual memory: 400 megabytes
-    Error: Processing ended: Mon Oct 17 13:08:54 2022
-    Error: Elapsed time: 00:00:19
-    Error: Total CPU time (on all processors): 00:00:41
+    Error: Processing ended: Mon Oct 17 13:19:12 2022
+    Error: Elapsed time: 00:00:17
+    Error: Total CPU time (on all processors): 00:00:40
 
 
