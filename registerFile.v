@@ -46,6 +46,9 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 		end
 	endgenerate
 	
+	assign readData1 = registerFile[srcAddr];
+	assign readData2 = registerFile[dstAddr];
+
 
 	/* assigning */
 	//always @(posedge clk) begin
