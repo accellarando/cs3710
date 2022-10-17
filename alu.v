@@ -352,4 +352,3 @@ module alu #(parameter WIDTH = 16)
 	// For Bcond and Jcond --> use aluCont for arith conditions???
 	
 endmodule
-
