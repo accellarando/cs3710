@@ -13,27 +13,28 @@ REGISTER FILE: Provide arguments and hold results by instantiating 16 16-bit reg
 //-----------------------------------
 /*
 @ 2 read ports	[output]:	Reads 2 args from register file to feed ALU
-@ 1 write port [input]:		Writes back the result
+@ 1 write port [input]:		Writes back the result data
 									Enables write to reg 
 @ 2 addresses  [input]:		From decoded instruction word (mipscpu.v)
 									Do not need independent write addr, one of the read addr is also the write addr (dual-port, bram.v)
 */	
-module registerFile #(parameter SIZE = 16, NUMREGS = 16) (
-	// rf(clk, reset, pcIn, aluOut, srcOut, dstOut, d1, d2);
-	
-	input	clk, reset,
-	input writeEn,
-	input	[$clog2(NUMREGS)-1:0] srcAddr, dstAddr,
-	input	[SIZE-1:0] writeData,	
-	output [SIZE-1:0] readData1, readData2 
-	
-	// writeEn INPUT 					"regWrite" enable write = 1/0 -> program counter in pcIn
-	// srcAddr, dstAddr INPUTS 	read addrs -> log2(16) = 4, REGBITS == 4 [3:0]
+module registerFile #(parameter SIZE = 16, NUMREGS = 16) (	
+	input								clk, reset,
+	input 							writeEn,						// enable signal
+	input[SIZE-1:0] 				writeData,					//	16-bit Data in
+	input[$clog2(NUMREGS)-1:0] srcAddr, dstAddr,			// 4-bit wide read addresses	
+	output[SIZE-1:0] 				readData1, readData2		// 16-bit Data out
 	);
  
+	// sixteen 16-bit registers
 	
-
+	// two 16:1 16-bit wide mux
+	//		read addrs (src/dst) are the mux's selector inputs
+	//		mux's output (readData1/2) is input for alu
 	
+	// clock signal is ANDed w/ the enable signal
+	
+	// OUTSIDE OF REG: 2 mux for immediate
 	
 	/*
 	REGISTER
@@ -41,12 +42,6 @@ module registerFile #(parameter SIZE = 16, NUMREGS = 16) (
 	*/
 	register #(.SIZE(mine_var)) r
 	
-	// (A) MUX2: 16-bit wide 2 to 1 selector mux for selecting either the value from
-	//				the RegFile or an Immediate
- 
- 	// (B) MUX2: 16-bit wide 2 to 1 selector mux for selecting either the value from
-	//				the RegFile ?
-
 endmodule 
 
 
