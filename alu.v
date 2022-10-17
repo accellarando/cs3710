@@ -27,38 +27,38 @@ module alu #(parameter WIDTH = 16)
 	
 	parameter ANDI  		= 	8'b0001xxxx;
 	parameter ORI 			= 	8'b0010xxxx;
-	parameter XORI 		= 	8'b0011xxxx;
-	parameter ADDI 		= 	8'b0101xxxx;
+	parameter XORI 			= 	8'b0011xxxx;
+	parameter ADDI 			= 	8'b0101xxxx;
 	parameter ADDUI 		= 	8'b0110xxxx;
-	parameter SUBI 		= 	8'b1001xxxx;
-	parameter CMPI 		= 	8'b1011xxxx;
-	parameter MOVI 		= 	8'b1101xxxx;
+	parameter SUBI 			= 	8'b1001xxxx;
+	parameter CMPI 			= 	8'b1011xxxx;
+	parameter MOVI 			= 	8'b1101xxxx;
 	parameter LUI 			= 	8'b1111xxxx;
 	
 	// shift
-	parameter LSHI 		= 	8'b1000000x; // used for shifting 1
+	parameter LSHI 			= 	8'b1000000x; // used for shifting 1
 	parameter LSH 			= 	8'b10000100; // used for shifting 1
-	parameter RSHI 		= 	8'b1000001x; // used for shifting -1
+	parameter RSHI 			= 	8'b1000001x; // used for shifting -1
 	parameter RSH 			= 	8'b10000101; // used for shifting -1
-	parameter ARTH_LSHI 	=	8'b1000100x; 
-	parameter ARTH_LSH 	= 	8'b10000110; 
-	parameter ARTH_RSH	= 	8'b10000111; 
+	parameter ARTH_LSHI 		=	8'b1000100x; 
+	parameter ARTH_LSH 		= 	8'b10000110; 
+	parameter ARTH_RSH		= 	8'b10000111; 
 	
 	// Registers
 	parameter NOT 			=	8'b00001111;
 	parameter AND 			= 	8'b00000001;
 	parameter ADD 			= 	8'b00000101;
 	parameter SUB 			= 	8'b00001001;
-	parameter MOV 			=  8'b00001101;
+	parameter MOV 			= 	 8'b00001101;
 	parameter OR 			= 	8'b00000010;
-	parameter ADDU 		= 	8'b00000110;
+	parameter ADDU 			= 	8'b00000110;
 	parameter XOR 			= 	8'b00000011;
 	parameter CMP 			= 	8'b00001011;
 	parameter ADDCU 		= 	8'b00000100;
 	
 	// special
-	parameter LOAD 		= 	8'b01000000;
-	parameter STOR 		=	8'b01000100;
+	parameter LOAD 			= 	8'b01000000;
+	parameter STOR 			=	8'b01000100;
 	
 	parameter JAL 			=	8'b01001000;
 	parameter Bcond 		= 	8'b1100xxxx;
@@ -349,3 +349,22 @@ module alu #(parameter WIDTH = 16)
    end
 	
 endmodule
+
+// register for condition codes going into ALU with enable signal
+module alu_cond_reg #(parameter SIZE=5)
+	(input reset, clk, en
+	input [SIZE-1:0] d, 
+	output reg [SIZE-1:0] q);
+
+	always @(posedge clk) begin
+		if(reset)
+			q <= 0;
+		else
+			begin
+				if(en)
+					q <= d;
+				else
+					q <= q;
+			end
+	end
+endmodule 
