@@ -130,13 +130,111 @@ always@(posedge clk) begin
 			$display("Testing ADD...\n");
 		end
 		14: if(aluOut != 8'b00010111 || conds != 5'b00010)
-				$display("ERROR IN XOR: Expected aluOut = 00010111, conds = 00010, got %d, %d\n",
+				$display("ERROR IN ADD: Expected aluOut = 00010111, conds = 00010, got %d, %d\n",
 					aluOut, conds);
 		15: begin
-			aluIn1 <= 8'b
+			aluIn1 <= 8'b00000011;
+			aluIn2 <= 8'b00000011;
+		end
+		16: if(aluOut != 8'b00000110 || conds != 5'b00000)
+				$display("ERROR IN ADD: Expected aluOut = 00000110, conds = 00000, got %d, %d\n",
+					aluOut, conds);
+		17: begin
+			aluOp = 8'b10010000;
+			$display("Testing SUB...\n");
+		end
+		18: if(aluOut != 8'b00000000 || conds != 5'b01000)
+				$display("ERROR IN SUB: Expected aluOut = 00000000, conds = 01000, got %d, %d\n",
+					aluOut, conds);
+		19: begin
+			aluIn1 <= 8'b00000000;
+			aluIn2 <= 8'b00000001;
+		end
+		20: if(aluOut != 8'b11111111 || conds != 5'b00010)
+				$display("ERROR IN SUB: Expected aluOut = 11111111, conds = 00010, got %d, %d\n",
+					aluOut, conds);
+		21: begin
+			aluOp <= 8'b01100000;
+			$display("Testing ADDU...\n");
+		end
+		22: if(aluOut != 8'b00000001 || conds != 5'b00000)
+				$display("ERROR IN ADDU: Expected aluOut = 00000001, conds = 00000, got %d, %d\n",
+					aluOut, conds);
+		23: begin
+			 aluIn1 <= 8'b01111111;
+			 aluIn2 <= 8'b00000001;
+		end
+		24: if(aluOut != 8'b10000000 || conds != 5'b00000)
+				$display("ERROR IN ADDU: Expected aluOut = 10000000, conds = 00000, got %d, %d\n",
+					aluOut, conds);
+		25: begin
+			aluOp <= 8'b10110000;
+			$display("Testing CMP...\n");
+		end
+		26: if(conds != 5'b00000)
+				$display("ERROR IN CMP: Expected conds = 00000, got %d\n",
+					conds);
+		27: begin
+			aluIn1 <= 8'b00000001;
+			aluIn2 <= 8'b01111111;
+		end
+		28: if(conds != 5'b01010)
+				$display("ERROR IN CMP: Expected conds = 01010, got %d\n",
+					conds);
+		29: begin
+			aluIn1 <= 8'b00000001;
+			aluIn2 <= 8'b00000001;
+		end
+		30: if(conds != 5'b00100)
+				$display("ERROR IN CMP: Expected conds = 00100, got %d\n",
+					conds);
+		31: begin
+			aluOp <= 8'b10000000;
+			$display("Testing LSH...\n");
+		end
+		32: if(aluOut != 8'b00000010 || conds != 5'b00000)
+				$display("ERROR IN LSH: Expected aluOut = 00000010, conds = 00000, got %d, %d\n",
+					aluOut, conds);
+		33: begin
+			aluOp <= 8'b10000010;
+			$display("Testing RSH...\n");
+		end
+		34: if(aluOut != 8'b00000000 || conds != 5'b00000)
+				$display("ERROR IN RSH: Expected aluOut = 00000000, conds = 00000, got %d, %d\n",
+					aluOut, conds);
+		35: begin
+			aluOp <= 8'b10001000;
+			aluIn1 <= 8'b10000001;
+			aluIn2 <= 8'b00000001;
+			$display("Testing arithmetic LSH...\n");
+		end
+		36: if(aluOut != 8'b10000010 || conds != 5'b00000)
+				$display("ERROR IN ARITH LSH: Expected aluOut = 10000010, conds = 00000, got %d, %d\n",
+					aluOut, conds);
+		37: begin
+			aluOp <= 8'b10000111;
+			$display("Testing arithmetic RSH...\n");
+		end
+		38: if(aluOut != 8'b10000000 || conds != 5'b00000)
+				$display("ERROR IN ARITH RSH: Expected aluOut = 10000000, conds = 00000, got %d, %d\n",
+					aluOut, conds);
+		end
+		39: begin
+			aluOp <= 8'b00001111;
+			$display("Testing NOT...\n");
+		end
+		40: if(aluOut != 8'01111110 || conds != 5'b00000)
+				$display("ERROR IN NOT: Expected aluOut = 01111110, conds = 00000, got %d, %d\n",
+					aluOut, conds);
+		41: aluIn1 <= 8'11111111;
+		42: if(aluOut != 8'b0 || conds != 5'b01000)
+				$display("ERROR IN RSH: Expected aluOut = 00000000, conds = 01000, got %d, %d\n",
+					aluOut, conds);
+		43: counter <= 0;
 		default: ;
 	endcase
 	
+
 	counter <= counter + 1;
 end
 
