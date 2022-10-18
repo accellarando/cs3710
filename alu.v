@@ -447,40 +447,28 @@ module alu #(parameter WIDTH = 16)
 		MOV: aluOut = aluIn1;
 	
 		// Load upper imm
-		LUI: aluOut = {{aluIn2[WIDTH-9:0]}, WIDTH-8{1'b0}};
+		LUI: aluOut = {aluIn2[WIDTH-9:0], {WIDTH-8{1'b0}}};
 
 		// Comparison imm
 		CMPI:
 			begin
-				if ($signed(aluIn1) < $signed({{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]})
-					begin
+				if ($signed(aluIn1) < $signed({{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]}))
 						cond_group2[2] = 1'b1; // N bit set to 1
-					end
 				else if (aluIn1 < {{WIDTH-8{1'b0}} , aluIn2[WIDTH-9:0]})
-					begin
 						cond_group2[0] = 1'b1; // L bit set to 1
-					end
 				else // if equal
-					begin
-						cond_group2[1] = 1'b1;  // Z bit set to 1
-					end			
+						cond_group2[1] = 1'b1;  // Z bit set to 1			
 			end
 			
 		// Comparison
 		CMP:
 			begin
 				if ($signed(aluIn1) < $signed(aluIn2))
-					begin
 						cond_group2[2] = 1'b1; // N bit set to 1
-					end
 				else if (aluIn1 < aluIn2)
-					begin
 						cond_group2[0] = 1'b1; // L bit set to 1
-					end
 				else // if equal
-					begin
-						cond_group2[1] = 1'b1;  // Z bit set to 1
-					end			
+						cond_group2[1] = 1'b1;  // Z bit set to 1			
 			end
 		
 		NOT:
