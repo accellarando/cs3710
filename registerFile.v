@@ -27,12 +27,13 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 	//	registerFile #(SIZE, REGBITS) rf(clk, reset, pcOut, aluOut, srcOut, dstOut, d1, d2);
 	);
 		
-	reg [SIZE-1:0] registerFile [REGBITS-1:0]; // Declare registers in register file 
 	
+	reg [SIZE-1:0] regFile [(1<<REGBITS)-1:0]; // Declare sixteen 16-bit registers in register file 
+
 	/* Option: reading relative path*/
 	initial begin
 	$display("Loading register file");
-	$readmemb("E:/3710/GroupProject/cs3710/reg.dat", registerFile); // ! change to your local path !
+	$readmemb("E:/3710/GroupProject/cs3710/reg.dat", regFile); // ! CHANGE TO YOUR LOCAL PATH !
 	$display("Done with loading register file"); 
 	end
 	
@@ -49,13 +50,15 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 	/* assigning */
 	always @(posedge clk) begin
 		if(reset) begin
-			readData1 <= 16'b0; //do something here ig?
-			readData2 <= 16'b0;
+			// ?? all 16 registers are set to 16'b0
+			for(genvar i = 0; i < SIZE; i++) begin 
+				regFile[i] <= 0;							
+			end
 		end
 		else begin	
-			if (writeEn) begin
-				readData1 <= registerFile[srcAddr];
-				readData2 <= registerFile[dstAddr];
+			if(writeEn) begin
+				readData1 <= regFile[srcAddr];
+				readData2 <= regFile[dstAddr];
 			end
 		end
 	end

@@ -30,20 +30,29 @@ module registerFile_tb();
 	end
 	
 	/* Generate clock */
-	always #50 begin
+	always #50 begin		// clock changes edge every 50 ns
 		clk = !clk;
 	end
 	
 	/* Adding stimulus testing */
+	// reference:	readData1 uses srcAddr
+	//					readData2 uses dstAddr
 	always @(posedge clk) begin
 		case(counter)
+			// ??? put #time each case -> longer time than generate clock
+			
+			// @ 
 			1: begin
+				
 			end
+			
 			// last case: set coutner back to zero
+			
 			default : ;
 		endcase
-		
+	
 		counter <= counter++; // increment counter value each pos-edge of the clock to test cases subseqently
+	end
 	
 endmodule
 	
