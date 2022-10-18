@@ -12,13 +12,9 @@
 *
 */	
 
-
-
-
-
 module alu #(parameter WIDTH = 16)
             (	input 		[WIDTH-9:0] aluOp,
-					input     	[WIDTH-1:0] aluIn1, aluIn2, 
+					input     	[WIDTH-1:0] aluIn1, aluIn2,
 					//output reg  [WIDTH-1:0] pcOut, // regarding pcOut as 16-bit
 					output reg [WIDTH-1:0] aluOut,
 					output reg [1:0] cond_group1,	
@@ -134,7 +130,7 @@ module alu #(parameter WIDTH = 16)
 				
 				// Could be incorrect due to jumping to link register.
 				// Jumps to aluIn2, where PC + 1 is written
-				aluOut = aluIn2 + aluOut + 1'b1; 
+				aluOut = aluIn2 + pcOut + 1'b1; 
 			end
 		
 		// Implementing Branch and Jump Conditions:
@@ -161,12 +157,12 @@ module alu #(parameter WIDTH = 16)
 						if(cond_group2[1]) // If Z bit is 1
 						begin
 							casex(aluOp)
-							Bcond: aluOut = aluOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
+							Bcond: aluOut = pcOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
 							Jcond: aluOut = aluIn2;
 							endcase
 						end
 						else
-							aluOut = aluOut + 1'b1; 
+							aluOut = pcOut + 1'b1; 
 					end
 				
 				NE:
@@ -174,12 +170,12 @@ module alu #(parameter WIDTH = 16)
 						if(!cond_group2[1]) // If Z bit is 0
 						begin
 							casex(aluOp)
-							Bcond: aluOut = aluOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
+							Bcond: aluOut = pcOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
 							Jcond: aluOut = aluIn2;
 							endcase
 						end 
 						else
-							aluOut = aluOut + 1'b1; 
+							aluOut = pcOut + 1'b1; 
 					end
 				
 				GE:
@@ -187,12 +183,12 @@ module alu #(parameter WIDTH = 16)
 						if(cond_group2[2] || cond_group2[1]) // If N or Z bit is 1
 						begin
 							casex(aluOp)
-							Bcond: aluOut = aluOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]}; 
+							Bcond: aluOut = pcOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]}; 
 							Jcond: aluOut = aluIn2;
 							endcase
 						end
 						else
-							aluOut = aluOut + 1'b1;
+							aluOut = pcOut + 1'b1;
 					end
 				
 				CS:
@@ -200,12 +196,12 @@ module alu #(parameter WIDTH = 16)
 						if(cond_group1[0]) // If C bit is 1
 						begin
 							casex(aluOp)
-							Bcond: aluOut = aluOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
+							Bcond: aluOut = pcOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
 							Jcond: aluOut = aluOut - aluIn2; // maybe aluOut = aluIn2
 							endcase
 						end 
 						else
-							aluOut = aluOut + 1'b1; 
+							aluOut = pcOut + 1'b1; 
 					end
 				
 				CC:
@@ -213,12 +209,12 @@ module alu #(parameter WIDTH = 16)
 						if(!cond_group1[0]) // If C bit is 0
 						begin
 							casex(aluOp)
-							Bcond: aluOut = aluOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
+							Bcond: aluOut = pcOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
 							Jcond: aluOut = aluIn2;
 							endcase
 						end 
 						else
-							aluOut = aluOut + 1'b1; 
+							aluOut = pcOut + 1'b1; 
 					end
 				
 				HI:
@@ -226,12 +222,12 @@ module alu #(parameter WIDTH = 16)
 						if(cond_group2[0]) // If L bit is 1
 						begin
 							casex(aluOp)
-							Bcond: aluOut = aluOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
+							Bcond: aluOut = pcOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
 							Jcond: aluOut = aluIn2;
 							endcase
 						end
 						else
-							aluOut = aluOut + 1'b1;
+							aluOut = pcOut + 1'b1;
 					end
 				
 				LS:
@@ -239,12 +235,12 @@ module alu #(parameter WIDTH = 16)
 						if(!cond_group2[0]) // If L bit is 0
 						begin
 							casex(aluOp)
-							Bcond: aluOut = aluOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
+							Bcond: aluOut = pcOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
 							Jcond: aluOut = aluIn2;
 							endcase
 						end
 						else
-							aluOut = aluOut + 1'b1;
+							aluOut = pcOut + 1'b1;
 					end
 					
 				LO:
@@ -252,12 +248,12 @@ module alu #(parameter WIDTH = 16)
 						if(!cond_group2[0] && !cond_group2[1]) // If L and Z bit are 0
 						begin
 							casex(aluOp)
-							Bcond: aluOut = aluOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
+							Bcond: aluOut = pcOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
 							Jcond: aluOut = aluIn2;
 							endcase
 						end
 						else
-							aluOut = aluOut + 1'b1;
+							aluOut = pcOut + 1'b1;
 					end
 					
 				HS:
@@ -265,12 +261,12 @@ module alu #(parameter WIDTH = 16)
 						if(cond_group2[0] && cond_group2[1]) // If L and Z bit are 1
 						begin
 							casex(aluOp)
-							Bcond: aluOut = aluOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
+							Bcond: aluOut = pcOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
 							Jcond: aluOut = aluIn2;
 							endcase
 						end
 						else
-							aluOut = aluOut + 1'b1;
+							aluOut = pcOut + 1'b1;
 					end
 					
 				GT:
@@ -278,12 +274,12 @@ module alu #(parameter WIDTH = 16)
 						if(cond_group2[2]) // If N bit is 1
 						begin
 							casex(aluOp)
-							Bcond: aluOut = aluOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
+							Bcond: aluOut = pcOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
 							Jcond: aluOut = aluIn2;
 							endcase
 						end
 						else
-							aluOut = aluOut + 1'b1;
+							aluOut = pcOut + 1'b1;
 					end
 				
 				LE:
@@ -291,12 +287,12 @@ module alu #(parameter WIDTH = 16)
 						if(!cond_group2[2]) // If N bit is 0
 						begin
 							casex(aluOp)
-							Bcond: aluOut = aluOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
+							Bcond: aluOut = pcOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
 							Jcond: aluOut = aluIn2;
 							endcase
 						end
 						else
-							aluOut = aluOut + 1'b1;
+							aluOut = pcOut + 1'b1;
 					end
 				
 				FS:
@@ -304,12 +300,12 @@ module alu #(parameter WIDTH = 16)
 						if(cond_group1[1]) // If F bit is 1
 						begin
 							casex(aluOp)
-							Bcond: aluOut = aluOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
+							Bcond: aluOut = pcOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
 							Jcond: aluOut = aluIn2;
 							endcase
 						end
 						else
-							aluOut = aluOut + 1'b1;
+							aluOut = pcOut + 1'b1;
 					end
 				
 				FC:
@@ -317,12 +313,12 @@ module alu #(parameter WIDTH = 16)
 						if(!cond_group1[1]) // If F bit is 0
 						begin
 							casex(aluOp)
-							Bcond: aluOut = aluOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
+							Bcond: aluOut = pcOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
 							Jcond: aluOut = aluIn2;
 							endcase
 						end
 						else
-							aluOut = aluOut + 1'b1;
+							aluOut = pcOut + 1'b1;
 					end
 				
 				LT:
@@ -330,25 +326,25 @@ module alu #(parameter WIDTH = 16)
 						if(cond_group2[2] && cond_group2[1]) // If N and Z bit are 1
 						begin
 							casex(aluOp)
-							Bcond: aluOut = aluOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
+							Bcond: aluOut = pcOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
 							Jcond: aluOut = aluIn2; // possibly same as Bcond
 							endcase
 						end
 						else
-							aluOut = aluOut + 1'b1;
+							aluOut = pcOut + 1'b1;
 					end
 				
 				UC:	
 					begin
 						casex(aluOp)
-						Bcond: aluOut = aluOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
+						Bcond: aluOut = pcOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
 						Jcond: aluOut = aluIn2;
 						endcase
 					end
 					
 				NJ:	
 					begin
-						aluOut = aluOut;
+						aluOut = pcOut;
 					end
 
 				endcase
