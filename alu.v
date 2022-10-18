@@ -14,8 +14,8 @@
 
 module alu #(parameter WIDTH = 16)
             (	input 		[WIDTH-9:0] aluOp,
-					input     	[WIDTH-1:0] aluIn1, aluIn2, 
-					output reg 	[WIDTH-1:0] pcOut, aluOut, // regarding pcOut as 16-bit
+					input     	[WIDTH-1:0] aluIn1, aluIn2, pcOut,	// regarding pcOut as 16-bit	
+					output reg 	[WIDTH-1:0] pcOut, aluOut, 
 					output reg 	[1:0] cond_group1,	
 					output reg 	[2:0] cond_group2
 					// output reg PCen, PCjump, PCbranch, WRen //program counter enable, jump, branch, write enable
@@ -34,12 +34,12 @@ module alu #(parameter WIDTH = 16)
 	
 	parameter ANDI			=	8'b0001xxxx;
 	parameter ORI			=	8'b0010xxxx;
-	parameter XORI 			= 	8'b0011xxxx;
-	parameter ADDI 			= 	8'b0101xxxx;
-	parameter ADDUI			=	8'b0110xxxx;
-	parameter SUBI 			= 	8'b1001xxxx;
-	parameter CMPI 			= 	8'b1011xxxx;
-	parameter MOVI 			= 	8'b1101xxxx;
+	parameter XORI 		= 	8'b0011xxxx;
+	parameter ADDI 		= 	8'b0101xxxx;
+	parameter ADDUI		=	8'b0110xxxx;
+	parameter SUBI 		= 	8'b1001xxxx;
+	parameter CMPI 		= 	8'b1011xxxx;
+	parameter MOVI 		= 	8'b1101xxxx;
 	parameter LUI			=	8'b1111xxxx;
 	
 	// shift
