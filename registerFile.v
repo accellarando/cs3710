@@ -43,7 +43,7 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 	always @(posedge clk) begin
 		if(reset) begin
 			// ?? all 16 registers are set to 16'b0
-			for(genvar i = 0; i < SIZE; i++) begin 
+			for(integer i = 0; i < SIZE; i = i + 1) begin 
 				regFile[i] <= 0;							
 			end
 		end
