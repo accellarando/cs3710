@@ -8,16 +8,18 @@ module registerFile_tb();
 	reg[3:0] 	srcAddr, dstAddr;
 	
 	/* Outputs */
-	wire[15:0] 	ReadData1, ReadData2;
+	wire[15:0] 	readData1, readData2;
 	
 	/* Instantiate the Unit Under Test (UUT) */
-	registerFile #(.SIZE(X), .REGBITS(X)) uut (
-		.clk(clk)
-		.reset(reset)
-		.writeEn(writeEn)
-		.writeData(writeData)
-		.srcAddr(srcAddr)
-		.dstAddr(dstAddr)
+	registerFile uut (
+		.clk(clk),
+		.reset(reset),
+		.writeEn(writeEn),
+		.writeData(writeData),
+		.srcAddr(srcAddr),
+		.dstAddr(dstAddr),
+		.readData1(readData1),
+		.readData2(readData2)
 	);
 	
 	/* Initializing inputs */
@@ -26,7 +28,7 @@ module registerFile_tb();
 		reset		<= 1'b1;	// active-low reset
 		writeEn	<= 1'b0;
 		counter 	= 0;		// for switch-case block in testing different write-read values
-		#100					// wait 100 ns for global reset to finish
+		#100;					// wait 100 ns for global reset to finish
 	end
 	
 	/* Generate clock */
@@ -39,9 +41,6 @@ module registerFile_tb();
 	//					readData2 uses srcAddr
 	always @(posedge clk) begin
 		case(counter)
-			// ??? put #time each case -> longer time than generate clock
-			$display("\n");
-			
 			// @ Writing to a register
 			1: begin
 				writeEn 		<= 1;
@@ -60,11 +59,7 @@ module registerFile_tb();
 			default : ;
 		endcase
 	
-		counter <= counter++; // increment counter value each pos-edge of the clock to test cases subseqently
+		counter <= counter + 1; // increment counter value each pos-edge of the clock to test cases subseqently
 	end
-	
+
 endmodule
-	
-	
-	
-	
