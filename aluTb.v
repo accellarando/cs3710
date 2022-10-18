@@ -55,9 +55,16 @@ initial begin
 	reset = 1'b1;
 	counter = 0;
 	clk = 1'b0;
+	aluOp = 8'b0;
+	aluIn1 = 8'b0;
+	aluIn2 = 8'b0;
+	writeEn = 1'b0;
+	writeData = 16'b0;
+	srcAddr = 4'b0;
+	dstAddr = 4'b0;
 end
 
-always #50 begin
+always #200 begin
 	clk = !clk;
 end
 
