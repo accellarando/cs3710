@@ -14,11 +14,10 @@
 
 module alu #(parameter WIDTH = 16)
             (	input 		[WIDTH-9:0] aluOp,
-					input     	[WIDTH-1:0] aluIn1, aluIn2,
-					output reg  [WIDTH-1:0] pcOut, // regarding pcOut as 16-bit
-					output reg [WIDTH-1:0] aluOut,
-					output reg [1:0] cond_group1,	
-					output reg [2:0] cond_group2
+					input     	[WIDTH-1:0] aluIn1, aluIn2, pcOut,	// regarding pcOut as 16-bit	
+					output reg 	[WIDTH-1:0] aluOut, 
+					output reg 	[1:0] cond_group1,	
+					output reg 	[2:0] cond_group2
 					// output reg PCen, PCjump, PCbranch, WRen //program counter enable, jump, branch, write enable
 	    );
 
@@ -33,7 +32,6 @@ module alu #(parameter WIDTH = 16)
 	* 	Defining opcode via 8bit for processor
 	*/ 
 	
-	parameter def			=  8'b0;
 	parameter ANDI			=	8'b0001xxxx;
 	parameter ORI			=	8'b0010xxxx;
 	parameter XORI 		= 	8'b0011xxxx;
@@ -449,12 +447,12 @@ module alu #(parameter WIDTH = 16)
 		MOV: aluOut = aluIn1;
 	
 		// Load upper imm
-		LUI: aluOut = {{aluIn2[WIDTH-9:0]}, {(WIDTH-8){1'b0}}};
+		LUI: aluOut = {{aluIn2[WIDTH-9:0]}, WIDTH-8{1'b0}};
 
 		// Comparison imm
 		CMPI:
 			begin
-				if ($signed(aluIn1) < $signed({{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]}))
+				if ($signed(aluIn1) < $signed({{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]})
 					begin
 						cond_group2[2] = 1'b1; // N bit set to 1
 					end
@@ -522,12 +520,13 @@ module alu #(parameter WIDTH = 16)
 				else
 					aluOut = $signed(aluIn1) <<< aluIn2;  // shift left
 			end
+			
 		default:
 			begin
-				cond_group1[1:0] = 2'b00; // condition codes to 0
-				cond_group2[2:0] = 3'b000; // condition codes to 0
+				cond_group1[1:0] = cond_group1[1:0]; // condition codes to 
+				cond_group2[2:0] = cond_group2[2:0]; // condition codes to 0
 				aluOut = aluIn1; // setting all bits to x of the variable pareter WIDTH
-				aluOut =  {WIDTH{1'b1}}; // depending on how register handles, may have to be all 0's.
+				//pcOut =  {WIDTH{1'b1}}; // depending on how register handles, may have to be all 0's.
 				// PCen = 1'b0; PCjump = 1'b0; PCbranch = 1'b0; WRen = 1'b0;
 			end
 	 endcase	
