@@ -28,7 +28,6 @@ module alu #(parameter WIDTH = 16)
 */
 
 alu uutAlu(aluOp, aluIn1, aluIn2,
-	cin,
 	aluOut,
 	cond_group1,
 	cond_group2);
@@ -56,15 +55,22 @@ initial begin
 	reset = 1'b1;
 	counter = 0;
 	clk = 1'b0;
+	aluOp = 8'b0;
+	aluIn1 = 8'b0;
+	aluIn2 = 8'b0;
+	writeEn = 1'b0;
+	writeData = 16'b0;
+	srcAddr = 4'b0;
+	dstAddr = 4'b0;
 end
 
-always #50 begin
+always #200 begin
 	clk = !clk;
 end
 
 always@(posedge clk) begin
-	$display("aluOp: %b, aluIn1: %b, aluIn2: %b, cin: %b, aluOut: %b, conds: %b",
-		aluOp, aluIn1, aluIn2, cin, aluOut, conds);
+	$display("aluOp: %b, aluIn1: %b, aluIn2: %b, aluOut: %b, conds: %b",
+		aluOp, aluIn1, aluIn2, aluOut, conds);
 	$display("writeEn: %b, writeData: %b, srcAddr: %b, dstAddr: %b, readData1: %b, readData2: %b",
 		writeEn, writeData, srcAddr, dstAddr, readData1, readData2);
 	//$display("%b %d",counter,counter);
