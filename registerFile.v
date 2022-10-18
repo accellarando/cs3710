@@ -41,18 +41,18 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 
 	/* Assigning */
 	always @(posedge clk) begin
+	/*
 		if(reset) begin
 			// ?? all 16 registers are set to 16'b0
 			for(genvar i = 0; i < SIZE; i++) begin 
 				regFile[i] <= 0;							
 			end
 		end
-		else begin	
+		*/
 			if(writeEn) begin
 				readData1 <= regFile[dstAddr];
 				readData2 <= regFile[srcAddr];
 			end
-		end
 	end
 
 endmodule 

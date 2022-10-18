@@ -5,7 +5,8 @@ reg clk, reset;
 integer counter;
 
 reg cIn;
-reg[7:0] aluOp, aluIn1, aluIn2;
+reg[7:0] aluOp;
+reg[15:0] aluIn1, aluIn2;
 wire[15:0] aluOut;
 wire[1:0] cond_group1;
 wire[2:0] cond_group2;
@@ -78,39 +79,39 @@ always@(posedge clk) begin
 		1: begin
 			//and
 			aluOp <= 8'b00010000;
-			aluIn1 <= 8'b10101010;
-			aluIn2 <= 8'b11011101;
+			aluIn1 <= 16'b10101010;
+			aluIn2 <= 16'b11011101;
 			//cin <= 8'b0;
 			$display("Testing AND...\n");
 		end
 		2: begin
-			if(aluOut != 8'b10001000 || conds != 5'b0)
+			if(aluOut != 16'b10001000 || conds != 5'b0)
 				$display("ERROR IN AND: Expected aluOut = 10001000, conds = 00000, got %d, %d \n",
 					aluOut, conds);
 		end
 		3: begin
-			aluIn1 <= 8'b11111111;
-			aluIn2 <= 8'b00000000;
+			aluIn1 <= 16'b11111111;
+			aluIn2 <= 16'b00000000;
 		end
 		4: begin
-			if(aluOut != 8'b0 || conds != 5'b01000)
+			if(aluOut != 16'b0 || conds != 5'b01000)
 				$display("ERROR IN AND: Expected aluOut = 0000000, conds = 01000, got %d, %d\n",
 					aluOut, conds);
 		end
 		5: begin
 			aluOp <= 8'b00100000;
-			aluIn1 <= 8'b10101010;
-			aluIn2 <= 8'b01010101;
+			aluIn1 <= 16'b10101010;
+			aluIn2 <= 16'b01010101;
 			$display("Testing OR...\n");
 		end
 		6: begin
-			if(aluOut != 8'b11111111 || conds != 5'b00000)
+			if(aluOut != 16'b11111111 || conds != 5'b00000)
 				$display("ERROR IN OR: Expected aluOut = 11111111, conds = 00000, got %d, %d\n",
 					aluOut, conds);
 		end
 		7: begin
-			aluIn1 <= 8'b00000000;
-			aluIn2 <= 8'b00000000;
+			aluIn1 <= 16'b00000000;
+			aluIn2 <= 16'b00000000;
 		end
 		8: if(aluOut != 8'b00000000 || conds != 5'b01000)
 				$display("ERROR IN OR: Expected aluOut = 00000000, conds = 01000, got %d, %d\n",
