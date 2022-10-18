@@ -33,6 +33,7 @@ module alu #(parameter WIDTH = 16)
 	* 	Defining opcode via 8bit for processor
 	*/ 
 	
+	parameter def			=  8'b0;
 	parameter ANDI			=	8'b0001xxxx;
 	parameter ORI			=	8'b0010xxxx;
 	parameter XORI 		= 	8'b0011xxxx;
@@ -521,7 +522,6 @@ module alu #(parameter WIDTH = 16)
 				else
 					aluOut = $signed(aluIn1) <<< aluIn2;  // shift left
 			end
-			
 		default:
 			begin
 				cond_group1[1:0] = 2'b00; // condition codes to 0
