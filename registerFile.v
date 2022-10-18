@@ -26,20 +26,18 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 	output reg[SIZE-1:0] 		readData1, readData2		// 16-bit Data out
 	//	registerFile #(SIZE, REGBITS) rf(clk, reset, pcOut, aluOut, srcOut, dstOut, d1, d2);
 	);
-	
-	// ! Adding Decoder later assignment!
-	
+		
 	reg [SIZE-1:0] registerFile [REGBITS-1:0]; // Declare registers in register file 
 	
 	/* Option: reading relative path*/
 	initial begin
 	$display("Loading register file");
-	$readmemb("/home/ella/Documents/School/CS3710/cpu/reg.dat", registerFile); 
-	$display("done with RF load"); 
+	$readmemb("/home/ella/Documents/School/CS3710/cpu/reg.dat", registerFile); // ! change to your local path !
+	$display("Done with loading register file"); 
 	end
 	
 	
-	/* Option: manually initualized */
+	/* Option: manually initialized */
 	/*
 	generate
 		for (genvar i = 0; i < SIZE; i++) begin
@@ -62,47 +60,4 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 		end
 	end
 
-/*
-   always @(posedge clk) begin
-      if (reset) begin
-            for (i = 0; i < 8; i = i + 1) begin
-                regfile[i] <= 0;
-            end
-      end else begin
-            if (write) regfile[wrAddr] <= wrData;
-      end // else: !if(reset)
-   end
-	
-	//assign enabledReg = {NUMREGS{writeEn}} & writeData; // -> need to put enableReg into registers? and clk?
-	
-	always @(posedge clk) begin
-		if(reset)
-			// registers = 0
-		else
-	
-
-	
-	always @(negedge clk) begin
-    rdDataA <= regfile[rdAddrA];
-    rdDataB <= regfile[rdAddrB];
-end
-			
-	register #(SIZE) r(reset, clk, x, y);
-
-	// two 16:1 16-bit wide mux (mux for each read port)
-	//		read addrs (src/dst) are the mux's selector inputs
-	//		mux's output (readData1/2) is input for alu
-	mux2 #(
-	
-	
-	
-	// OUTSIDE OF REG: mux for immediate extend
-	
-	/*
-	REGISTER
-	@ Instantiate all 16-bit registers w/ the correct write-enable and reset inputs
-	
-	//d1 d2
-	assign register #(.SIZE(mine_var)) r
-	assign readData1 = */
 endmodule 
