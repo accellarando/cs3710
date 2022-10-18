@@ -34,7 +34,7 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 	/* Option: reading relative path*/
 	initial begin
 	$display("Loading register file");
-	$readmemb("./reg.dat", registerFile); 
+	$readmemb("/home/ella/Documents/School/CS3710/cpu/reg.dat", registerFile); 
 	$display("done with RF load"); 
 	end
 	
@@ -51,7 +51,8 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 	/* assigning */
 	always @(posedge clk) begin
 		if(reset) begin
-			; //do something here ig?
+			readData1 <= 16'b0; //do something here ig?
+			readData2 <= 16'b0;
 		end
 		else begin	
 			if (writeEn) begin

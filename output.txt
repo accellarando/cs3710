@@ -1,0 +1,134 @@
+# done with RF load
+# aluOp: xxxxxxxx, aluIn1: xxxxxxxx, aluIn2: xxxxxxxx, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: xxxxx
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: xxxxxxxxxxxxxxxx, readData2: xxxxxxxxxxxxxxxx
+# aluOp: xxxxxxxx, aluIn1: xxxxxxxx, aluIn2: xxxxxxxx, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: xxxxx
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# Testing AND...
+# 
+# aluOp: 00010000, aluIn1: 10101010, aluIn2: 11011101, cin: z, aluOut: xxxxxxxx10001000, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# aluOp: 00010000, aluIn1: 10101010, aluIn2: 11011101, cin: z, aluOut: xxxxxxxx10001000, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# aluOp: 00010000, aluIn1: 11111111, aluIn2: 00000000, cin: z, aluOut: xxxxxxxx00000000, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# ERROR IN AND: Expected aluOut = 0000000, conds = 01000, got     X,  0
+# 
+# aluOp: 00010000, aluIn1: 11111111, aluIn2: 00000000, cin: z, aluOut: xxxxxxxx00000000, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# Testing OR...
+# 
+# aluOp: 00100000, aluIn1: 10101010, aluIn2: 01010101, cin: z, aluOut: xxxxxxxx11111111, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# aluOp: 00100000, aluIn1: 10101010, aluIn2: 01010101, cin: z, aluOut: xxxxxxxx11111111, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# aluOp: 00100000, aluIn1: 00000000, aluIn2: 00000000, cin: z, aluOut: xxxxxxxx00000000, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# ERROR IN OR: Expected aluOut = 00000000, conds = 01000, got     X,  0
+# 
+# aluOp: 00100000, aluIn1: 00000000, aluIn2: 00000000, cin: z, aluOut: xxxxxxxx00000000, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# Testing XOR...
+# 
+# aluOp: 00110000, aluIn1: 10001000, aluIn2: 10001000, cin: z, aluOut: xxxxxxxx00000000, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# ERROR IN XOR: Expected aluOut = 00000000, conds = 01000, got     X,  0
+# 
+# aluOp: 00110000, aluIn1: 10001000, aluIn2: 10001000, cin: z, aluOut: xxxxxxxx00000000, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# aluOp: 00110000, aluIn1: 10110101, aluIn2: 01100010, cin: z, aluOut: xxxxxxxx11010111, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# aluOp: 00110000, aluIn1: 10110101, aluIn2: 01100010, cin: z, aluOut: xxxxxxxx11010111, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# Testing ADD...
+# 
+# aluOp: 01010000, aluIn1: 10110101, aluIn2: 01100010, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# ERROR IN ADD: Expected aluOut = 00010111, conds = 00010, got     x,  0
+# 
+# aluOp: 01010000, aluIn1: 10110101, aluIn2: 01100010, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# aluOp: 01010000, aluIn1: 00000011, aluIn2: 00000011, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# aluOp: 01010000, aluIn1: 00000011, aluIn2: 00000011, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# Testing SUB...
+# 
+# aluOp: 10010000, aluIn1: 00000011, aluIn2: 00000011, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# ERROR IN SUB: Expected aluOut = 00000000, conds = 01000, got     x,  0
+# 
+# aluOp: 10010000, aluIn1: 00000011, aluIn2: 00000011, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# aluOp: 10010000, aluIn1: 00000000, aluIn2: 00000001, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# ERROR IN SUB: Expected aluOut = 11111111, conds = 00010, got     x,  0
+# 
+# aluOp: 10010000, aluIn1: 00000000, aluIn2: 00000001, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# Testing ADDU...
+# 
+# aluOp: 01100000, aluIn1: 00000000, aluIn2: 00000001, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# aluOp: 01100000, aluIn1: 00000000, aluIn2: 00000001, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# aluOp: 01100000, aluIn1: 01111111, aluIn2: 00000001, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# aluOp: 01100000, aluIn1: 01111111, aluIn2: 00000001, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# Testing CMP...
+# 
+# aluOp: 10110000, aluIn1: 01111111, aluIn2: 00000001, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# aluOp: 10110000, aluIn1: 01111111, aluIn2: 00000001, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# aluOp: 10110000, aluIn1: 00000001, aluIn2: 01111111, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# ERROR IN CMP: Expected conds = 01010, got  0
+# 
+# aluOp: 10110000, aluIn1: 00000001, aluIn2: 01111111, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# aluOp: 10110000, aluIn1: 00000001, aluIn2: 00000001, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# ERROR IN CMP: Expected conds = 00100, got  0
+# 
+# aluOp: 10110000, aluIn1: 00000001, aluIn2: 00000001, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# Testing LSH...
+# 
+# aluOp: 10000000, aluIn1: 00000001, aluIn2: 00000001, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# aluOp: 10000000, aluIn1: 00000001, aluIn2: 00000001, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# Testing RSH...
+# 
+# aluOp: 10000010, aluIn1: 00000001, aluIn2: 00000001, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# aluOp: 10000010, aluIn1: 00000001, aluIn2: 00000001, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# Testing arithmetic LSH...
+# 
+# aluOp: 10001000, aluIn1: 10000001, aluIn2: 00000001, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# aluOp: 10001000, aluIn1: 10000001, aluIn2: 00000001, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# Testing arithmetic RSH...
+# 
+# aluOp: 10000111, aluIn1: 10000001, aluIn2: 00000001, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# aluOp: 10000111, aluIn1: 10000001, aluIn2: 00000001, cin: z, aluOut: xxxxxxxxxxxxxxxx, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# Testing NOT...
+# 
+# aluOp: 00001111, aluIn1: 10000001, aluIn2: 00000001, cin: z, aluOut: xxxxxxxx01111110, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# aluOp: 00001111, aluIn1: 10000001, aluIn2: 00000001, cin: z, aluOut: xxxxxxxx01111110, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# aluOp: 00001111, aluIn1: 11111111, aluIn2: 00000001, cin: z, aluOut: xxxxxxxx00000000, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# ERROR IN RSH: Expected aluOut = 00000000, conds = 01000, got     X,  0
+# 
+# aluOp: 00001111, aluIn1: 11111111, aluIn2: 00000001, cin: z, aluOut: xxxxxxxx00000000, conds: 00000
+# writeEn: x, writeData: xxxxxxxxxxxxxxxx, srcAddr: xxxx, dstAddr: xxxx, readData1: 0000000000000000, readData2: 0000000000000000
+# aluOp: 00001111, aluIn1: 11111111, aluIn2: 00000001, cin: z, aluOut: xxxxxxxx00000000, conds: 00000
+# writeEn: 1, writeData: 0000000010101010, srcAddr: 0001, dstAddr: 0001, readData1: 0000000000000000, readData2: 0000000000000000
+# ERROR IN RF: Expected readData1 = 10101010, got     0
