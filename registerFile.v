@@ -32,7 +32,7 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 	/* Option: reading relative path*/
 	initial begin
 	$display("Loading register file");
-	$readmemb("E:/3710/GroupProject/cs3710/reg.dat", registerFile); // ! change to your local path !
+	$readmemb("/home/ella/Documents/School/CS3710/cpu/reg.dat", registerFile); // ! change to your local path !
 	$display("Done with loading register file"); 
 	end
 	

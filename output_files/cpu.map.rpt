@@ -1,5 +1,5 @@
 Analysis & Synthesis report for cpu
-Mon Oct 17 17:51:30 2022
+Mon Oct 17 23:00:24 2022
 Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 
 
@@ -60,7 +60,7 @@ https://fpgasoftware.intel.com/eula.
 +-------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                  ;
 +---------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Mon Oct 17 17:51:30 2022       ;
+; Analysis & Synthesis Status     ; Successful - Mon Oct 17 23:00:24 2022       ;
 ; Quartus Prime Version           ; 20.1.1 Build 720 11/11/2020 SJ Lite Edition ;
 ; Revision Name                   ; cpu                                         ;
 ; Top-level Entity Name           ; cpu                                         ;
@@ -235,15 +235,21 @@ https://fpgasoftware.intel.com/eula.
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
 
-+--------------------------------------------------------------------------------+
-; Registers Removed During Synthesis                                             ;
-+---------------------------------------+----------------------------------------+
-; Register name                         ; Reason for Removal                     ;
-+---------------------------------------+----------------------------------------+
-; PSR_reg:PSRreg|final_group2[0]        ; Stuck at GND due to stuck port data_in ;
-; PSR_reg:PSRreg|final_group1[0]        ; Stuck at GND due to stuck port data_in ;
-; Total Number of Removed Registers = 2 ;                                        ;
-+---------------------------------------+----------------------------------------+
++---------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                              ;
++----------------------------------------+----------------------------------------+
+; Register name                          ; Reason for Removal                     ;
++----------------------------------------+----------------------------------------+
+; register:pcReg|q[0..15]                ; Lost fanout                            ;
+; register:immReg|q[0..15]               ; Lost fanout                            ;
+; register:srcReg|q[0,1]                 ; Lost fanout                            ;
+; register:dstReg|q[0,1]                 ; Lost fanout                            ;
+; registerFile:rf|readData2[0..15]       ; Lost fanout                            ;
+; registerFile:rf|readData1[0..15]       ; Lost fanout                            ;
+; PSR_reg:PSRreg|final_group2[0]         ; Stuck at GND due to stuck port data_in ;
+; PSR_reg:PSRreg|final_group1[0]         ; Stuck at GND due to stuck port data_in ;
+; Total Number of Removed Registers = 70 ;                                        ;
++----------------------------------------+----------------------------------------+
 
 
 +------------------------------------------------------+
@@ -440,13 +446,13 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
-    Info: Processing started: Mon Oct 17 17:51:13 2022
+    Info: Processing started: Mon Oct 17 23:00:04 2022
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off cpu -c cpu
+Info (125069): Default assignment values were changed in the current version of the Quartus Prime software -- changes to default assignments values are contained in file /home/ella/Applications/intelFPGA_lite/20.1/quartus/linux64/assignment_defaults.qdf
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 2 of the 2 processors detected
 Info (12021): Found 1 design units, including 1 entities, in source file PSR_reg.v
     Info (12023): Found entity 1: PSR_reg File: /home/ella/Documents/School/CS3710/cpu/PSR_reg.v Line: 2
-Warning (10090): Verilog HDL syntax warning at registerFile.v(101): extra block comment delimiter characters /* within block comment File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 101
 Info (12021): Found 1 design units, including 1 entities, in source file registerFile.v
     Info (12023): Found entity 1: registerFile File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 21
 Info (12021): Found 1 design units, including 1 entities, in source file register.v
@@ -456,86 +462,77 @@ Info (12021): Found 1 design units, including 1 entities, in source file cpu.v
 Info (12021): Found 1 design units, including 1 entities, in source file mux2.v
     Info (12023): Found entity 1: mux2 File: /home/ella/Documents/School/CS3710/cpu/mux2.v Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file alu.v
-    Info (12023): Found entity 1: alu File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 1
+    Info (12023): Found entity 1: alu File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 19
 Info (12021): Found 1 design units, including 1 entities, in source file aluTb.v
     Info (12023): Found entity 1: aluTb File: /home/ella/Documents/School/CS3710/cpu/aluTb.v Line: 3
 Warning (10236): Verilog HDL Implicit Net warning at cpu.v(40): created implicit net for "final_group1" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 40
 Warning (10236): Verilog HDL Implicit Net warning at cpu.v(40): created implicit net for "final_group2" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 40
 Warning (10236): Verilog HDL Implicit Net warning at aluTb.v(31): created implicit net for "cin" File: /home/ella/Documents/School/CS3710/cpu/aluTb.v Line: 31
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(24): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 24
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(26): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 26
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(27): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 27
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(28): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 28
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(29): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 29
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(30): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 30
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(31): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 31
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(32): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 32
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(33): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 33
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(34): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 34
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(37): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 37
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(38): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 38
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(39): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 39
 Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(40): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 40
 Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(41): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 41
 Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(42): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 42
 Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(43): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 43
 Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(44): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 44
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(45): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 45
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(46): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 46
 Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(47): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 47
 Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(48): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 48
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(49): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 49
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(50): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 50
 Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(51): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 51
 Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(52): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 52
 Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(53): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 53
 Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(54): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 54
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(55): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 55
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(56): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 56
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(57): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 57
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(58): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 58
 Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(59): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 59
 Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(60): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 60
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(61): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 61
 Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(62): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 62
 Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(63): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 63
 Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(64): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 64
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(65): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 65
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(66): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 66
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(69): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 69
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(70): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 70
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(72): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 72
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(73): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 73
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(74): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 74
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(77): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 77
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(78): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 78
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(79): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 79
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(80): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 80
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(81): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 81
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(82): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 82
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(83): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 83
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(84): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 84
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(85): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 85
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(86): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 86
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(87): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 87
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(88): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 88
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(89): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 89
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(90): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 90
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(91): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 91
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(92): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 92
 Info (12127): Elaborating entity "cpu" for the top level hierarchy
 Warning (10034): Output port "adr" at cpu.v(6) has no driver File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
 Warning (10034): Output port "wd" at cpu.v(7) has no driver File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
 Warning (10034): Output port "memwrite" at cpu.v(5) has no driver File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 5
 Info (12128): Elaborating entity "register" for hierarchy "register:pcReg" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 28
 Info (12128): Elaborating entity "registerFile" for hierarchy "registerFile:rf" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 33
-Info (10648): Verilog HDL Display System Task info at registerFile.v(36): Loading register file File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 36
-Warning (10850): Verilog HDL warning at registerFile.v(37): number of words (16) in memory file does not match the number of elements in the address range [0:3] File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 37
-Info (10648): Verilog HDL Display System Task info at registerFile.v(38): done with RF load File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 38
-Warning (10030): Net "registerFile.data_a" at registerFile.v(32) has no driver or initial value, using a default initial value '0' File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 32
-Warning (10030): Net "registerFile.waddr_a" at registerFile.v(32) has no driver or initial value, using a default initial value '0' File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 32
-Warning (10030): Net "registerFile.we_a" at registerFile.v(32) has no driver or initial value, using a default initial value '0' File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 32
+Info (10648): Verilog HDL Display System Task info at registerFile.v(34): Loading register file File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 34
+Warning (10850): Verilog HDL warning at registerFile.v(35): number of words (16) in memory file does not match the number of elements in the address range [0:3] File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 35
+Info (10648): Verilog HDL Display System Task info at registerFile.v(36): Done with loading register file File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 36
+Warning (10030): Net "registerFile.data_a" at registerFile.v(30) has no driver or initial value, using a default initial value '0' File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 30
+Warning (10030): Net "registerFile.waddr_a" at registerFile.v(30) has no driver or initial value, using a default initial value '0' File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 30
+Warning (10030): Net "registerFile.we_a" at registerFile.v(30) has no driver or initial value, using a default initial value '0' File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 30
 Info (12128): Elaborating entity "mux2" for hierarchy "mux2:alu1" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 35
 Info (12128): Elaborating entity "alu" for hierarchy "alu:mainAlu" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 38
-Warning (10764): Verilog HDL warning at alu.v(285): converting signed shift amount to unsigned File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 285
-Warning (10764): Verilog HDL warning at alu.v(292): converting signed shift amount to unsigned File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 292
-Warning (10935): Verilog HDL Casex/Casez warning at alu.v(288): casex/casez item expression overlaps with a previous casex/casez item expression File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 288
-Warning (10240): Verilog HDL Always Construct warning at alu.v(80): inferring latch(es) for variable "aluOut", which holds its previous value in one or more paths through the always construct File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 80
-Warning (10240): Verilog HDL Always Construct warning at alu.v(80): inferring latch(es) for variable "cond_group2", which holds its previous value in one or more paths through the always construct File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 80
-Warning (10240): Verilog HDL Always Construct warning at alu.v(80): inferring latch(es) for variable "cond_group1", which holds its previous value in one or more paths through the always construct File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 80
-Info (10041): Inferred latch for "cond_group1[0]" at alu.v(80) File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 80
-Info (10041): Inferred latch for "cond_group1[1]" at alu.v(80) File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 80
-Info (10041): Inferred latch for "cond_group2[0]" at alu.v(80) File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 80
-Info (10041): Inferred latch for "cond_group2[1]" at alu.v(80) File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 80
-Info (10041): Inferred latch for "cond_group2[2]" at alu.v(80) File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 80
-Info (10041): Inferred latch for "aluOut[0]" at alu.v(80) File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 80
-Info (10041): Inferred latch for "aluOut[1]" at alu.v(80) File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 80
-Info (10041): Inferred latch for "aluOut[2]" at alu.v(80) File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 80
-Info (10041): Inferred latch for "aluOut[3]" at alu.v(80) File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 80
-Info (10041): Inferred latch for "aluOut[4]" at alu.v(80) File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 80
-Info (10041): Inferred latch for "aluOut[5]" at alu.v(80) File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 80
-Info (10041): Inferred latch for "aluOut[6]" at alu.v(80) File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 80
-Info (10041): Inferred latch for "aluOut[7]" at alu.v(80) File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 80
-Info (10041): Inferred latch for "aluOut[8]" at alu.v(80) File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 80
-Info (10041): Inferred latch for "aluOut[9]" at alu.v(80) File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 80
-Info (10041): Inferred latch for "aluOut[10]" at alu.v(80) File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 80
-Info (10041): Inferred latch for "aluOut[11]" at alu.v(80) File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 80
-Info (10041): Inferred latch for "aluOut[12]" at alu.v(80) File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 80
-Info (10041): Inferred latch for "aluOut[13]" at alu.v(80) File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 80
-Info (10041): Inferred latch for "aluOut[14]" at alu.v(80) File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 80
-Info (10041): Inferred latch for "aluOut[15]" at alu.v(80) File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 80
+Warning (10270): Verilog HDL Case Statement warning at alu.v(176): incomplete case statement has no default case item File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 176
+Warning (10270): Verilog HDL Case Statement warning at alu.v(215): incomplete case statement has no default case item File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 215
+Warning (10270): Verilog HDL Case Statement warning at alu.v(241): incomplete case statement has no default case item File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 241
+Warning (10270): Verilog HDL Case Statement warning at alu.v(254): incomplete case statement has no default case item File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 254
+Warning (10270): Verilog HDL Case Statement warning at alu.v(293): incomplete case statement has no default case item File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 293
+Warning (10270): Verilog HDL Case Statement warning at alu.v(319): incomplete case statement has no default case item File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 319
+Warning (10270): Verilog HDL Case Statement warning at alu.v(343): incomplete case statement has no default case item File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 343
 Info (12128): Elaborating entity "PSR_reg" for hierarchy "PSR_reg:PSRreg" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 40
 Warning (12011): Net is missing source, defaulting to GND
     Warning (12110): Net "en" is missing source, defaulting to GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 12
@@ -587,6 +584,7 @@ Warning (13024): Output pins are stuck at VCC or GND
     Warning (13410): Pin "condsOut[2]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 8
     Warning (13410): Pin "condsOut[3]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 8
     Warning (13410): Pin "condsOut[4]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 8
+Info (17049): 68 registers lost all their fanouts during netlist optimizations.
 Info (144001): Generated suppressed messages file /home/ella/Documents/School/CS3710/cpu/output_files/cpu.map.smsg
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
@@ -670,11 +668,11 @@ Warning (21074): Design contains 76 input pin(s) that do not drive logic
 Info (21057): Implemented 114 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 76 input pins
     Info (21059): Implemented 38 output pins
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 178 warnings
-    Info: Peak virtual memory: 423 megabytes
-    Info: Processing ended: Mon Oct 17 17:51:30 2022
-    Info: Elapsed time: 00:00:17
-    Info: Total CPU time (on all processors): 00:00:40
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 189 warnings
+    Info: Peak virtual memory: 424 megabytes
+    Info: Processing ended: Mon Oct 17 23:00:24 2022
+    Info: Elapsed time: 00:00:20
+    Info: Total CPU time (on all processors): 00:00:43
 
 
 +------------------------------------------+
