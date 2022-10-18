@@ -4,7 +4,7 @@ module alu #(parameter WIDTH = 16)
 					input	cIn,
 					output reg [WIDTH-1:0] aluOut,
 					output reg [1:0] cond_group1,	
-					output reg [2:0] cond_group2,			
+					output reg [2:0] cond_group2			
 	    );
 
 	// 	cond_codes --> condition codes
@@ -94,8 +94,8 @@ module alu #(parameter WIDTH = 16)
 			
 		ADDI, ADD: 
 			begin
-				aluOut = AluIn1 + AluIn2;
-				if (aluOut == {WIDTH{1'b0})
+				aluOut = aluIn1 + aluIn2;
+				if (aluOut == {WIDTH{1'b0}})
 					begin
 						cond_group2[1] = 1'b1; // Z bit set to 1
 					end
@@ -118,8 +118,8 @@ module alu #(parameter WIDTH = 16)
 		
 		SUBI, SUB:
 			begin
-				aluOut = AluIn1 - AluIn2;
-				if (aluOut == {WIDTH{1'b0})
+				aluOut = aluIn1 - aluIn2;
+				if (aluOut == {WIDTH{1'b0}})
 					begin
 						cond_group2[1] = 1'b1; // Z bit set to 1
 					end
@@ -142,8 +142,8 @@ module alu #(parameter WIDTH = 16)
 			
 		ANDI, AND:
 			begin
-				aluOut = AluIn1 & AluIn2;
-				if (aluOut == {WIDTH{1'b0})
+				aluOut = aluIn1 & aluIn2;
+				if (aluOut == {WIDTH{1'b0}})
 					begin
 						cond_group2[1] = 1'b1; // Z bit set to 1
 					end
@@ -158,8 +158,8 @@ module alu #(parameter WIDTH = 16)
 		
 		ORI, OR:
 			begin
-				aluOut = AluIn1 | AluIn2;
-				if (aluOut == {WIDTH{1'b0})
+				aluOut = aluIn1 | aluIn2;
+				if (aluOut == {WIDTH{1'b0}})
 					begin
 						cond_group2[1] = 1'b1; // Z bit set to 1
 					end
@@ -174,8 +174,8 @@ module alu #(parameter WIDTH = 16)
 		
 		XORI, XOR:
 			begin
-				aluOut = AluIn1 ^ AluIn2;
-				if (aluOut == {WIDTH{1'b0})
+				aluOut = aluIn1 ^ aluIn2;
+				if (aluOut == {WIDTH{1'b0}})
 					begin
 						cond_group2[1] = 1'b1; // Z bit set to 1
 					end
@@ -191,8 +191,8 @@ module alu #(parameter WIDTH = 16)
 		// Move
 		MOVI, MOV: // need help with this one			--> understand if condition code bit reset necessary
 			begin
-				aluOut = AluIn2; // where AluIn2 used as Rdest and overwritten
-				if (aluOut == {WIDTH{1'b0})
+				aluOut = aluIn2; // where AluIn2 used as Rdest and overwritten
+				if (aluOut == {WIDTH{1'b0}})
 					begin
 						cond_group2[1] = 1'b1; // Z bit set to 1
 					end
@@ -208,8 +208,9 @@ module alu #(parameter WIDTH = 16)
 		// Load upper immediate
 		LUI: // need help with this one					--> understand if condition code bit reset necessary
 			begin
-				aluOut = {AluIn1[WIDTH-9:0], 8'b00000000}; // may need to adjust when WIDTH isn't 16-bit
-				if (aluOut == {WIDTH{1'b0})
+			//	aluOut = {{AluIn1[WIDTH-9:0]}, 8'b0}; // may need to adjust when WIDTH isn't 16-bit
+				aluOut = {{AluIn1[WIDTH-9:0]}, 8'b0};
+				if (aluOut == {WIDTH{1'b0}})
 					begin
 						cond_group2[1] = 1'b1; // Z bit set to 1
 					end
@@ -226,12 +227,12 @@ module alu #(parameter WIDTH = 16)
 		// Comparison
 		CMPI, CMP:
 			begin
-				if ( $signed(AluIn1) > $signed(AluIn2))
+				if ( $signed(aluIn1) > $signed(aluIn2))
 					begin
 						cond_group1[1:0] = 2'b00;  // Bits set to: C -> 0, F -> 0
 						cond_group2[0:2] = 3'b000; // Bits set to: L -> 0, Z -> 0, N -> 0
 					end
-				else if ($signed(AluIn1) < $signed(AluIn2))
+				else if ($signed(aluIn1) < $signed(aluIn2))
 					begin
 						cond_group1[1:0] = 2'b10;  // Bits set to: C -> 1, F -> 0
 						cond_group2[0:2] = 3'b010; // Bits set to: L -> 0, Z -> 1, N -> 0
@@ -248,8 +249,8 @@ module alu #(parameter WIDTH = 16)
 		
 		NOT:
 			begin
-				aluOut = ~AluIn1;
-				if (aluOut == {WIDTH{1'b0})
+				aluOut = ~aluIn1;
+				if (aluOut == {WIDTH{1'b0}})
 					begin
 						cond_group2[1] = 1'b1; // Z bit set to 1
 					end
@@ -273,21 +274,21 @@ module alu #(parameter WIDTH = 16)
 			begin
 				cond_group1[1:0] = 2'b00; // condition codes to 0
 				cond_group2[2:0] = 3'b000; // condition codes to 0
-				aluOut = AluIn1 << AluIn2;
+				aluOut = aluIn1 << aluIn2;
 			end
 		
 		ARTH_RSHI, ARTH_RSH:
 			begin
 				cond_group1[1:0] = 2'b00; // condition codes to 0
 				cond_group2[2:0] = 3'b000; // condition codes to 0
-				aluOut = $signed(AluIn1) >>> $signed(AluIn2); // sign extension shift operator
+				aluOut = $signed(aluIn1) >>> $signed(aluIn2); // sign extension shift operator
 			end
 		
 		ARTH_LSHI, ARTH,LSH:
 			begin
 				cond_group1[1:0] = 2'b00; // condition codes to 0
 				cond_group2[2:0] = 3'b000; // condition codes to 0
-				aluOut = $signed(AluIn1) <<< $signed(AluIn2); // sign extension shift operator
+				aluOut = $signed(aluIn1) <<< $signed(aluIn2); // sign extension shift operator
 			end
 		
 		
