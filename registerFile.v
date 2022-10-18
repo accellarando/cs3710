@@ -18,66 +18,41 @@ REGISTER FILE: Provide arguments and hold results by instantiating 16 16-bit reg
 @ 2 addresses  [input]:		From decoded instruction word (mipscpu.v)
 									Do not need independent write addr, one of the read addr is also the write addr (dual-port, bram.v)
 */	
-module registerFile #(parameter SIZE = 16, NUMREGS = 16) (	
+module registerFile #(parameter SIZE = 16, REGBITS = 4) (	
 	input								clk, reset,
 	input 							writeEn,						// enable signal
 	input[SIZE-1:0] 				writeData,					//	16-bit Data in
-	input[$clog2(NUMREGS)-1:0] srcAddr, dstAddr,			// 4-bit wide read addresses	
-	output[SIZE-1:0] 				readData1, readData2		// 16-bit Data out
+	input[REGBITS-1:0]			srcAddr, dstAddr,			// 4-bit wide read addresses	
+	output reg[SIZE-1:0] 		readData1, readData2		// 16-bit Data out
+	
+	//	registerFile #(SIZE, REGBITS) rf(clk, reset, pcOut, aluOut, srcOut, dstOut, d1, d2);
 	);
+		
 	
-	// ! Adding Decoder later assignment!
+	reg [SIZE-1:0] regFile [(1<<REGBITS)-1:0]; // Declare sixteen 16-bit registers in register file 
+
+	/* Reading relative path*/
+	initial begin
+	$display("Loading register file");
+	$readmemb("E:/3710/GroupProject/cs3710/reg.dat", regFile); // ! CHANGE TO YOUR LOCAL PATH !
+	$display("Done with loading register file"); 
+	end
 	
-	// intialize with all zeros
-	register[SIZE-1:0] registerFile [(1<<$clog2(NUMREGS))-1:0];
-	
-	
-	// data written to register when clock is enabled
-	// clock signal is ANDed w/ the enable signal -> How to WriteEn to write to reg
-	
-	assign enabledReg = {NUMREGS{writeEn}} & writeData; // -> need to put enableReg into registers? and clk?
-	
-	// sixteen 16-bit registers 
+
+	/* Assigning */
 	always @(posedge clk) begin
-		if(reset)
-			// registers = 0
-	
-	
-	//----
-	reg [31:0]    regfile [0:31];
+		if(reset) begin
+			// ?? all 16 registers are set to 16'b0
+			for(integer i = 0; i < SIZE; i = i + 1) begin 
+				regFile[i] <= 0;							
+			end
+		end
+		else begin	
+			if(writeEn) begin
+				readData1 <= regFile[dstAddr];
+				readData2 <= regFile[srcAddr];
+			end
+		end
+	end
 
-   assign rdDataA = regfile[rdAddrA];
-   assign rdDataB = regfile[rdAddrB];
-
-   integer   i;
-
-   always @(posedge clk) begin
-      if (reset) begin
-            for (i = 0; i < 8; i = i + 1) begin
-                regfile[i] <= 0;
-            end
-      end else begin
-            if (write) regfile[wrAddr] <= wrData;
-      end // else: !if(reset)
-   end
-			
-			
-	register #(SIZE) r(reset, clk, x, y);
-
-	// two 16:1 16-bit wide mux (mux for each read port)
-	//		read addrs (src/dst) are the mux's selector inputs
-	//		mux's output (readData1/2) is input for alu
-	mux2 #(
-	
-	
-	
-	// OUTSIDE OF REG: mux for immediate extend
-	
-	/*
-	REGISTER
-	@ Instantiate all 16-bit registers w/ the correct write-enable and reset inputs
-	*/
-	//d1 d2
-	assign register #(.SIZE(mine_var)) r
-	assign readData1 = 
 endmodule 

@@ -1,7 +1,5 @@
 `timescale 1ns / 1ps
 
-`timescale 1ns / 1ns
-
 module aluTb();
 reg clk, reset;
 integer counter;
@@ -30,7 +28,6 @@ module alu #(parameter WIDTH = 16)
 */
 
 alu uutAlu(aluOp, aluIn1, aluIn2,
-	cin,
 	aluOut,
 	cond_group1,
 	cond_group2);
@@ -57,24 +54,33 @@ initial begin
 	#200;
 	reset = 1'b1;
 	counter = 0;
+	clk = 1'b0;
+	aluOp = 8'b0;
+	aluIn1 = 8'b0;
+	aluIn2 = 8'b0;
+	writeEn = 1'b0;
+	writeData = 16'b0;
+	srcAddr = 4'b0;
+	dstAddr = 4'b0;
 end
 
-always #50 begin
+always #200 begin
 	clk = !clk;
 end
 
 always@(posedge clk) begin
-	$display("aluOp: %b, aluIn1: %b, aluIn2: %b, cin: %b, aluOut: %b, conds: %b \n",
-		aluOp, aluIn1, aluIn2, cin, aluOut, conds);
-	$display("writeEn: %b, writeData: %b, srcAddr: %b, dstAddr: %b, readData1: %b, readData2: %b \n",
+	$display("aluOp: %b, aluIn1: %b, aluIn2: %b, aluOut: %b, conds: %b",
+		aluOp, aluIn1, aluIn2, aluOut, conds);
+	$display("writeEn: %b, writeData: %b, srcAddr: %b, dstAddr: %b, readData1: %b, readData2: %b",
 		writeEn, writeData, srcAddr, dstAddr, readData1, readData2);
+	//$display("%b %d",counter,counter);
 	case(counter)
 		1: begin
 			//and
 			aluOp <= 8'b00010000;
 			aluIn1 <= 8'b10101010;
 			aluIn2 <= 8'b11011101;
-			cin <= 8'b0;
+			//cin <= 8'b0;
 			$display("Testing AND...\n");
 		end
 		2: begin
@@ -218,19 +224,26 @@ always@(posedge clk) begin
 		38: if(aluOut != 8'b10000000 || conds != 5'b00000)
 				$display("ERROR IN ARITH RSH: Expected aluOut = 10000000, conds = 00000, got %d, %d\n",
 					aluOut, conds);
-		end
 		39: begin
 			aluOp <= 8'b00001111;
 			$display("Testing NOT...\n");
 		end
-		40: if(aluOut != 8'01111110 || conds != 5'b00000)
+		40: if(aluOut != 8'b01111110 || conds != 5'b00000)
 				$display("ERROR IN NOT: Expected aluOut = 01111110, conds = 00000, got %d, %d\n",
 					aluOut, conds);
-		41: aluIn1 <= 8'11111111;
+		41: aluIn1 <= 8'b11111111;
 		42: if(aluOut != 8'b0 || conds != 5'b01000)
 				$display("ERROR IN RSH: Expected aluOut = 00000000, conds = 01000, got %d, %d\n",
 					aluOut, conds);
-		43: counter <= 0;
+		43: begin
+			writeEn <= 1;
+			writeData <= 8'b10101010;
+			srcAddr <= 8'b1;
+			dstAddr <= 8'b1;
+		end
+		44: if(readData1 != 8'b10101010)
+			$display("ERROR IN RF: Expected readData1 = 10101010, got %d\n",readData1);
+		45: counter <= 0;
 		default: ;
 	endcase
 	

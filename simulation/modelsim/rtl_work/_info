@@ -1,0 +1,182 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/ella/Documents/School/CS3710/cpu/simulation/modelsim
+valu
+!s110 1666070146
+!i10b 1
+!s100 HiD?lo^4AO0jYkI:]4EQU1
+Z1 !s11b Dg1SIo80bB@j0V0VzS_@n1
+I:kX1`Vm880_eQ7lXeR==U0
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+R0
+w1666069932
+8/home/ella/Documents/School/CS3710/cpu/alu.v
+F/home/ella/Documents/School/CS3710/cpu/alu.v
+!i122 88
+L0 15 522
+Z3 OV;L;2020.1;71
+r1
+!s85 0
+31
+!s108 1666070146.000000
+!s107 /home/ella/Documents/School/CS3710/cpu/alu.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/ella/Documents/School/CS3710/cpu|/home/ella/Documents/School/CS3710/cpu/alu.v|
+!i113 1
+Z4 o-vlog01compat -work work
+Z5 !s92 -vlog01compat -work work +incdir+/home/ella/Documents/School/CS3710/cpu
+Z6 tCvgOpt 0
+valuTb
+!s110 1666070920
+!i10b 1
+!s100 F;;JnX=3B;1RcU`<IUcmU3
+R1
+IBHfWE0<i2VGV<OUIli2BK0
+R2
+R0
+w1666070134
+8/home/ella/Documents/School/CS3710/cpu/aluTb.v
+F/home/ella/Documents/School/CS3710/cpu/aluTb.v
+!i122 95
+L0 3 253
+R3
+r1
+!s85 0
+31
+Z7 !s108 1666070920.000000
+!s107 /home/ella/Documents/School/CS3710/cpu/aluTb.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/ella/Documents/School/CS3710/cpu|/home/ella/Documents/School/CS3710/cpu/aluTb.v|
+!i113 1
+R4
+R5
+R6
+nalu@tb
+vcpu
+Z8 !s110 1666070921
+!i10b 1
+!s100 A9?PJV<<`;8R?kRT68LlS3
+R1
+I7YkdQ8oSHi]c1;G>SBS8Q1
+R2
+R0
+w1666069674
+8/home/ella/Documents/School/CS3710/cpu/cpu.v
+F/home/ella/Documents/School/CS3710/cpu/cpu.v
+!i122 96
+L0 1 45
+R3
+r1
+!s85 0
+31
+R7
+!s107 /home/ella/Documents/School/CS3710/cpu/cpu.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/ella/Documents/School/CS3710/cpu|/home/ella/Documents/School/CS3710/cpu/cpu.v|
+!i113 1
+R4
+R5
+R6
+vmux2
+R8
+!i10b 1
+!s100 lFbRM;Q:gz[16m@jkhW7f1
+R1
+IQ1HMi4EFOc3aBe2SR<5WY3
+R2
+R0
+w1665819355
+8/home/ella/Documents/School/CS3710/cpu/mux2.v
+F/home/ella/Documents/School/CS3710/cpu/mux2.v
+!i122 97
+L0 1 7
+R3
+r1
+!s85 0
+31
+Z9 !s108 1666070921.000000
+!s107 /home/ella/Documents/School/CS3710/cpu/mux2.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/ella/Documents/School/CS3710/cpu|/home/ella/Documents/School/CS3710/cpu/mux2.v|
+!i113 1
+R4
+R5
+R6
+vPSR_reg
+R8
+!i10b 1
+!s100 3UJYEOcd<7mmCf5fJ>UB:2
+R1
+IZLc^TJZNo::`CaU3j`0j52
+R2
+R0
+w1666034031
+8/home/ella/Documents/School/CS3710/cpu/PSR_reg.v
+F/home/ella/Documents/School/CS3710/cpu/PSR_reg.v
+!i122 98
+L0 2 26
+R3
+r1
+!s85 0
+31
+R9
+!s107 /home/ella/Documents/School/CS3710/cpu/PSR_reg.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/ella/Documents/School/CS3710/cpu|/home/ella/Documents/School/CS3710/cpu/PSR_reg.v|
+!i113 1
+R4
+R5
+R6
+n@p@s@r_reg
+vregister
+R8
+!i10b 1
+!s100 BEO=z<VBleR:k2X^mGf380
+R1
+I^7cnCUko^F3YZkHYA`3NR3
+R2
+R0
+w1666002870
+8/home/ella/Documents/School/CS3710/cpu/register.v
+F/home/ella/Documents/School/CS3710/cpu/register.v
+!i122 99
+L0 1 12
+R3
+r1
+!s85 0
+31
+R9
+!s107 /home/ella/Documents/School/CS3710/cpu/register.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/ella/Documents/School/CS3710/cpu|/home/ella/Documents/School/CS3710/cpu/register.v|
+!i113 1
+R4
+R5
+R6
+vregisterFile
+R8
+!i10b 1
+!s100 R4X=zFM^Z7eZCn:[F0hmH0
+R1
+IQGM7no:^MSWfEn2QdIZob2
+R2
+R0
+w1666068989
+8/home/ella/Documents/School/CS3710/cpu/registerFile.v
+F/home/ella/Documents/School/CS3710/cpu/registerFile.v
+!i122 100
+L0 21 43
+R3
+r1
+!s85 0
+31
+R9
+!s107 /home/ella/Documents/School/CS3710/cpu/registerFile.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/ella/Documents/School/CS3710/cpu|/home/ella/Documents/School/CS3710/cpu/registerFile.v|
+!i113 1
+R4
+R5
+R6
+nregister@file
