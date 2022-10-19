@@ -23,9 +23,9 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 
 	/* Reading relative path*/
 	initial begin
-	$display("Loading register file");
+	$display("Loading Register File...");
 	$readmemb("E:/3710/GroupProject/cs3710/reg.dat", regFile); // ! CHANGE TO YOUR LOCAL PATH !
-	$display("Done with loading register file"); 
+	$display("Done with loading Register File\n"); 
 	end
 	
 
@@ -33,7 +33,7 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 	integer i;
 	
 	always @(posedge clk) begin
-		if(reset) begin
+		if(!reset) begin
 			// ?? all 16 registers are set to 16'b0
 			for(i = 0; i < SIZE; i = i + 1) begin 
 				regFile[i] <= 0;							
@@ -41,10 +41,11 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 		end
 		else begin	
 			if(writeEn) begin
-				readData1 <= regFile[dstAddr];
-				readData2 <= regFile[srcAddr];
+				regFile[dstAddr] <= writeData;	// dstAddr is both read and write address (dual-port)
 			end
 		end
+		readData1 <= regFile[dstAddr];			// read ports have data inputs
+		readData2 <= regFile[srcAddr];
 	end
 
-endmodule 
+endmodule
