@@ -2,16 +2,6 @@
 /*
 REGISTER FILE: Provide arguments and hold results by instantiating 16 16-bit registers
 
-(-) Immediate to be sign-extended before ALU (concatenation)
-(-) Shifter
-
-(-) Program counter register and immediate register (make sure you can change these later on)
-
-(?) PSR = processor status register
-(X) Decoder
-*/
-//-----------------------------------
-/*
 @ 2 read ports	[output]:	Reads 2 args from register file to feed ALU
 @ 1 write port [input]:		Writes back the result data
 									Enables write to reg 
@@ -40,10 +30,12 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 	
 
 	/* Assigning */
+	integer i;
+	
 	always @(posedge clk) begin
 		if(reset) begin
 			// ?? all 16 registers are set to 16'b0
-			for(integer i = 0; i < SIZE; i = i + 1) begin 
+			for(i = 0; i < SIZE; i = i + 1) begin 
 				regFile[i] <= 0;							
 			end
 		end
