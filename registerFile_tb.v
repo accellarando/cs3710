@@ -6,6 +6,7 @@ module registerFile_tb();
 	reg			writeEn;
 	reg[15:0] 	writeData;
 	reg[3:0] 	srcAddr, dstAddr;
+	integer 		counter;
 	
 	/* Outputs */
 	wire[15:0] 	readData1, readData2;
