@@ -10,173 +10,173 @@ z2
 cModel Technology
 Z0 d/home/ella/Documents/School/CS3710/cpu/simulation/modelsim
 valu
-!s110 1666070146
+Z1 !s110 1666134992
 !i10b 1
-!s100 HiD?lo^4AO0jYkI:]4EQU1
-Z1 !s11b Dg1SIo80bB@j0V0VzS_@n1
-I:kX1`Vm880_eQ7lXeR==U0
-Z2 VDg1SIo80bB@j0V0VzS_@n1
+!s100 NLCV8jTCCRk3nk^n=DBhE1
+Z2 !s11b Dg1SIo80bB@j0V0VzS_@n1
+I9Wz2L<bLTcSFl]NnHP2Oo2
+Z3 VDg1SIo80bB@j0V0VzS_@n1
 R0
-w1666069932
+w1666071787
 8/home/ella/Documents/School/CS3710/cpu/alu.v
 F/home/ella/Documents/School/CS3710/cpu/alu.v
-!i122 88
-L0 15 522
-Z3 OV;L;2020.1;71
+!i122 7
+L0 15 509
+Z4 OV;L;2020.1;71
 r1
 !s85 0
 31
-!s108 1666070146.000000
+Z5 !s108 1666134992.000000
 !s107 /home/ella/Documents/School/CS3710/cpu/alu.v|
 !s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/ella/Documents/School/CS3710/cpu|/home/ella/Documents/School/CS3710/cpu/alu.v|
 !i113 1
-Z4 o-vlog01compat -work work
-Z5 !s92 -vlog01compat -work work +incdir+/home/ella/Documents/School/CS3710/cpu
-Z6 tCvgOpt 0
+Z6 o-vlog01compat -work work
+Z7 !s92 -vlog01compat -work work +incdir+/home/ella/Documents/School/CS3710/cpu
+Z8 tCvgOpt 0
 valuTb
-Z7 !s110 1666071689
-!i10b 1
-!s100 2g0zn^?NCAlT;Li3@78kl0
 R1
-IX]]gBbzIDhba;5ZgNeMgh3
+!i10b 1
+!s100 SzX8lj[OgVI?oZ4eZ4aYR3
 R2
+IL1L458;=WVLDFTDmi91Po2
+R3
 R0
-w1666071633
+w1666134982
 8/home/ella/Documents/School/CS3710/cpu/aluTb.v
 F/home/ella/Documents/School/CS3710/cpu/aluTb.v
-!i122 106
+!i122 8
 L0 3 254
-R3
+R4
 r1
 !s85 0
 31
-Z8 !s108 1666071689.000000
+R5
 !s107 /home/ella/Documents/School/CS3710/cpu/aluTb.v|
 !s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/ella/Documents/School/CS3710/cpu|/home/ella/Documents/School/CS3710/cpu/aluTb.v|
 !i113 1
-R4
-R5
 R6
+R7
+R8
 nalu@tb
 vcpu
-R7
+R1
 !i10b 1
 !s100 A9?PJV<<`;8R?kRT68LlS3
-R1
-I7YkdQ8oSHi]c1;G>SBS8Q1
 R2
+I7YkdQ8oSHi]c1;G>SBS8Q1
+R3
 R0
 w1666069674
 8/home/ella/Documents/School/CS3710/cpu/cpu.v
 F/home/ella/Documents/School/CS3710/cpu/cpu.v
-!i122 107
+!i122 9
 L0 1 45
-R3
+R4
 r1
 !s85 0
 31
-R8
+R5
 !s107 /home/ella/Documents/School/CS3710/cpu/cpu.v|
 !s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/ella/Documents/School/CS3710/cpu|/home/ella/Documents/School/CS3710/cpu/cpu.v|
 !i113 1
-R4
-R5
 R6
-vmux2
 R7
+R8
+vmux2
+R1
 !i10b 1
 !s100 lFbRM;Q:gz[16m@jkhW7f1
-R1
-IQ1HMi4EFOc3aBe2SR<5WY3
 R2
+IQ1HMi4EFOc3aBe2SR<5WY3
+R3
 R0
 w1665819355
 8/home/ella/Documents/School/CS3710/cpu/mux2.v
 F/home/ella/Documents/School/CS3710/cpu/mux2.v
-!i122 108
+!i122 10
 L0 1 7
-R3
+R4
 r1
 !s85 0
 31
-R8
+R5
 !s107 /home/ella/Documents/School/CS3710/cpu/mux2.v|
 !s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/ella/Documents/School/CS3710/cpu|/home/ella/Documents/School/CS3710/cpu/mux2.v|
 !i113 1
-R4
-R5
 R6
+R7
+R8
 vPSR_reg
-Z9 !s110 1666071690
+R1
 !i10b 1
 !s100 3UJYEOcd<7mmCf5fJ>UB:2
-R1
-IZLc^TJZNo::`CaU3j`0j52
 R2
+IZLc^TJZNo::`CaU3j`0j52
+R3
 R0
 w1666034031
 8/home/ella/Documents/School/CS3710/cpu/PSR_reg.v
 F/home/ella/Documents/School/CS3710/cpu/PSR_reg.v
-!i122 109
+!i122 11
 L0 2 26
-R3
+R4
 r1
 !s85 0
 31
-R8
+R5
 !s107 /home/ella/Documents/School/CS3710/cpu/PSR_reg.v|
 !s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/ella/Documents/School/CS3710/cpu|/home/ella/Documents/School/CS3710/cpu/PSR_reg.v|
 !i113 1
-R4
-R5
 R6
+R7
+R8
 n@p@s@r_reg
 vregister
-R9
+Z9 !s110 1666134993
 !i10b 1
 !s100 BEO=z<VBleR:k2X^mGf380
-R1
-I^7cnCUko^F3YZkHYA`3NR3
 R2
+I^7cnCUko^F3YZkHYA`3NR3
+R3
 R0
 w1666002870
 8/home/ella/Documents/School/CS3710/cpu/register.v
 F/home/ella/Documents/School/CS3710/cpu/register.v
-!i122 110
+!i122 12
 L0 1 12
-R3
+R4
 r1
 !s85 0
 31
-Z10 !s108 1666071690.000000
+R5
 !s107 /home/ella/Documents/School/CS3710/cpu/register.v|
 !s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/ella/Documents/School/CS3710/cpu|/home/ella/Documents/School/CS3710/cpu/register.v|
 !i113 1
-R4
-R5
 R6
+R7
+R8
 vregisterFile
 R9
 !i10b 1
-!s100 gn7CVicL3iA>2XAJB:j933
-R1
-I<Yo`kW0M9kW;P7EM4Z4Mj2
+!s100 `EQMol[M_dFC17<kh=QX21
 R2
+IzB?39k=QQ7oZ[@N<1h>CT3
+R3
 R0
-w1666071682
+w1666132698
 8/home/ella/Documents/School/CS3710/cpu/registerFile.v
 F/home/ella/Documents/School/CS3710/cpu/registerFile.v
-!i122 111
-L0 21 38
-R3
+!i122 13
+L0 21 39
+R4
 r1
 !s85 0
 31
-R10
+!s108 1666134993.000000
 !s107 /home/ella/Documents/School/CS3710/cpu/registerFile.v|
 !s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/ella/Documents/School/CS3710/cpu|/home/ella/Documents/School/CS3710/cpu/registerFile.v|
 !i113 1
-R4
-R5
 R6
+R7
+R8
 nregister@file

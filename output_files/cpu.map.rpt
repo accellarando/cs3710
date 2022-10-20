@@ -1,5 +1,5 @@
 Analysis & Synthesis report for cpu
-Mon Oct 17 23:45:38 2022
+Tue Oct 18 17:24:44 2022
 Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 
 
@@ -10,8 +10,30 @@ Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
   2. Analysis & Synthesis Summary
   3. Analysis & Synthesis Settings
   4. Parallel Compilation
-  5. Analysis & Synthesis Messages
-  6. Analysis & Synthesis Suppressed Messages
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. Registers Removed During Synthesis
+  9. General Register Statistics
+ 10. Parameter Settings for User Entity Instance: Top-level Entity: |cpu
+ 11. Parameter Settings for User Entity Instance: register:pcReg
+ 12. Parameter Settings for User Entity Instance: register:srcReg
+ 13. Parameter Settings for User Entity Instance: register:dstReg
+ 14. Parameter Settings for User Entity Instance: register:immReg
+ 15. Parameter Settings for User Entity Instance: registerFile:rf
+ 16. Parameter Settings for User Entity Instance: mux2:alu1
+ 17. Parameter Settings for User Entity Instance: mux2:alu2
+ 18. Parameter Settings for User Entity Instance: alu:mainAlu
+ 19. Parameter Settings for User Entity Instance: register:outReg
+ 20. Port Connectivity Checks: "register:outReg"
+ 21. Port Connectivity Checks: "PSR_reg:PSRreg"
+ 22. Port Connectivity Checks: "registerFile:rf"
+ 23. Port Connectivity Checks: "register:dstReg"
+ 24. Port Connectivity Checks: "register:srcReg"
+ 25. Post-Synthesis Netlist Statistics for Top Partition
+ 26. Elapsed Time Per Partition
+ 27. Analysis & Synthesis Messages
+ 28. Analysis & Synthesis Suppressed Messages
 
 
 
@@ -35,22 +57,27 @@ https://fpgasoftware.intel.com/eula.
 
 
 
-+---------------------------------------------------------------------------+
-; Analysis & Synthesis Summary                                              ;
-+-----------------------------+---------------------------------------------+
-; Analysis & Synthesis Status ; Failed - Mon Oct 17 23:45:38 2022           ;
-; Quartus Prime Version       ; 20.1.1 Build 720 11/11/2020 SJ Lite Edition ;
-; Revision Name               ; cpu                                         ;
-; Top-level Entity Name       ; cpu                                         ;
-; Family                      ; Cyclone V                                   ;
-; Logic utilization (in ALMs) ; N/A until Partition Merge                   ;
-; Total registers             ; N/A until Partition Merge                   ;
-; Total pins                  ; N/A until Partition Merge                   ;
-; Total virtual pins          ; N/A until Partition Merge                   ;
-; Total block memory bits     ; N/A until Partition Merge                   ;
-; Total PLLs                  ; N/A until Partition Merge                   ;
-; Total DLLs                  ; N/A until Partition Merge                   ;
-+-----------------------------+---------------------------------------------+
++-------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                  ;
++---------------------------------+---------------------------------------------+
+; Analysis & Synthesis Status     ; Successful - Tue Oct 18 17:24:44 2022       ;
+; Quartus Prime Version           ; 20.1.1 Build 720 11/11/2020 SJ Lite Edition ;
+; Revision Name                   ; cpu                                         ;
+; Top-level Entity Name           ; cpu                                         ;
+; Family                          ; Cyclone V                                   ;
+; Logic utilization (in ALMs)     ; N/A                                         ;
+; Total registers                 ; 0                                           ;
+; Total pins                      ; 114                                         ;
+; Total virtual pins              ; 0                                           ;
+; Total block memory bits         ; 0                                           ;
+; Total DSP Blocks                ; 0                                           ;
+; Total HSSI RX PCSs              ; 0                                           ;
+; Total HSSI PMA RX Deserializers ; 0                                           ;
+; Total HSSI TX PCSs              ; 0                                           ;
+; Total HSSI PMA TX Serializers   ; 0                                           ;
+; Total PLLs                      ; 0                                           ;
+; Total DLLs                      ; 0                                           ;
++---------------------------------+---------------------------------------------+
 
 
 +---------------------------------------------------------------------------------------------------------------------------+
@@ -156,15 +183,331 @@ https://fpgasoftware.intel.com/eula.
 +----------------------------+-------------+
 
 
++-----------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                              ;
++----------------------------------+-----------------+------------------------------+-------------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type                    ; File Name with Absolute Path                          ; Library ;
++----------------------------------+-----------------+------------------------------+-------------------------------------------------------+---------+
+; PSR_reg.v                        ; yes             ; User Verilog HDL File        ; /home/ella/Documents/School/CS3710/cpu/PSR_reg.v      ;         ;
+; registerFile.v                   ; yes             ; User Verilog HDL File        ; /home/ella/Documents/School/CS3710/cpu/registerFile.v ;         ;
+; register.v                       ; yes             ; User Verilog HDL File        ; /home/ella/Documents/School/CS3710/cpu/register.v     ;         ;
+; cpu.v                            ; yes             ; User Verilog HDL File        ; /home/ella/Documents/School/CS3710/cpu/cpu.v          ;         ;
+; mux2.v                           ; yes             ; User Verilog HDL File        ; /home/ella/Documents/School/CS3710/cpu/mux2.v         ;         ;
+; alu.v                            ; yes             ; User Verilog HDL File        ; /home/ella/Documents/School/CS3710/cpu/alu.v          ;         ;
+; reg.dat                          ; yes             ; Auto-Found Unspecified File  ; /home/ella/Documents/School/CS3710/cpu/reg.dat        ;         ;
++----------------------------------+-----------------+------------------------------+-------------------------------------------------------+---------+
+
+
++-----------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary         ;
++---------------------------------------------+-------+
+; Resource                                    ; Usage ;
++---------------------------------------------+-------+
+; Estimate of Logic utilization (ALMs needed) ; 0     ;
+;                                             ;       ;
+; Combinational ALUT usage for logic          ; 0     ;
+;     -- 7 input functions                    ; 0     ;
+;     -- 6 input functions                    ; 0     ;
+;     -- 5 input functions                    ; 0     ;
+;     -- 4 input functions                    ; 0     ;
+;     -- <=3 input functions                  ; 0     ;
+;                                             ;       ;
+; Dedicated logic registers                   ; 0     ;
+;                                             ;       ;
+; I/O pins                                    ; 114   ;
+;                                             ;       ;
+; Total DSP Blocks                            ; 0     ;
+;                                             ;       ;
+; Maximum fan-out node                        ; clk   ;
+; Maximum fan-out                             ; 1     ;
+; Total fan-out                               ; 114   ;
+; Average fan-out                             ; 0.50  ;
++---------------------------------------------+-------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                    ;
++----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
+; Compilation Hierarchy Node ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name ; Entity Name ; Library Name ;
++----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
+; |cpu                       ; 0 (0)               ; 0 (0)                     ; 0                 ; 0          ; 114  ; 0            ; |cpu                ; cpu         ; work         ;
++----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
++---------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                              ;
++----------------------------------------+----------------------------------------+
+; Register name                          ; Reason for Removal                     ;
++----------------------------------------+----------------------------------------+
+; register:pcReg|q[15]                   ; Lost fanout                            ;
+; registerFile:rf|readData1[15]          ; Lost fanout                            ;
+; register:pcReg|q[14]                   ; Lost fanout                            ;
+; registerFile:rf|readData1[14]          ; Lost fanout                            ;
+; register:pcReg|q[13]                   ; Lost fanout                            ;
+; registerFile:rf|readData1[13]          ; Lost fanout                            ;
+; register:pcReg|q[12]                   ; Lost fanout                            ;
+; registerFile:rf|readData1[12]          ; Lost fanout                            ;
+; register:pcReg|q[11]                   ; Lost fanout                            ;
+; registerFile:rf|readData1[11]          ; Lost fanout                            ;
+; register:pcReg|q[10]                   ; Lost fanout                            ;
+; registerFile:rf|readData1[10]          ; Lost fanout                            ;
+; register:pcReg|q[9]                    ; Lost fanout                            ;
+; registerFile:rf|readData1[9]           ; Lost fanout                            ;
+; register:pcReg|q[8]                    ; Lost fanout                            ;
+; registerFile:rf|readData1[8]           ; Lost fanout                            ;
+; register:pcReg|q[7]                    ; Lost fanout                            ;
+; registerFile:rf|readData1[7]           ; Lost fanout                            ;
+; register:pcReg|q[6]                    ; Lost fanout                            ;
+; registerFile:rf|readData1[6]           ; Lost fanout                            ;
+; register:pcReg|q[5]                    ; Lost fanout                            ;
+; registerFile:rf|readData1[5]           ; Lost fanout                            ;
+; register:pcReg|q[4]                    ; Lost fanout                            ;
+; registerFile:rf|readData1[4]           ; Lost fanout                            ;
+; register:pcReg|q[3]                    ; Lost fanout                            ;
+; registerFile:rf|readData1[3]           ; Lost fanout                            ;
+; register:pcReg|q[2]                    ; Lost fanout                            ;
+; registerFile:rf|readData1[2]           ; Lost fanout                            ;
+; register:pcReg|q[1]                    ; Lost fanout                            ;
+; registerFile:rf|readData1[1]           ; Lost fanout                            ;
+; register:pcReg|q[0]                    ; Lost fanout                            ;
+; registerFile:rf|readData1[0]           ; Lost fanout                            ;
+; registerFile:rf|readData2[15]          ; Lost fanout                            ;
+; register:immReg|q[15]                  ; Lost fanout                            ;
+; registerFile:rf|readData2[14]          ; Lost fanout                            ;
+; register:immReg|q[14]                  ; Lost fanout                            ;
+; registerFile:rf|readData2[13]          ; Lost fanout                            ;
+; register:immReg|q[13]                  ; Lost fanout                            ;
+; registerFile:rf|readData2[12]          ; Lost fanout                            ;
+; register:immReg|q[12]                  ; Lost fanout                            ;
+; registerFile:rf|readData2[11]          ; Lost fanout                            ;
+; register:immReg|q[11]                  ; Lost fanout                            ;
+; registerFile:rf|readData2[10]          ; Lost fanout                            ;
+; register:immReg|q[10]                  ; Lost fanout                            ;
+; registerFile:rf|readData2[9]           ; Lost fanout                            ;
+; register:immReg|q[9]                   ; Lost fanout                            ;
+; registerFile:rf|readData2[8]           ; Lost fanout                            ;
+; register:immReg|q[8]                   ; Lost fanout                            ;
+; registerFile:rf|readData2[7]           ; Lost fanout                            ;
+; register:immReg|q[7]                   ; Lost fanout                            ;
+; registerFile:rf|readData2[6]           ; Lost fanout                            ;
+; register:immReg|q[6]                   ; Lost fanout                            ;
+; registerFile:rf|readData2[5]           ; Lost fanout                            ;
+; register:immReg|q[5]                   ; Lost fanout                            ;
+; registerFile:rf|readData2[4]           ; Lost fanout                            ;
+; register:immReg|q[4]                   ; Lost fanout                            ;
+; registerFile:rf|readData2[3]           ; Lost fanout                            ;
+; register:immReg|q[3]                   ; Lost fanout                            ;
+; registerFile:rf|readData2[2]           ; Lost fanout                            ;
+; register:immReg|q[2]                   ; Lost fanout                            ;
+; registerFile:rf|readData2[1]           ; Lost fanout                            ;
+; register:immReg|q[1]                   ; Lost fanout                            ;
+; registerFile:rf|readData2[0]           ; Lost fanout                            ;
+; register:dstReg|q[0..3]                ; Lost fanout                            ;
+; register:srcReg|q[0..3]                ; Lost fanout                            ;
+; register:immReg|q[0]                   ; Lost fanout                            ;
+; PSR_reg:PSRreg|final_group2[0]         ; Stuck at GND due to stuck port data_in ;
+; PSR_reg:PSRreg|final_group1[0]         ; Stuck at GND due to stuck port data_in ;
+; Total Number of Removed Registers = 74 ;                                        ;
++----------------------------------------+----------------------------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 0     ;
+; Number of registers using Synchronous Clear  ; 0     ;
+; Number of registers using Synchronous Load   ; 0     ;
+; Number of registers using Asynchronous Clear ; 0     ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 0     ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++---------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: Top-level Entity: |cpu ;
++----------------+-------+--------------------------------------------+
+; Parameter Name ; Value ; Type                                       ;
++----------------+-------+--------------------------------------------+
+; SIZE           ; 16    ; Signed Integer                             ;
+; NUMREGS        ; 16    ; Signed Integer                             ;
++----------------+-------+--------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: register:pcReg ;
++----------------+-------+------------------------------------+
+; Parameter Name ; Value ; Type                               ;
++----------------+-------+------------------------------------+
+; SIZE           ; 16    ; Signed Integer                     ;
++----------------+-------+------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: register:srcReg ;
++----------------+-------+-------------------------------------+
+; Parameter Name ; Value ; Type                                ;
++----------------+-------+-------------------------------------+
+; SIZE           ; 16    ; Signed Integer                      ;
++----------------+-------+-------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: register:dstReg ;
++----------------+-------+-------------------------------------+
+; Parameter Name ; Value ; Type                                ;
++----------------+-------+-------------------------------------+
+; SIZE           ; 16    ; Signed Integer                      ;
++----------------+-------+-------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: register:immReg ;
++----------------+-------+-------------------------------------+
+; Parameter Name ; Value ; Type                                ;
++----------------+-------+-------------------------------------+
+; SIZE           ; 16    ; Signed Integer                      ;
++----------------+-------+-------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: registerFile:rf ;
++----------------+-------+-------------------------------------+
+; Parameter Name ; Value ; Type                                ;
++----------------+-------+-------------------------------------+
+; SIZE           ; 16    ; Signed Integer                      ;
+; REGBITS        ; 4     ; Signed Integer                      ;
++----------------+-------+-------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------+
+; Parameter Settings for User Entity Instance: mux2:alu1 ;
++----------------+-------+-------------------------------+
+; Parameter Name ; Value ; Type                          ;
++----------------+-------+-------------------------------+
+; WIDTH          ; 16    ; Signed Integer                ;
++----------------+-------+-------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------+
+; Parameter Settings for User Entity Instance: mux2:alu2 ;
++----------------+-------+-------------------------------+
+; Parameter Name ; Value ; Type                          ;
++----------------+-------+-------------------------------+
+; WIDTH          ; 16    ; Signed Integer                ;
++----------------+-------+-------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------+
+; Parameter Settings for User Entity Instance: alu:mainAlu ;
++----------------+-------+---------------------------------+
+; Parameter Name ; Value ; Type                            ;
++----------------+-------+---------------------------------+
+; WIDTH          ; 16    ; Signed Integer                  ;
++----------------+-------+---------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++--------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: register:outReg ;
++----------------+-------+-------------------------------------+
+; Parameter Name ; Value ; Type                                ;
++----------------+-------+-------------------------------------+
+; SIZE           ; 16    ; Signed Integer                      ;
++----------------+-------+-------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:outReg"                                                                    ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; Port ; Type   ; Severity ; Details                                                                             ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+; q    ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "PSR_reg:PSRreg"                                                                                                                         ;
++--------------+--------+----------+---------------------------------------------------------------------------------------------------------------------------------+
+; Port         ; Type   ; Severity ; Details                                                                                                                         ;
++--------------+--------+----------+---------------------------------------------------------------------------------------------------------------------------------+
+; final_group1 ; Output ; Warning  ; Output or bidir port (2 bits) is wider than the port expression (1 bits) it drives; bit(s) "final_group1[1..1]" have no fanouts ;
+; final_group2 ; Output ; Warning  ; Output or bidir port (3 bits) is wider than the port expression (1 bits) it drives; bit(s) "final_group2[2..1]" have no fanouts ;
++--------------+--------+----------+---------------------------------------------------------------------------------------------------------------------------------+
+
+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "registerFile:rf"                                                                                                                                                                     ;
++---------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port    ; Type  ; Severity ; Details                                                                                                                                                                            ;
++---------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; srcAddr ; Input ; Warning  ; Input port expression (16 bits) is wider than the input port (4 bits) it drives.  The 12 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
+; dstAddr ; Input ; Warning  ; Input port expression (16 bits) is wider than the input port (4 bits) it drives.  The 12 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
++---------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:dstReg"                                                                        ;
++----------+--------+----------+-------------------------------------------------------------------------------------+
+; Port     ; Type   ; Severity ; Details                                                                             ;
++----------+--------+----------+-------------------------------------------------------------------------------------+
+; q[15..4] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++----------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "register:srcReg"                                                                        ;
++----------+--------+----------+-------------------------------------------------------------------------------------+
+; Port     ; Type   ; Severity ; Details                                                                             ;
++----------+--------+----------+-------------------------------------------------------------------------------------+
+; q[15..4] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++----------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++-----------------------------------------------------+
+; Post-Synthesis Netlist Statistics for Top Partition ;
++-----------------------+-----------------------------+
+; Type                  ; Count                       ;
++-----------------------+-----------------------------+
+; arriav_lcell_comb     ; 1                           ;
+;     normal            ; 1                           ;
+;         0 data inputs ; 1                           ;
+; boundary_port         ; 114                         ;
+;                       ;                             ;
+; Max LUT depth         ; 0.00                        ;
+; Average LUT depth     ; 0.00                        ;
++-----------------------+-----------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:00     ;
++----------------+--------------+
+
+
 +-------------------------------+
 ; Analysis & Synthesis Messages ;
 +-------------------------------+
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
-    Info: Processing started: Mon Oct 17 23:45:07 2022
+    Info: Processing started: Tue Oct 18 17:24:14 2022
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off cpu -c cpu
-Info (125069): Default assignment values were changed in the current version of the Quartus Prime software -- changes to default assignments values are contained in file /home/ella/Applications/intelFPGA_lite/20.1/quartus/linux64/assignment_defaults.qdf
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 2 of the 2 processors detected
 Info (12021): Found 1 design units, including 1 entities, in source file PSR_reg.v
@@ -229,17 +572,166 @@ Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(84): Paramet
 Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(85): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 85
 Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(86): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 86
 Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(87): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 87
-Error (10161): Verilog HDL error at registerFile_tb.v(14): object "X" is not declared. Verify the object name is correct. If the name is correct, declare the object. File: /home/ella/Documents/School/CS3710/cpu/registerFile_tb.v Line: 14
-Error (10161): Verilog HDL error at registerFile_tb.v(28): object "counter" is not declared. Verify the object name is correct. If the name is correct, declare the object. File: /home/ella/Documents/School/CS3710/cpu/registerFile_tb.v Line: 28
-Error (10161): Verilog HDL error at registerFile_tb.v(42): object "counter" is not declared. Verify the object name is correct. If the name is correct, declare the object. File: /home/ella/Documents/School/CS3710/cpu/registerFile_tb.v Line: 42
-Error (10161): Verilog HDL error at registerFile_tb.v(53): object "readData1" is not declared. Verify the object name is correct. If the name is correct, declare the object. File: /home/ella/Documents/School/CS3710/cpu/registerFile_tb.v Line: 53
-Error (10161): Verilog HDL error at registerFile_tb.v(64): object "counter" is not declared. Verify the object name is correct. If the name is correct, declare the object. File: /home/ella/Documents/School/CS3710/cpu/registerFile_tb.v Line: 64
+Info (12127): Elaborating entity "cpu" for the top level hierarchy
+Warning (10034): Output port "adr" at cpu.v(6) has no driver File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
+Warning (10034): Output port "wd" at cpu.v(7) has no driver File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
+Warning (10034): Output port "memwrite" at cpu.v(5) has no driver File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 5
+Info (12128): Elaborating entity "register" for hierarchy "register:pcReg" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 28
+Info (12128): Elaborating entity "registerFile" for hierarchy "registerFile:rf" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 33
+Info (10648): Verilog HDL Display System Task info at registerFile.v(36): Loading register file File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 36
+Info (10648): Verilog HDL Display System Task info at registerFile.v(39): Done with loading register file File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 39
+Warning (10030): Net "regFile.data_a" at registerFile.v(32) has no driver or initial value, using a default initial value '0' File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 32
+Warning (10030): Net "regFile.waddr_a" at registerFile.v(32) has no driver or initial value, using a default initial value '0' File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 32
+Warning (10030): Net "regFile.we_a" at registerFile.v(32) has no driver or initial value, using a default initial value '0' File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 32
+Info (12128): Elaborating entity "mux2" for hierarchy "mux2:alu1" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 35
+Info (12128): Elaborating entity "alu" for hierarchy "alu:mainAlu" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 38
+Warning (10270): Verilog HDL Case Statement warning at alu.v(171): incomplete case statement has no default case item File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 171
+Warning (10270): Verilog HDL Case Statement warning at alu.v(210): incomplete case statement has no default case item File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 210
+Warning (10270): Verilog HDL Case Statement warning at alu.v(236): incomplete case statement has no default case item File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 236
+Warning (10270): Verilog HDL Case Statement warning at alu.v(249): incomplete case statement has no default case item File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 249
+Warning (10270): Verilog HDL Case Statement warning at alu.v(288): incomplete case statement has no default case item File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 288
+Warning (10270): Verilog HDL Case Statement warning at alu.v(314): incomplete case statement has no default case item File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 314
+Warning (10270): Verilog HDL Case Statement warning at alu.v(338): incomplete case statement has no default case item File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 338
+Info (12128): Elaborating entity "PSR_reg" for hierarchy "PSR_reg:PSRreg" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 40
+Warning (12011): Net is missing source, defaulting to GND
+    Warning (12110): Net "en" is missing source, defaulting to GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 12
+Warning (12011): Net is missing source, defaulting to GND
+    Warning (12110): Net "en" is missing source, defaulting to GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 12
+Warning (12011): Net is missing source, defaulting to GND
+    Warning (12110): Net "en" is missing source, defaulting to GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 12
+Warning (12011): Net is missing source, defaulting to GND
+    Warning (12110): Net "en" is missing source, defaulting to GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 12
+Warning (12011): Net is missing source, defaulting to GND
+    Warning (12110): Net "en" is missing source, defaulting to GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 12
+Warning (12241): 2 hierarchies have connectivity warnings - see the Connectivity Checks report folder
+Warning (13024): Output pins are stuck at VCC or GND
+    Warning (13410): Pin "memwrite" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 5
+    Warning (13410): Pin "adr[0]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
+    Warning (13410): Pin "adr[1]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
+    Warning (13410): Pin "adr[2]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
+    Warning (13410): Pin "adr[3]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
+    Warning (13410): Pin "adr[4]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
+    Warning (13410): Pin "adr[5]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
+    Warning (13410): Pin "adr[6]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
+    Warning (13410): Pin "adr[7]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
+    Warning (13410): Pin "adr[8]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
+    Warning (13410): Pin "adr[9]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
+    Warning (13410): Pin "adr[10]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
+    Warning (13410): Pin "adr[11]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
+    Warning (13410): Pin "adr[12]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
+    Warning (13410): Pin "adr[13]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
+    Warning (13410): Pin "adr[14]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
+    Warning (13410): Pin "adr[15]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
+    Warning (13410): Pin "wd[0]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
+    Warning (13410): Pin "wd[1]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
+    Warning (13410): Pin "wd[2]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
+    Warning (13410): Pin "wd[3]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
+    Warning (13410): Pin "wd[4]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
+    Warning (13410): Pin "wd[5]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
+    Warning (13410): Pin "wd[6]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
+    Warning (13410): Pin "wd[7]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
+    Warning (13410): Pin "wd[8]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
+    Warning (13410): Pin "wd[9]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
+    Warning (13410): Pin "wd[10]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
+    Warning (13410): Pin "wd[11]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
+    Warning (13410): Pin "wd[12]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
+    Warning (13410): Pin "wd[13]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
+    Warning (13410): Pin "wd[14]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
+    Warning (13410): Pin "wd[15]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
+    Warning (13410): Pin "condsOut[0]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 8
+    Warning (13410): Pin "condsOut[1]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 8
+    Warning (13410): Pin "condsOut[2]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 8
+    Warning (13410): Pin "condsOut[3]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 8
+    Warning (13410): Pin "condsOut[4]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 8
+Info (17049): 72 registers lost all their fanouts during netlist optimizations.
 Info (144001): Generated suppressed messages file /home/ella/Documents/School/CS3710/cpu/output_files/cpu.map.smsg
-Error: Quartus Prime Analysis & Synthesis was unsuccessful. 5 errors, 47 warnings
-    Error: Peak virtual memory: 400 megabytes
-    Error: Processing ended: Mon Oct 17 23:45:38 2022
-    Error: Elapsed time: 00:00:31
-    Error: Total CPU time (on all processors): 00:00:53
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Warning (21074): Design contains 76 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "clk" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 2
+    Warning (15610): No output dependent on input pin "reset" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 2
+    Warning (15610): No output dependent on input pin "ctrl[0]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 3
+    Warning (15610): No output dependent on input pin "ctrl[1]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 3
+    Warning (15610): No output dependent on input pin "ctrl[2]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 3
+    Warning (15610): No output dependent on input pin "ctrl[3]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 3
+    Warning (15610): No output dependent on input pin "ctrl[4]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 3
+    Warning (15610): No output dependent on input pin "ctrl[5]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 3
+    Warning (15610): No output dependent on input pin "ctrl[6]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 3
+    Warning (15610): No output dependent on input pin "ctrl[7]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 3
+    Warning (15610): No output dependent on input pin "ctrl[8]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 3
+    Warning (15610): No output dependent on input pin "ctrl[9]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 3
+    Warning (15610): No output dependent on input pin "memdata[0]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "memdata[1]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "memdata[2]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "memdata[3]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "memdata[4]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "memdata[5]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "memdata[6]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "memdata[7]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "memdata[8]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "memdata[9]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "memdata[10]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "memdata[11]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "memdata[12]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "memdata[13]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "memdata[14]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "memdata[15]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "srcAddr[0]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "srcAddr[1]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "srcAddr[2]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "srcAddr[3]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "srcAddr[4]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "srcAddr[5]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "srcAddr[6]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "srcAddr[7]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "srcAddr[8]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "srcAddr[9]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "srcAddr[10]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "srcAddr[11]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "srcAddr[12]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "srcAddr[13]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "srcAddr[14]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "srcAddr[15]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "dstAddr[0]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "dstAddr[1]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "dstAddr[2]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "dstAddr[3]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "dstAddr[4]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "dstAddr[5]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "dstAddr[6]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "dstAddr[7]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "dstAddr[8]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "dstAddr[9]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "dstAddr[10]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "dstAddr[11]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "dstAddr[12]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "dstAddr[13]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "dstAddr[14]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "dstAddr[15]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "imm[0]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "imm[1]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "imm[2]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "imm[3]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "imm[4]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "imm[5]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "imm[6]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "imm[7]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "imm[8]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "imm[9]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "imm[10]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "imm[11]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "imm[12]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "imm[13]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "imm[14]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+    Warning (15610): No output dependent on input pin "imm[15]" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 4
+Info (21057): Implemented 114 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 76 input pins
+    Info (21059): Implemented 38 output pins
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 187 warnings
+    Info: Peak virtual memory: 426 megabytes
+    Info: Processing ended: Tue Oct 18 17:24:44 2022
+    Info: Elapsed time: 00:00:30
+    Info: Total CPU time (on all processors): 00:00:51
 
 
 +------------------------------------------+

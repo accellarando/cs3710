@@ -8,17 +8,20 @@ module registerFile_tb();
 	reg[3:0] 	srcAddr, dstAddr;
 	
 	/* Outputs */
-	wire[15:0] 	ReadData1, ReadData2;
+
+	wire[15:0] 	readData1, readData2;
 	integer counter;
 	
 	/* Instantiate the Unit Under Test (UUT) */
-	registerFile #(.SIZE(16), .REGBITS(4)) uut (
+	registerFile uut (
 		.clk(clk),
 		.reset(reset),
 		.writeEn(writeEn),
 		.writeData(writeData),
 		.srcAddr(srcAddr),
-		.dstAddr(dstAddr)
+		.dstAddr(dstAddr),
+		.readData1(readData1),
+		.readData2(readData2)
 	);
 	
 	/* Initializing inputs */
@@ -41,9 +44,6 @@ module registerFile_tb();
 	always @(posedge clk) begin
 				$display("\n");
 		case(counter)
-			// ??? put #time each case -> longer time than generate clock
-
-			
 			// @ Writing to a register
 			1: begin
 				writeEn 		<= 1;
@@ -60,13 +60,9 @@ module registerFile_tb();
 			// last case: set coutner back to zero
 			
 			default : ;
-		endcase;
+		endcase
 	
 		counter <= counter + 1; // increment counter value each pos-edge of the clock to test cases subseqently
 	end
-	
+
 endmodule
-	
-	
-	
-	
