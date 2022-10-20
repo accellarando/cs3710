@@ -2,16 +2,6 @@
 /*
 REGISTER FILE: Provide arguments and hold results by instantiating 16 16-bit registers
 
-(-) Immediate to be sign-extended before ALU (concatenation)
-(-) Shifter
-
-(-) Program counter register and immediate register (make sure you can change these later on)
-
-(?) PSR = processor status register
-(X) Decoder
-*/
-//-----------------------------------
-/*
 @ 2 read ports	[output]:	Reads 2 args from register file to feed ALU
 @ 1 write port [input]:		Writes back the result data
 									Enables write to reg 
@@ -33,27 +23,44 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 
 	/* Reading relative path*/
 	initial begin
+<<<<<<< HEAD
 	$display("Loading register file");
 	//$readmemb("E:/3710/GroupProject/cs3710/reg.dat", regFile); // ! CHANGE TO YOUR LOCAL PATH !
 	$readmemb("/home/ella/Documents/School/CS3710/cpu/reg.dat",regFile);
 	$display("Done with loading register file"); 
+=======
+	$display("Loading Register File...");
+	$readmemb("E:/3710/GroupProject/cs3710/reg.dat", regFile); // ! CHANGE TO YOUR LOCAL PATH !
+	$display("Done with loading Register File\n"); 
+>>>>>>> 6fdedbbf5d586a85909adf85b8fba1134555fd38
 	end
 	
 
 	/* Assigning */
+	integer i;
+	
 	always @(posedge clk) begin
+<<<<<<< HEAD
 	/*
 		if(reset) begin
+=======
+		if(!reset) begin
+>>>>>>> 6fdedbbf5d586a85909adf85b8fba1134555fd38
 			// ?? all 16 registers are set to 16'b0
-			for(integer i = 0; i < SIZE; i = i + 1) begin 
+			for(i = 0; i < SIZE; i = i + 1) begin 
 				regFile[i] <= 0;							
 			end
 		end
 		*/
 			if(writeEn) begin
-				readData1 <= regFile[dstAddr];
-				readData2 <= regFile[srcAddr];
+				regFile[dstAddr] <= writeData;	// dstAddr is both read and write address (dual-port)
 			end
+<<<<<<< HEAD
+=======
+		end
+		readData1 <= regFile[dstAddr];			// read ports have data inputs
+		readData2 <= regFile[srcAddr];
+>>>>>>> 6fdedbbf5d586a85909adf85b8fba1134555fd38
 	end
 
-endmodule 
+endmodule

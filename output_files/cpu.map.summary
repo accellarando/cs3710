@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 Analysis & Synthesis Status : Successful - Tue Oct 18 17:24:44 2022
 Quartus Prime Version : 20.1.1 Build 720 11/11/2020 SJ Lite Edition
+=======
+Analysis & Synthesis Status : Successful - Wed Oct 19 16:23:41 2022
+Quartus Prime Version : 18.0.0 Build 614 04/24/2018 SJ Lite Edition
+>>>>>>> 6fdedbbf5d586a85909adf85b8fba1134555fd38
 Revision Name : cpu
 Top-level Entity Name : cpu
 Family : Cyclone V
