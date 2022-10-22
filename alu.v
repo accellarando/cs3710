@@ -1,3 +1,129 @@
+module alu #(parameter WIDTH = 16)
+            (	input 		[WIDTH-9:0] aluOp,
+					input     	[WIDTH-1:0] aluIn1, aluIn2,	// regarding pcOut as 16-bit	
+					output reg 	[WIDTH-1:0] aluOut, 
+					output reg 	 cond_group1,	// FC bit
+					output reg 	[2:0] cond_group2
+				
+				);
+					
+	parameter AND		=	4'b0000;
+	parameter OR		=	4'b0001;
+	parameter XOR 		= 	4'b0010;
+	parameter ADD 		= 	4'b0011;
+	parameter SUB		=	4'b0100;
+	parameter NOT 		= 	4'b0101;
+	parameter SLL 		= 	4'b0110; 	// shift Left logical
+	parameter SRL 		= 	4'b0111; 	// shift right logical
+	
+	wire [WIDTH:0] tmp;
+	assign tmp =({1'b0,aluIn1} + {1'b0, aluIn2});
+	assign reg cond_group1 = tmp[WIDTH];	// overflow flag F 
+		
+					
+	always@(*) begin // maybe always at ALUIn1, ALUIn2, carryIn, and maybe aluOp? dependent on opcodes though
+      
+		aluOut <= {WIDTH{1'b0}};
+		cond_group1 <= 1'b0;
+		cond_group2 <= 3'b000;
+		cOut <= cond_group1;
+		 
+		
+	casex(aluOp)
+	
+	AND:begin 
+			aluOut <= aluIn1 & aluIn2;
+				if (aluOut == {WIDTH{1'b0}})
+					begin
+						cond_group2[1] = 1'b1; // Z bit set to 1
+					end
+				else 
+					begin
+						cond_group2[1] = 1'b0; // Else, Z bit set to 0
+						cond_group1 = 1'b0; // C and F bit to 0
+						cond_group2[0] = 1'b0; // L bit to 0
+						cond_group2[2] = 1'b0; // N bit to 0	
+					end
+		 end
+	OR: begin
+			aluOut <= aluIn1 | aluIn2;
+				if (aluOut == {WIDTH{1'b0}})
+					begin
+						cond_group2[1] = 1'b1; // Z bit set to 1
+					
+					end
+		 end
+	XOR: begin
+			aluOut <= aluIn1 ^ aluIn2;
+			if (aluOut == {WIDTH{1'b0}})
+					cond_group2[1] = 1'b1; // Z bit set to 1
+			
+	     end
+		
+	ADD: begin
+			 {cOut, aluOut} <= $signed(aluIn1) + $signed(aluIn2);
+				if ((~aluOut[WIDTH-1] & aluIn1[WIDTH-1] & aluIn2[WIDTH-1]) | (aluOut[WIDTH-1] & ~aluIn1[WIDTH-1] & ~aluIn2[WIDTH-1]))
+					cond_group1 = 1'b1; // F bit set to 1 in signed arithmetic
+				else
+				begin
+				 {cOut, aluOut}<= aluIn1 + aluIn2;
+					 if(cOut == 1'b1)
+						cond_group1 = 1'b1;  // C bit set to 1 in unsigned arrithmetic
+				end
+			end
+	SUB:
+			begin
+					aluOut <= aluIn1 - aluIn2;
+					
+				if(aluIn1 < aluIn2)
+				begin
+					cond_group1 = 1'b1; 		// C flag is to 1
+					cond_group2[0] = 1'b1;
+				end	// L flag is set to 1
+					
+				if($signed(aluIn1) < $signed(aluIn2))
+				begin
+					cond_group1 = 1'b1;
+					cond_group2[2] = 1'b1; // N bit set to 1
+				end
+				if(aluIn1 == aluIn2)
+					cond_group2[1] = 1'b1; // Z bit set to 1
+				begin
+				{cOut, aluOut} <= $signed(aluIn1) - $signed(aluIn2);
+					if ((~aluOut[WIDTH-1] & aluIn1[WIDTH-1] & aluIn2[WIDTH-1]) | (aluOut[WIDTH-1] & ~aluIn1[WIDTH-1] & ~aluIn2[WIDTH-1]))
+						cond_group1 = 1'b1; // F bit set to 1 in signed arithmetic
+				end
+			end
+	NOT:
+			begin
+				aluOut <= ~aluIn1;
+				if (aluOut == {WIDTH{1'b0}})
+					begin
+						cond_group2[1] = 1'b1; // Z bit set to 1 Not veriry sure about this 
+					end
+				else 
+					begin
+						cond_group2[1] = 1'b0; // Else, Z bit set to 0
+					end
+				cond_group1[1:0] = 2'b00; // C and F bit to 0
+				cond_group2[0] = 1'b0; // L bit to 0
+				cond_group2[2] = 1'b0; // N bit to 0
+				
+			end
+	SLL: 
+		begin
+			aluOut = aluIn1 << 1;
+		
+		end
+	SRL:
+		begin
+			aloOut = aluIn1 >> 1;
+		end
+		
+ endcase
+end
+endmodule				
+
 /* ECE 3710: ALU and RF Design
 * 	Group: Jack Marshall, Ella Moss, Dana Escandor, and Blandine Tchetche
 *	
@@ -12,14 +138,14 @@
 *
 */	
 
-module alu #(parameter WIDTH = 16)
+/*module alu #(parameter WIDTH = 16)
             (	input 		[WIDTH-9:0] aluOp,
 					input     	[WIDTH-1:0] aluIn1, aluIn2, pcOut,	// regarding pcOut as 16-bit	
 					output reg 	[WIDTH-1:0] aluOut, 
 					output reg 	[1:0] cond_group1,	
 					output reg 	[2:0] cond_group2
 					// output reg PCen, PCjump, PCbranch, WRen //program counter enable, jump, branch, write enable
-	    );
+	    );*/
 
 	/* cond_codes --> condition codes
 	*
@@ -32,7 +158,7 @@ module alu #(parameter WIDTH = 16)
 	* 	Defining opcode via 8bit for processor
 	*/ 
 	
-	parameter ANDI			=	8'b0001xxxx;
+	/*parameter ANDI			=	8'b0001xxxx;
 	parameter ORI			=	8'b0010xxxx;
 	parameter XORI 		= 	8'b0011xxxx;
 	parameter ADDI 		= 	8'b0101xxxx;
@@ -57,7 +183,7 @@ module alu #(parameter WIDTH = 16)
 	parameter OR 			= 	8'b00000010;
 	parameter ADDU			=	8'b00000110;
 	parameter XOR 			= 	8'b00000011;
-	parameter CMP 			= 	8'b00001011;
+/	parameter CMP 			= 	8'b00001011;
 	parameter ADDCU 		= 	8'b00000100;
 	
 	// special
@@ -104,7 +230,7 @@ module alu #(parameter WIDTH = 16)
 		* 		Assuming "pass-through" means pass aluIn2 into aluOut, could mean aluOut = aluOut
 		*/
 		
-		LOAD:
+		/*LOAD:
 			begin
 				aluOut = aluIn2;
 				//WRen = 1'b1;   //need some way eventually to let CPU know to writeback
@@ -121,7 +247,8 @@ module alu #(parameter WIDTH = 16)
 					begin
 						cond_group2[1] = 1'b0; // Else, Z bit set to 0
 					end
-				if ((~cIn[WIDTH-1] & aluIn1[WIDTH-1] & aluIn2[WIDTH-1]) | (cIn[WIDTH-1] & ~aluIn1[WIDTH-1] & ~aluIn2[WIDTH-1]))
+				if ((aluOut[WIDTH-1] & ~aluIn1[WIDTH-1] & ~aluIn2[WIDTH-1]) | (~aluOut[WIDTH-1] & aluIn1[WIDTH-1] & aluIn2[WIDTH-1]))
+				//if ((~cIn[WIDTH-1] & aluIn1[WIDTH-1] & aluIn2[WIDTH-1]) | (cIn[WIDTH-1] & ~aluIn1[WIDTH-1] & ~aluIn2[WIDTH-1]))
 					begin
 						cond_group1[1] = 1'b1; // F bit set to 1
 					end
@@ -145,13 +272,14 @@ module alu #(parameter WIDTH = 16)
 					begin
 						cond_group2[1] = 1'b0; // Else, Z bit set to 0
 					end
-				if ((cIn[WIDTH-1] & ~aluIn1[WIDTH-1] & ~aluIn1[WIDTH-1]) | (~cIn[WIDTH-1] & aluIn1[WIDTH-1] & aluIn1[WIDTH-1]))
+				if ((aluOut[WIDTH-1] & ~aluIn1[WIDTH-1] & ~aluIn2[WIDTH-1]) | (~aluOut[WIDTH-1] & aluIn1[WIDTH-1] & aluIn2[WIDTH-1]))	
+				//if ((cIN[WIDTH-1] & ~aluIn1[WIDTH-1] & ~aluIn2[WIDTH-1]) | (~cIn[WIDTH-1] & aluIn1[WIDTH-1] & aluIn2[WIDTH-1]))
 					begin
 						cond_group1[1] = 1'b1; // F bit set to 1
 					end
 				else 
 					begin
-						cond_group1[1] = 1'b1;	 // Else, F bit set to 0
+						cond_group1[1] = 1'b0;	 // Else, F bit set to 0
 					end
 				cond_group1[0] = 1'b0; // C bit to 0
 				cond_group2[0] = 1'b0; // L bit to 0
@@ -192,7 +320,7 @@ module alu #(parameter WIDTH = 16)
 		
 		XORI, XOR:
 			begin
-				aluOut = aluIn1 ^ aluIn2;
+				aluOut = aluIn1 & aluIn2;
 				if (aluOut == {WIDTH{1'b0}})
 					begin
 						cond_group2[1] = 1'b1; // Z bit set to 1
@@ -203,8 +331,7 @@ module alu #(parameter WIDTH = 16)
 					end
 				cond_group1[1:0] = 2'b00; // C and F bit to 0
 				cond_group2[0] = 1'b0; // L bit to 0
-				cond_group2[2] = 1'b0; // N bit to 0			
-			end
+				cond_group2[2] = 1'b0; // N bit to 0	
 		
 		// Move
 		MOVI, MOV: // need help with this one			--> understand if condition code bit reset necessary
@@ -227,7 +354,7 @@ module alu #(parameter WIDTH = 16)
 		LUI: // need help with this one					--> understand if condition code bit reset necessary
 			begin
 			//	aluOut = {{AluIn1[WIDTH-9:0]}, 8'b0}; // may need to adjust when WIDTH isn't 16-bit
-				aluOut = {{AluIn1[WIDTH-9:0]}, 8'b0};
+				aluOut = {{aluIn1[WIDTH-9:0]}, 8'b0};
 				if (aluOut == {WIDTH{1'b0}})
 					begin
 						cond_group2[1] = 1'b1; // Z bit set to 1
@@ -248,17 +375,17 @@ module alu #(parameter WIDTH = 16)
 				if ( $signed(aluIn1) > $signed(aluIn2))
 					begin
 						cond_group1[1:0] = 2'b00;  // Bits set to: C -> 0, F -> 0
-						cond_group2[0:2] = 3'b000; // Bits set to: L -> 0, Z -> 0, N -> 0
+						cond_group2[2:0] = 3'b000; // Bits set to: N -> 0, Z -> 0, L -> 0
 					end
 				else if ($signed(aluIn1) < $signed(aluIn2))
 					begin
 						cond_group1[1:0] = 2'b10;  // Bits set to: C -> 1, F -> 0
-						cond_group2[0:2] = 3'b010; // Bits set to: L -> 0, Z -> 1, N -> 0
+						cond_group2[2:0] = 3'b010; // Bits set to: N -> 0, Z -> 1, L -> 0
 					end
 				else // if equal
 					begin
 						cond_group1[1:0] = 2'b00;  // Bits set to: C -> 0, F -> 0
-						cond_group2[0:2] = 3'b001; // Bits set to: L -> 0, Z -> 0, N -> 1
+						cond_group2[2:0] = 3'b100; // Bits set to: N -> 1, Z -> 0, L -> 0
 					end
 				cond_group1[1:0] = 2'b00; // C and F bit to 0
 				cond_group2[0] = 1'b0; // L bit to 0
@@ -279,14 +406,14 @@ module alu #(parameter WIDTH = 16)
 				cond_group1[1:0] = 2'b00; // C and F bit to 0
 				cond_group2[0] = 1'b0; // L bit to 0
 				cond_group2[2] = 1'b0; // N bit to 0			
-			end
+			end */
 		
-		RSHI, RSH:
+	/*	RSHI, RSH:
 			begin
 				cond_group1[1:0] = 2'b00; // condition codes to 0
 				cond_group2[2:0] = 3'b000; // condition codes to 0
-				aluOut = AluIn1 >> AluIn2;
-			end
+				aluOut = aluIn1 >> aluIn2;
+			end 
 		
 		LSHI, LSH:
 			begin
@@ -307,7 +434,7 @@ module alu #(parameter WIDTH = 16)
 				cond_group1[1:0] = 2'b00; // condition codes to 0
 				cond_group2[2:0] = 3'b000; // condition codes to 0
 				aluOut = $signed(aluIn1) <<< $signed(aluIn2); // sign extension shift operator
-			end
+			end */
 		
 		
 		// Jump and Link:
@@ -315,7 +442,7 @@ module alu #(parameter WIDTH = 16)
 		//		Function: jump to a subroutine, and return back to this point in code (where the subroutine was called)
 		//		How to do: Use a JUC (jump unconditional) Rlink instruction
 		//			--> Jump undonitional to the value that you stored in the Rlink register
-		JAL:
+	/*	JAL:
 			begin	
 				// Will be uncommented once PC implemented, this is here to show work. 
 				// PCen = 1'b1; PCjump = 1'b1; PCbranch = 1'b0;
@@ -338,7 +465,7 @@ module alu #(parameter WIDTH = 16)
 		*			therefore: only can branch to -128 or 127 instructions past the current instruction (using baseline instruction set)
 		*/
 		
-		Bcond, Jcond: 
+		/*Bcond, Jcond: 
 			begin
 				// PCen = 1'b1; PCjump = 1'b0; PCbranch = 1'b1;
 				case(aluIn1[3:0])
@@ -552,7 +679,7 @@ module alu #(parameter WIDTH = 16)
 		ADD: 
 			begin
 				{carryIn, aluOut} = aluIn1 + aluIn2;
-				if ((~carryIn & aluIn1[WIDTH-1] & aluIn2[WIDTH-1]) | (carryIn & ~aluIn1[WIDTH-1] & ~aluIn2[WIDTH-1]))
+				if ((~aluOut[WIDTH-1] & aluIn1[WIDTH-1] & aluIn2[WIDTH-1]) | (aluOut[WIDTH-1] & ~aluIn1[WIDTH-1] & ~aluIn2[WIDTH-1]))
 					cond_group1[1] = 1'b1; // F bit set to 1	
 			end
 		
@@ -713,4 +840,4 @@ module alu #(parameter WIDTH = 16)
 	 endcase	
    end
 	
-endmodule
+endmodulem*/
