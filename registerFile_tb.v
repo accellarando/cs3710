@@ -10,9 +10,7 @@ module registerFile_tb();
 	
 	/* Outputs */
 
-	wire[15:0] 	readData1, readData2;
-	integer counter;
-	
+	wire[15:0] 	readData1, readData2;	
 	/* Instantiate the Unit Under Test (UUT) */
 	registerFile uut (
 		.clk(clk),

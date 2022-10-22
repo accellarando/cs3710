@@ -14,7 +14,7 @@
 
 module alu #(parameter WIDTH = 16)
             (	input 		[WIDTH-9:0] aluOp,
-					input     	[WIDTH-1:0] aluIn1, aluIn2, pcOut,	// regarding pcOut as 16-bit	
+					input     	[WIDTH-1:0] aluIn1, aluIn2,	// regarding pcOut as 16-bit	
 					output reg 	[WIDTH-1:0] aluOut, 
 					output reg 	[1:0] cond_group1,	
 					output reg 	[2:0] cond_group2
@@ -129,7 +129,7 @@ module alu #(parameter WIDTH = 16)
 				
 				// Could be incorrect due to jumping to link register.
 				// Jumps to aluIn2, where PC + 1 is written
-				aluOut = aluIn2 + pcOut + 1'b1; 
+				//aluOut = aluIn2 + pcOut + 1'b1; 
 			end
 		
 		// Implementing Branch and Jump Conditions:
@@ -156,7 +156,7 @@ module alu #(parameter WIDTH = 16)
 						if(cond_group2[1]) // If Z bit is 1
 						begin
 							casex(aluOp)
-							Bcond: aluOut = pcOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
+							//Bcond: aluOut = pcOut - {{WIDTH-8{aluIn2[WIDTH-9]}} , aluIn2[WIDTH-9:0]};
 							Jcond: aluOut = aluIn2;
 							endcase
 						end

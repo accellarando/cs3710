@@ -1,11 +1,6 @@
 Analysis & Synthesis report for cpu
-<<<<<<< HEAD
-Tue Oct 18 17:24:44 2022
+Thu Oct 20 16:10:02 2022
 Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
-=======
-Wed Oct 19 16:23:41 2022
-Quartus Prime Version 18.0.0 Build 614 04/24/2018 SJ Lite Edition
->>>>>>> 6fdedbbf5d586a85909adf85b8fba1134555fd38
 
 
 ---------------------
@@ -15,39 +10,17 @@ Quartus Prime Version 18.0.0 Build 614 04/24/2018 SJ Lite Edition
   2. Analysis & Synthesis Summary
   3. Analysis & Synthesis Settings
   4. Parallel Compilation
-  5. Analysis & Synthesis Source Files Read
-  6. Analysis & Synthesis Resource Usage Summary
-  7. Analysis & Synthesis Resource Utilization by Entity
-  8. Registers Removed During Synthesis
-  9. General Register Statistics
- 10. Parameter Settings for User Entity Instance: Top-level Entity: |cpu
- 11. Parameter Settings for User Entity Instance: register:pcReg
- 12. Parameter Settings for User Entity Instance: register:srcReg
- 13. Parameter Settings for User Entity Instance: register:dstReg
- 14. Parameter Settings for User Entity Instance: register:immReg
- 15. Parameter Settings for User Entity Instance: registerFile:rf
- 16. Parameter Settings for User Entity Instance: mux2:alu1
- 17. Parameter Settings for User Entity Instance: mux2:alu2
- 18. Parameter Settings for User Entity Instance: alu:mainAlu
- 19. Parameter Settings for User Entity Instance: register:outReg
- 20. Port Connectivity Checks: "register:outReg"
- 21. Port Connectivity Checks: "PSR_reg:PSRreg"
- 22. Port Connectivity Checks: "registerFile:rf"
- 23. Port Connectivity Checks: "register:dstReg"
- 24. Port Connectivity Checks: "register:srcReg"
- 25. Post-Synthesis Netlist Statistics for Top Partition
- 26. Elapsed Time Per Partition
- 27. Analysis & Synthesis Messages
- 28. Analysis & Synthesis Suppressed Messages
+  5. Analysis & Synthesis Messages
+  6. Analysis & Synthesis Suppressed Messages
 
 
 
 ----------------
 ; Legal Notice ;
 ----------------
-Copyright (C) 2018  Intel Corporation. All rights reserved.
+Copyright (C) 2020  Intel Corporation. All rights reserved.
 Your use of Intel Corporation's design tools, logic functions 
-and other software and tools, and its AMPP partner logic 
+and other software and tools, and any partner logic 
 functions, and any output files from any of the foregoing 
 (including device programming or simulation files), and any 
 associated documentation or information are expressly subject 
@@ -57,36 +30,27 @@ the Intel FPGA IP License Agreement, or other applicable license
 agreement, including, without limitation, that your use is for
 the sole purpose of programming logic devices manufactured by
 Intel and sold by Intel or its authorized distributors.  Please
-refer to the applicable agreement for further details.
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
 
 
 
-+-------------------------------------------------------------------------------+
-; Analysis & Synthesis Summary                                                  ;
-+---------------------------------+---------------------------------------------+
-<<<<<<< HEAD
-; Analysis & Synthesis Status     ; Successful - Tue Oct 18 17:24:44 2022       ;
-; Quartus Prime Version           ; 20.1.1 Build 720 11/11/2020 SJ Lite Edition ;
-=======
-; Analysis & Synthesis Status     ; Successful - Wed Oct 19 16:23:41 2022       ;
-; Quartus Prime Version           ; 18.0.0 Build 614 04/24/2018 SJ Lite Edition ;
->>>>>>> 6fdedbbf5d586a85909adf85b8fba1134555fd38
-; Revision Name                   ; cpu                                         ;
-; Top-level Entity Name           ; cpu                                         ;
-; Family                          ; Cyclone V                                   ;
-; Logic utilization (in ALMs)     ; N/A                                         ;
-; Total registers                 ; 0                                           ;
-; Total pins                      ; 114                                         ;
-; Total virtual pins              ; 0                                           ;
-; Total block memory bits         ; 0                                           ;
-; Total DSP Blocks                ; 0                                           ;
-; Total HSSI RX PCSs              ; 0                                           ;
-; Total HSSI PMA RX Deserializers ; 0                                           ;
-; Total HSSI TX PCSs              ; 0                                           ;
-; Total HSSI PMA TX Serializers   ; 0                                           ;
-; Total PLLs                      ; 0                                           ;
-; Total DLLs                      ; 0                                           ;
-+---------------------------------+---------------------------------------------+
++---------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                              ;
++-----------------------------+---------------------------------------------+
+; Analysis & Synthesis Status ; Failed - Thu Oct 20 16:10:02 2022           ;
+; Quartus Prime Version       ; 20.1.1 Build 720 11/11/2020 SJ Lite Edition ;
+; Revision Name               ; cpu                                         ;
+; Top-level Entity Name       ; alu                                         ;
+; Family                      ; Cyclone V                                   ;
+; Logic utilization (in ALMs) ; N/A until Partition Merge                   ;
+; Total registers             ; N/A until Partition Merge                   ;
+; Total pins                  ; N/A until Partition Merge                   ;
+; Total virtual pins          ; N/A until Partition Merge                   ;
+; Total block memory bits     ; N/A until Partition Merge                   ;
+; Total PLLs                  ; N/A until Partition Merge                   ;
+; Total DLLs                  ; N/A until Partition Merge                   ;
++-----------------------------+---------------------------------------------+
 
 
 +---------------------------------------------------------------------------------------------------------------------------+
@@ -95,7 +59,7 @@ refer to the applicable agreement for further details.
 ; Option                                                                          ; Setting            ; Default Value      ;
 +---------------------------------------------------------------------------------+--------------------+--------------------+
 ; Device                                                                          ; 5CSEMA5F31C6       ;                    ;
-; Top-level entity name                                                           ; cpu                ; cpu                ;
+; Top-level entity name                                                           ; alu                ; cpu                ;
 ; Family name                                                                     ; Cyclone V          ; Cyclone V          ;
 ; Use smart compilation                                                           ; Off                ; Off                ;
 ; Enable parallel Assembler and Timing Analyzer during compilation                ; On                 ; On                 ;
@@ -181,8 +145,8 @@ refer to the applicable agreement for further details.
 +----------------------------+-------------+
 ; Processors                 ; Number      ;
 +----------------------------+-------------+
-; Number detected on machine ; 8           ;
-; Maximum allowed            ; 8           ;
+; Number detected on machine ; 4           ;
+; Maximum allowed            ; 2           ;
 ;                            ;             ;
 ; Average used               ; 1.00        ;
 ; Maximum used               ; 1           ;
@@ -192,632 +156,41 @@ refer to the applicable agreement for further details.
 +----------------------------+-------------+
 
 
-+------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Source Files Read                                                                                                   ;
-+----------------------------------+-----------------+------------------------------+--------------------------------------------+---------+
-; File Name with User-Entered Path ; Used in Netlist ; File Type                    ; File Name with Absolute Path               ; Library ;
-+----------------------------------+-----------------+------------------------------+--------------------------------------------+---------+
-; PSR_reg.v                        ; yes             ; User Verilog HDL File        ; E:/3710/GroupProject/cs3710/PSR_reg.v      ;         ;
-; registerFile.v                   ; yes             ; User Verilog HDL File        ; E:/3710/GroupProject/cs3710/registerFile.v ;         ;
-; register.v                       ; yes             ; User Verilog HDL File        ; E:/3710/GroupProject/cs3710/register.v     ;         ;
-; cpu.v                            ; yes             ; User Verilog HDL File        ; E:/3710/GroupProject/cs3710/cpu.v          ;         ;
-; mux2.v                           ; yes             ; User Verilog HDL File        ; E:/3710/GroupProject/cs3710/mux2.v         ;         ;
-; alu.v                            ; yes             ; User Verilog HDL File        ; E:/3710/GroupProject/cs3710/alu.v          ;         ;
-; reg.dat                          ; yes             ; Auto-Found Unspecified File  ; E:/3710/GroupProject/cs3710/reg.dat        ;         ;
-+----------------------------------+-----------------+------------------------------+--------------------------------------------+---------+
-
-
-+-----------------------------------------------------+
-; Analysis & Synthesis Resource Usage Summary         ;
-+---------------------------------------------+-------+
-; Resource                                    ; Usage ;
-+---------------------------------------------+-------+
-; Estimate of Logic utilization (ALMs needed) ; 0     ;
-;                                             ;       ;
-; Combinational ALUT usage for logic          ; 0     ;
-;     -- 7 input functions                    ; 0     ;
-;     -- 6 input functions                    ; 0     ;
-;     -- 5 input functions                    ; 0     ;
-;     -- 4 input functions                    ; 0     ;
-;     -- <=3 input functions                  ; 0     ;
-;                                             ;       ;
-; Dedicated logic registers                   ; 0     ;
-;                                             ;       ;
-; I/O pins                                    ; 114   ;
-;                                             ;       ;
-; Total DSP Blocks                            ; 0     ;
-;                                             ;       ;
-; Maximum fan-out node                        ; clk   ;
-; Maximum fan-out                             ; 1     ;
-; Total fan-out                               ; 114   ;
-; Average fan-out                             ; 0.50  ;
-+---------------------------------------------+-------+
-
-
-+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                    ;
-+----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
-; Compilation Hierarchy Node ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name ; Entity Name ; Library Name ;
-+----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
-; |cpu                       ; 0 (0)               ; 0 (0)                     ; 0                 ; 0          ; 114  ; 0            ; |cpu                ; cpu         ; work         ;
-+----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
-Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
-
-
-<<<<<<< HEAD
-+---------------------------------------------------------------------------------+
-; Registers Removed During Synthesis                                              ;
-+----------------------------------------+----------------------------------------+
-; Register name                          ; Reason for Removal                     ;
-+----------------------------------------+----------------------------------------+
-; register:pcReg|q[15]                   ; Lost fanout                            ;
-; registerFile:rf|readData1[15]          ; Lost fanout                            ;
-; register:pcReg|q[14]                   ; Lost fanout                            ;
-; registerFile:rf|readData1[14]          ; Lost fanout                            ;
-; register:pcReg|q[13]                   ; Lost fanout                            ;
-; registerFile:rf|readData1[13]          ; Lost fanout                            ;
-; register:pcReg|q[12]                   ; Lost fanout                            ;
-; registerFile:rf|readData1[12]          ; Lost fanout                            ;
-; register:pcReg|q[11]                   ; Lost fanout                            ;
-; registerFile:rf|readData1[11]          ; Lost fanout                            ;
-; register:pcReg|q[10]                   ; Lost fanout                            ;
-; registerFile:rf|readData1[10]          ; Lost fanout                            ;
-; register:pcReg|q[9]                    ; Lost fanout                            ;
-; registerFile:rf|readData1[9]           ; Lost fanout                            ;
-; register:pcReg|q[8]                    ; Lost fanout                            ;
-; registerFile:rf|readData1[8]           ; Lost fanout                            ;
-; register:pcReg|q[7]                    ; Lost fanout                            ;
-; registerFile:rf|readData1[7]           ; Lost fanout                            ;
-; register:pcReg|q[6]                    ; Lost fanout                            ;
-; registerFile:rf|readData1[6]           ; Lost fanout                            ;
-; register:pcReg|q[5]                    ; Lost fanout                            ;
-; registerFile:rf|readData1[5]           ; Lost fanout                            ;
-; register:pcReg|q[4]                    ; Lost fanout                            ;
-; registerFile:rf|readData1[4]           ; Lost fanout                            ;
-; register:pcReg|q[3]                    ; Lost fanout                            ;
-; registerFile:rf|readData1[3]           ; Lost fanout                            ;
-; register:pcReg|q[2]                    ; Lost fanout                            ;
-; registerFile:rf|readData1[2]           ; Lost fanout                            ;
-; register:pcReg|q[1]                    ; Lost fanout                            ;
-; registerFile:rf|readData1[1]           ; Lost fanout                            ;
-; register:pcReg|q[0]                    ; Lost fanout                            ;
-; registerFile:rf|readData1[0]           ; Lost fanout                            ;
-; registerFile:rf|readData2[15]          ; Lost fanout                            ;
-; register:immReg|q[15]                  ; Lost fanout                            ;
-; registerFile:rf|readData2[14]          ; Lost fanout                            ;
-; register:immReg|q[14]                  ; Lost fanout                            ;
-; registerFile:rf|readData2[13]          ; Lost fanout                            ;
-; register:immReg|q[13]                  ; Lost fanout                            ;
-; registerFile:rf|readData2[12]          ; Lost fanout                            ;
-; register:immReg|q[12]                  ; Lost fanout                            ;
-; registerFile:rf|readData2[11]          ; Lost fanout                            ;
-; register:immReg|q[11]                  ; Lost fanout                            ;
-; registerFile:rf|readData2[10]          ; Lost fanout                            ;
-; register:immReg|q[10]                  ; Lost fanout                            ;
-; registerFile:rf|readData2[9]           ; Lost fanout                            ;
-; register:immReg|q[9]                   ; Lost fanout                            ;
-; registerFile:rf|readData2[8]           ; Lost fanout                            ;
-; register:immReg|q[8]                   ; Lost fanout                            ;
-; registerFile:rf|readData2[7]           ; Lost fanout                            ;
-; register:immReg|q[7]                   ; Lost fanout                            ;
-; registerFile:rf|readData2[6]           ; Lost fanout                            ;
-; register:immReg|q[6]                   ; Lost fanout                            ;
-; registerFile:rf|readData2[5]           ; Lost fanout                            ;
-; register:immReg|q[5]                   ; Lost fanout                            ;
-; registerFile:rf|readData2[4]           ; Lost fanout                            ;
-; register:immReg|q[4]                   ; Lost fanout                            ;
-; registerFile:rf|readData2[3]           ; Lost fanout                            ;
-; register:immReg|q[3]                   ; Lost fanout                            ;
-; registerFile:rf|readData2[2]           ; Lost fanout                            ;
-; register:immReg|q[2]                   ; Lost fanout                            ;
-; registerFile:rf|readData2[1]           ; Lost fanout                            ;
-; register:immReg|q[1]                   ; Lost fanout                            ;
-; registerFile:rf|readData2[0]           ; Lost fanout                            ;
-; register:dstReg|q[0..3]                ; Lost fanout                            ;
-; register:srcReg|q[0..3]                ; Lost fanout                            ;
-; register:immReg|q[0]                   ; Lost fanout                            ;
-; PSR_reg:PSRreg|final_group2[0]         ; Stuck at GND due to stuck port data_in ;
-; PSR_reg:PSRreg|final_group1[0]         ; Stuck at GND due to stuck port data_in ;
-; Total Number of Removed Registers = 74 ;                                        ;
-+----------------------------------------+----------------------------------------+
-=======
-+----------------------------------------------------------------------------------+
-; Registers Removed During Synthesis                                               ;
-+-----------------------------------------+----------------------------------------+
-; Register name                           ; Reason for Removal                     ;
-+-----------------------------------------+----------------------------------------+
-; register:pcReg|q[0..15]                 ; Lost fanout                            ;
-; register:immReg|q[0..15]                ; Lost fanout                            ;
-; register:dstReg|q[0..3]                 ; Lost fanout                            ;
-; registerFile:rf|regFile[15][15]         ; Lost fanout                            ;
-; registerFile:rf|regFile[14][15]         ; Lost fanout                            ;
-; registerFile:rf|regFile[13][15]         ; Lost fanout                            ;
-; registerFile:rf|regFile[12][15]         ; Lost fanout                            ;
-; registerFile:rf|regFile[11][15]         ; Lost fanout                            ;
-; registerFile:rf|regFile[10][15]         ; Lost fanout                            ;
-; registerFile:rf|regFile[9][15]          ; Lost fanout                            ;
-; registerFile:rf|regFile[8][15]          ; Lost fanout                            ;
-; registerFile:rf|regFile[7][15]          ; Lost fanout                            ;
-; registerFile:rf|regFile[6][15]          ; Lost fanout                            ;
-; registerFile:rf|regFile[5][15]          ; Lost fanout                            ;
-; registerFile:rf|regFile[4][15]          ; Lost fanout                            ;
-; registerFile:rf|regFile[3][15]          ; Lost fanout                            ;
-; registerFile:rf|regFile[2][15]          ; Lost fanout                            ;
-; registerFile:rf|regFile[1][15]          ; Lost fanout                            ;
-; registerFile:rf|regFile[0][15]          ; Lost fanout                            ;
-; registerFile:rf|regFile[15][14]         ; Lost fanout                            ;
-; registerFile:rf|regFile[14][14]         ; Lost fanout                            ;
-; registerFile:rf|regFile[13][14]         ; Lost fanout                            ;
-; registerFile:rf|regFile[12][14]         ; Lost fanout                            ;
-; registerFile:rf|regFile[11][14]         ; Lost fanout                            ;
-; registerFile:rf|regFile[10][14]         ; Lost fanout                            ;
-; registerFile:rf|regFile[9][14]          ; Lost fanout                            ;
-; registerFile:rf|regFile[8][14]          ; Lost fanout                            ;
-; registerFile:rf|regFile[7][14]          ; Lost fanout                            ;
-; registerFile:rf|regFile[6][14]          ; Lost fanout                            ;
-; registerFile:rf|regFile[5][14]          ; Lost fanout                            ;
-; registerFile:rf|regFile[4][14]          ; Lost fanout                            ;
-; registerFile:rf|regFile[3][14]          ; Lost fanout                            ;
-; registerFile:rf|regFile[2][14]          ; Lost fanout                            ;
-; registerFile:rf|regFile[1][14]          ; Lost fanout                            ;
-; registerFile:rf|regFile[0][14]          ; Lost fanout                            ;
-; registerFile:rf|regFile[15][13]         ; Lost fanout                            ;
-; registerFile:rf|regFile[14][13]         ; Lost fanout                            ;
-; registerFile:rf|regFile[13][13]         ; Lost fanout                            ;
-; registerFile:rf|regFile[12][13]         ; Lost fanout                            ;
-; registerFile:rf|regFile[11][13]         ; Lost fanout                            ;
-; registerFile:rf|regFile[10][13]         ; Lost fanout                            ;
-; registerFile:rf|regFile[9][13]          ; Lost fanout                            ;
-; registerFile:rf|regFile[8][13]          ; Lost fanout                            ;
-; registerFile:rf|regFile[7][13]          ; Lost fanout                            ;
-; registerFile:rf|regFile[6][13]          ; Lost fanout                            ;
-; registerFile:rf|regFile[5][13]          ; Lost fanout                            ;
-; registerFile:rf|regFile[4][13]          ; Lost fanout                            ;
-; registerFile:rf|regFile[3][13]          ; Lost fanout                            ;
-; registerFile:rf|regFile[2][13]          ; Lost fanout                            ;
-; registerFile:rf|regFile[1][13]          ; Lost fanout                            ;
-; registerFile:rf|regFile[0][13]          ; Lost fanout                            ;
-; registerFile:rf|regFile[15][12]         ; Lost fanout                            ;
-; registerFile:rf|regFile[14][12]         ; Lost fanout                            ;
-; registerFile:rf|regFile[13][12]         ; Lost fanout                            ;
-; registerFile:rf|regFile[12][12]         ; Lost fanout                            ;
-; registerFile:rf|regFile[11][12]         ; Lost fanout                            ;
-; registerFile:rf|regFile[10][12]         ; Lost fanout                            ;
-; registerFile:rf|regFile[9][12]          ; Lost fanout                            ;
-; registerFile:rf|regFile[8][12]          ; Lost fanout                            ;
-; registerFile:rf|regFile[7][12]          ; Lost fanout                            ;
-; registerFile:rf|regFile[6][12]          ; Lost fanout                            ;
-; registerFile:rf|regFile[5][12]          ; Lost fanout                            ;
-; registerFile:rf|regFile[4][12]          ; Lost fanout                            ;
-; registerFile:rf|regFile[3][12]          ; Lost fanout                            ;
-; registerFile:rf|regFile[2][12]          ; Lost fanout                            ;
-; registerFile:rf|regFile[1][12]          ; Lost fanout                            ;
-; registerFile:rf|regFile[0][12]          ; Lost fanout                            ;
-; registerFile:rf|regFile[15][11]         ; Lost fanout                            ;
-; registerFile:rf|regFile[14][11]         ; Lost fanout                            ;
-; registerFile:rf|regFile[13][11]         ; Lost fanout                            ;
-; registerFile:rf|regFile[12][11]         ; Lost fanout                            ;
-; registerFile:rf|regFile[11][11]         ; Lost fanout                            ;
-; registerFile:rf|regFile[10][11]         ; Lost fanout                            ;
-; registerFile:rf|regFile[9][11]          ; Lost fanout                            ;
-; registerFile:rf|regFile[8][11]          ; Lost fanout                            ;
-; registerFile:rf|regFile[7][11]          ; Lost fanout                            ;
-; registerFile:rf|regFile[6][11]          ; Lost fanout                            ;
-; registerFile:rf|regFile[5][11]          ; Lost fanout                            ;
-; registerFile:rf|regFile[4][11]          ; Lost fanout                            ;
-; registerFile:rf|regFile[3][11]          ; Lost fanout                            ;
-; registerFile:rf|regFile[2][11]          ; Lost fanout                            ;
-; registerFile:rf|regFile[1][11]          ; Lost fanout                            ;
-; registerFile:rf|regFile[0][11]          ; Lost fanout                            ;
-; registerFile:rf|regFile[15][10]         ; Lost fanout                            ;
-; registerFile:rf|regFile[14][10]         ; Lost fanout                            ;
-; registerFile:rf|regFile[13][10]         ; Lost fanout                            ;
-; registerFile:rf|regFile[12][10]         ; Lost fanout                            ;
-; registerFile:rf|regFile[11][10]         ; Lost fanout                            ;
-; registerFile:rf|regFile[10][10]         ; Lost fanout                            ;
-; registerFile:rf|regFile[9][10]          ; Lost fanout                            ;
-; registerFile:rf|regFile[8][10]          ; Lost fanout                            ;
-; registerFile:rf|regFile[7][10]          ; Lost fanout                            ;
-; registerFile:rf|regFile[6][10]          ; Lost fanout                            ;
-; registerFile:rf|regFile[5][10]          ; Lost fanout                            ;
-; registerFile:rf|regFile[4][10]          ; Lost fanout                            ;
-; registerFile:rf|regFile[3][10]          ; Lost fanout                            ;
-; registerFile:rf|regFile[2][10]          ; Lost fanout                            ;
-; registerFile:rf|regFile[1][10]          ; Lost fanout                            ;
-; registerFile:rf|regFile[0][10]          ; Lost fanout                            ;
-; registerFile:rf|regFile[15][9]          ; Lost fanout                            ;
-; registerFile:rf|regFile[14][9]          ; Lost fanout                            ;
-; registerFile:rf|regFile[13][9]          ; Lost fanout                            ;
-; registerFile:rf|regFile[12][9]          ; Lost fanout                            ;
-; registerFile:rf|regFile[11][9]          ; Lost fanout                            ;
-; registerFile:rf|regFile[10][9]          ; Lost fanout                            ;
-; registerFile:rf|regFile[9][9]           ; Lost fanout                            ;
-; registerFile:rf|regFile[8][9]           ; Lost fanout                            ;
-; registerFile:rf|regFile[7][9]           ; Lost fanout                            ;
-; registerFile:rf|regFile[6][9]           ; Lost fanout                            ;
-; registerFile:rf|regFile[5][9]           ; Lost fanout                            ;
-; registerFile:rf|regFile[4][9]           ; Lost fanout                            ;
-; registerFile:rf|regFile[3][9]           ; Lost fanout                            ;
-; registerFile:rf|regFile[2][9]           ; Lost fanout                            ;
-; registerFile:rf|regFile[1][9]           ; Lost fanout                            ;
-; registerFile:rf|regFile[0][9]           ; Lost fanout                            ;
-; registerFile:rf|regFile[15][8]          ; Lost fanout                            ;
-; registerFile:rf|regFile[14][8]          ; Lost fanout                            ;
-; registerFile:rf|regFile[13][8]          ; Lost fanout                            ;
-; registerFile:rf|regFile[12][8]          ; Lost fanout                            ;
-; registerFile:rf|regFile[11][8]          ; Lost fanout                            ;
-; registerFile:rf|regFile[10][8]          ; Lost fanout                            ;
-; registerFile:rf|regFile[9][8]           ; Lost fanout                            ;
-; registerFile:rf|regFile[8][8]           ; Lost fanout                            ;
-; registerFile:rf|regFile[7][8]           ; Lost fanout                            ;
-; registerFile:rf|regFile[6][8]           ; Lost fanout                            ;
-; registerFile:rf|regFile[5][8]           ; Lost fanout                            ;
-; registerFile:rf|regFile[4][8]           ; Lost fanout                            ;
-; registerFile:rf|regFile[3][8]           ; Lost fanout                            ;
-; registerFile:rf|regFile[2][8]           ; Lost fanout                            ;
-; registerFile:rf|regFile[1][8]           ; Lost fanout                            ;
-; registerFile:rf|regFile[0][8]           ; Lost fanout                            ;
-; registerFile:rf|regFile[15][7]          ; Lost fanout                            ;
-; registerFile:rf|regFile[14][7]          ; Lost fanout                            ;
-; registerFile:rf|regFile[13][7]          ; Lost fanout                            ;
-; registerFile:rf|regFile[12][7]          ; Lost fanout                            ;
-; registerFile:rf|regFile[11][7]          ; Lost fanout                            ;
-; registerFile:rf|regFile[10][7]          ; Lost fanout                            ;
-; registerFile:rf|regFile[9][7]           ; Lost fanout                            ;
-; registerFile:rf|regFile[8][7]           ; Lost fanout                            ;
-; registerFile:rf|regFile[7][7]           ; Lost fanout                            ;
-; registerFile:rf|regFile[6][7]           ; Lost fanout                            ;
-; registerFile:rf|regFile[5][7]           ; Lost fanout                            ;
-; registerFile:rf|regFile[4][7]           ; Lost fanout                            ;
-; registerFile:rf|regFile[3][7]           ; Lost fanout                            ;
-; registerFile:rf|regFile[2][7]           ; Lost fanout                            ;
-; registerFile:rf|regFile[1][7]           ; Lost fanout                            ;
-; registerFile:rf|regFile[0][7]           ; Lost fanout                            ;
-; registerFile:rf|regFile[15][6]          ; Lost fanout                            ;
-; registerFile:rf|regFile[14][6]          ; Lost fanout                            ;
-; registerFile:rf|regFile[13][6]          ; Lost fanout                            ;
-; registerFile:rf|regFile[12][6]          ; Lost fanout                            ;
-; registerFile:rf|regFile[11][6]          ; Lost fanout                            ;
-; registerFile:rf|regFile[10][6]          ; Lost fanout                            ;
-; registerFile:rf|regFile[9][6]           ; Lost fanout                            ;
-; registerFile:rf|regFile[8][6]           ; Lost fanout                            ;
-; registerFile:rf|regFile[7][6]           ; Lost fanout                            ;
-; registerFile:rf|regFile[6][6]           ; Lost fanout                            ;
-; registerFile:rf|regFile[5][6]           ; Lost fanout                            ;
-; registerFile:rf|regFile[4][6]           ; Lost fanout                            ;
-; registerFile:rf|regFile[3][6]           ; Lost fanout                            ;
-; registerFile:rf|regFile[2][6]           ; Lost fanout                            ;
-; registerFile:rf|regFile[1][6]           ; Lost fanout                            ;
-; registerFile:rf|regFile[0][6]           ; Lost fanout                            ;
-; registerFile:rf|regFile[15][5]          ; Lost fanout                            ;
-; registerFile:rf|regFile[14][5]          ; Lost fanout                            ;
-; registerFile:rf|regFile[13][5]          ; Lost fanout                            ;
-; registerFile:rf|regFile[12][5]          ; Lost fanout                            ;
-; registerFile:rf|regFile[11][5]          ; Lost fanout                            ;
-; registerFile:rf|regFile[10][5]          ; Lost fanout                            ;
-; registerFile:rf|regFile[9][5]           ; Lost fanout                            ;
-; registerFile:rf|regFile[8][5]           ; Lost fanout                            ;
-; registerFile:rf|regFile[7][5]           ; Lost fanout                            ;
-; registerFile:rf|regFile[6][5]           ; Lost fanout                            ;
-; registerFile:rf|regFile[5][5]           ; Lost fanout                            ;
-; registerFile:rf|regFile[4][5]           ; Lost fanout                            ;
-; registerFile:rf|regFile[3][5]           ; Lost fanout                            ;
-; registerFile:rf|regFile[2][5]           ; Lost fanout                            ;
-; registerFile:rf|regFile[1][5]           ; Lost fanout                            ;
-; registerFile:rf|regFile[0][5]           ; Lost fanout                            ;
-; registerFile:rf|regFile[15][4]          ; Lost fanout                            ;
-; registerFile:rf|regFile[14][4]          ; Lost fanout                            ;
-; registerFile:rf|regFile[13][4]          ; Lost fanout                            ;
-; registerFile:rf|regFile[12][4]          ; Lost fanout                            ;
-; registerFile:rf|regFile[11][4]          ; Lost fanout                            ;
-; registerFile:rf|regFile[10][4]          ; Lost fanout                            ;
-; registerFile:rf|regFile[9][4]           ; Lost fanout                            ;
-; registerFile:rf|regFile[8][4]           ; Lost fanout                            ;
-; registerFile:rf|regFile[7][4]           ; Lost fanout                            ;
-; registerFile:rf|regFile[6][4]           ; Lost fanout                            ;
-; registerFile:rf|regFile[5][4]           ; Lost fanout                            ;
-; registerFile:rf|regFile[4][4]           ; Lost fanout                            ;
-; registerFile:rf|regFile[3][4]           ; Lost fanout                            ;
-; registerFile:rf|regFile[2][4]           ; Lost fanout                            ;
-; registerFile:rf|regFile[1][4]           ; Lost fanout                            ;
-; registerFile:rf|regFile[0][4]           ; Lost fanout                            ;
-; registerFile:rf|regFile[15][3]          ; Lost fanout                            ;
-; registerFile:rf|regFile[14][3]          ; Lost fanout                            ;
-; registerFile:rf|regFile[13][3]          ; Lost fanout                            ;
-; registerFile:rf|regFile[12][3]          ; Lost fanout                            ;
-; registerFile:rf|regFile[11][3]          ; Lost fanout                            ;
-; registerFile:rf|regFile[10][3]          ; Lost fanout                            ;
-; registerFile:rf|regFile[9][3]           ; Lost fanout                            ;
-; registerFile:rf|regFile[8][3]           ; Lost fanout                            ;
-; registerFile:rf|regFile[7][3]           ; Lost fanout                            ;
-; registerFile:rf|regFile[6][3]           ; Lost fanout                            ;
-; registerFile:rf|regFile[5][3]           ; Lost fanout                            ;
-; registerFile:rf|regFile[4][3]           ; Lost fanout                            ;
-; registerFile:rf|regFile[3][3]           ; Lost fanout                            ;
-; registerFile:rf|regFile[2][3]           ; Lost fanout                            ;
-; registerFile:rf|regFile[1][3]           ; Lost fanout                            ;
-; registerFile:rf|regFile[0][3]           ; Lost fanout                            ;
-; registerFile:rf|regFile[15][2]          ; Lost fanout                            ;
-; registerFile:rf|regFile[14][2]          ; Lost fanout                            ;
-; registerFile:rf|regFile[13][2]          ; Lost fanout                            ;
-; registerFile:rf|regFile[12][2]          ; Lost fanout                            ;
-; registerFile:rf|regFile[11][2]          ; Lost fanout                            ;
-; registerFile:rf|regFile[10][2]          ; Lost fanout                            ;
-; registerFile:rf|regFile[9][2]           ; Lost fanout                            ;
-; registerFile:rf|regFile[8][2]           ; Lost fanout                            ;
-; registerFile:rf|regFile[7][2]           ; Lost fanout                            ;
-; registerFile:rf|regFile[6][2]           ; Lost fanout                            ;
-; registerFile:rf|regFile[5][2]           ; Lost fanout                            ;
-; registerFile:rf|regFile[4][2]           ; Lost fanout                            ;
-; registerFile:rf|regFile[3][2]           ; Lost fanout                            ;
-; registerFile:rf|regFile[2][2]           ; Lost fanout                            ;
-; registerFile:rf|regFile[1][2]           ; Lost fanout                            ;
-; registerFile:rf|regFile[0][2]           ; Lost fanout                            ;
-; registerFile:rf|regFile[15][1]          ; Lost fanout                            ;
-; registerFile:rf|regFile[14][1]          ; Lost fanout                            ;
-; registerFile:rf|regFile[13][1]          ; Lost fanout                            ;
-; registerFile:rf|regFile[12][1]          ; Lost fanout                            ;
-; registerFile:rf|regFile[11][1]          ; Lost fanout                            ;
-; registerFile:rf|regFile[10][1]          ; Lost fanout                            ;
-; registerFile:rf|regFile[9][1]           ; Lost fanout                            ;
-; registerFile:rf|regFile[8][1]           ; Lost fanout                            ;
-; registerFile:rf|regFile[7][1]           ; Lost fanout                            ;
-; registerFile:rf|regFile[6][1]           ; Lost fanout                            ;
-; registerFile:rf|regFile[5][1]           ; Lost fanout                            ;
-; registerFile:rf|regFile[4][1]           ; Lost fanout                            ;
-; registerFile:rf|regFile[3][1]           ; Lost fanout                            ;
-; registerFile:rf|regFile[2][1]           ; Lost fanout                            ;
-; registerFile:rf|regFile[1][1]           ; Lost fanout                            ;
-; registerFile:rf|regFile[0][1]           ; Lost fanout                            ;
-; register:srcReg|q[0..3]                 ; Lost fanout                            ;
-; registerFile:rf|regFile[15][0]          ; Lost fanout                            ;
-; registerFile:rf|regFile[14][0]          ; Lost fanout                            ;
-; registerFile:rf|regFile[13][0]          ; Lost fanout                            ;
-; registerFile:rf|regFile[12][0]          ; Lost fanout                            ;
-; registerFile:rf|regFile[11][0]          ; Lost fanout                            ;
-; registerFile:rf|regFile[10][0]          ; Lost fanout                            ;
-; registerFile:rf|regFile[9][0]           ; Lost fanout                            ;
-; registerFile:rf|regFile[8][0]           ; Lost fanout                            ;
-; registerFile:rf|regFile[7][0]           ; Lost fanout                            ;
-; registerFile:rf|regFile[6][0]           ; Lost fanout                            ;
-; registerFile:rf|regFile[5][0]           ; Lost fanout                            ;
-; registerFile:rf|regFile[4][0]           ; Lost fanout                            ;
-; registerFile:rf|regFile[3][0]           ; Lost fanout                            ;
-; registerFile:rf|regFile[2][0]           ; Lost fanout                            ;
-; registerFile:rf|regFile[1][0]           ; Lost fanout                            ;
-; registerFile:rf|regFile[0][0]           ; Lost fanout                            ;
-; registerFile:rf|readData1[0..2]         ; Lost fanout                            ;
-; registerFile:rf|readData2[0..15]        ; Lost fanout                            ;
-; registerFile:rf|readData1[3..15]        ; Lost fanout                            ;
-; PSR_reg:PSRreg|final_group2[0]          ; Stuck at GND due to stuck port data_in ;
-; PSR_reg:PSRreg|final_group1[0]          ; Stuck at GND due to stuck port data_in ;
-; Total Number of Removed Registers = 330 ;                                        ;
-+-----------------------------------------+----------------------------------------+
->>>>>>> 6fdedbbf5d586a85909adf85b8fba1134555fd38
-
-
-+------------------------------------------------------+
-; General Register Statistics                          ;
-+----------------------------------------------+-------+
-; Statistic                                    ; Value ;
-+----------------------------------------------+-------+
-; Total registers                              ; 0     ;
-; Number of registers using Synchronous Clear  ; 0     ;
-; Number of registers using Synchronous Load   ; 0     ;
-; Number of registers using Asynchronous Clear ; 0     ;
-; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 0     ;
-; Number of registers using Preset             ; 0     ;
-+----------------------------------------------+-------+
-
-
-+---------------------------------------------------------------------+
-; Parameter Settings for User Entity Instance: Top-level Entity: |cpu ;
-+----------------+-------+--------------------------------------------+
-; Parameter Name ; Value ; Type                                       ;
-+----------------+-------+--------------------------------------------+
-; SIZE           ; 16    ; Signed Integer                             ;
-; NUMREGS        ; 16    ; Signed Integer                             ;
-+----------------+-------+--------------------------------------------+
-Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
-
-
-+-------------------------------------------------------------+
-; Parameter Settings for User Entity Instance: register:pcReg ;
-+----------------+-------+------------------------------------+
-; Parameter Name ; Value ; Type                               ;
-+----------------+-------+------------------------------------+
-; SIZE           ; 16    ; Signed Integer                     ;
-+----------------+-------+------------------------------------+
-Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
-
-
-+--------------------------------------------------------------+
-; Parameter Settings for User Entity Instance: register:srcReg ;
-+----------------+-------+-------------------------------------+
-; Parameter Name ; Value ; Type                                ;
-+----------------+-------+-------------------------------------+
-; SIZE           ; 16    ; Signed Integer                      ;
-+----------------+-------+-------------------------------------+
-Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
-
-
-+--------------------------------------------------------------+
-; Parameter Settings for User Entity Instance: register:dstReg ;
-+----------------+-------+-------------------------------------+
-; Parameter Name ; Value ; Type                                ;
-+----------------+-------+-------------------------------------+
-; SIZE           ; 16    ; Signed Integer                      ;
-+----------------+-------+-------------------------------------+
-Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
-
-
-+--------------------------------------------------------------+
-; Parameter Settings for User Entity Instance: register:immReg ;
-+----------------+-------+-------------------------------------+
-; Parameter Name ; Value ; Type                                ;
-+----------------+-------+-------------------------------------+
-; SIZE           ; 16    ; Signed Integer                      ;
-+----------------+-------+-------------------------------------+
-Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
-
-
-+--------------------------------------------------------------+
-; Parameter Settings for User Entity Instance: registerFile:rf ;
-+----------------+-------+-------------------------------------+
-; Parameter Name ; Value ; Type                                ;
-+----------------+-------+-------------------------------------+
-; SIZE           ; 16    ; Signed Integer                      ;
-; REGBITS        ; 4     ; Signed Integer                      ;
-+----------------+-------+-------------------------------------+
-Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
-
-
-+--------------------------------------------------------+
-; Parameter Settings for User Entity Instance: mux2:alu1 ;
-+----------------+-------+-------------------------------+
-; Parameter Name ; Value ; Type                          ;
-+----------------+-------+-------------------------------+
-; WIDTH          ; 16    ; Signed Integer                ;
-+----------------+-------+-------------------------------+
-Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
-
-
-+--------------------------------------------------------+
-; Parameter Settings for User Entity Instance: mux2:alu2 ;
-+----------------+-------+-------------------------------+
-; Parameter Name ; Value ; Type                          ;
-+----------------+-------+-------------------------------+
-; WIDTH          ; 16    ; Signed Integer                ;
-+----------------+-------+-------------------------------+
-Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
-
-
-+----------------------------------------------------------+
-; Parameter Settings for User Entity Instance: alu:mainAlu ;
-+----------------+-------+---------------------------------+
-; Parameter Name ; Value ; Type                            ;
-+----------------+-------+---------------------------------+
-; WIDTH          ; 16    ; Signed Integer                  ;
-+----------------+-------+---------------------------------+
-Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
-
-
-+--------------------------------------------------------------+
-; Parameter Settings for User Entity Instance: register:outReg ;
-+----------------+-------+-------------------------------------+
-; Parameter Name ; Value ; Type                                ;
-+----------------+-------+-------------------------------------+
-; SIZE           ; 16    ; Signed Integer                      ;
-+----------------+-------+-------------------------------------+
-Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
-
-
-+----------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "register:outReg"                                                                    ;
-+------+--------+----------+-------------------------------------------------------------------------------------+
-; Port ; Type   ; Severity ; Details                                                                             ;
-+------+--------+----------+-------------------------------------------------------------------------------------+
-; q    ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
-+------+--------+----------+-------------------------------------------------------------------------------------+
-
-
-+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "PSR_reg:PSRreg"                                                                                                                         ;
-+--------------+--------+----------+---------------------------------------------------------------------------------------------------------------------------------+
-; Port         ; Type   ; Severity ; Details                                                                                                                         ;
-+--------------+--------+----------+---------------------------------------------------------------------------------------------------------------------------------+
-; final_group1 ; Output ; Warning  ; Output or bidir port (2 bits) is wider than the port expression (1 bits) it drives; bit(s) "final_group1[1..1]" have no fanouts ;
-; final_group2 ; Output ; Warning  ; Output or bidir port (3 bits) is wider than the port expression (1 bits) it drives; bit(s) "final_group2[2..1]" have no fanouts ;
-+--------------+--------+----------+---------------------------------------------------------------------------------------------------------------------------------+
-
-
-+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "registerFile:rf"                                                                                                                                                                     ;
-+---------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Port    ; Type  ; Severity ; Details                                                                                                                                                                            ;
-+---------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; srcAddr ; Input ; Warning  ; Input port expression (16 bits) is wider than the input port (4 bits) it drives.  The 12 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
-; dstAddr ; Input ; Warning  ; Input port expression (16 bits) is wider than the input port (4 bits) it drives.  The 12 most-significant bit(s) in the expression will be dangling if they have no other fanouts. ;
-+---------+-------+----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-
-
-+--------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "register:dstReg"                                                                        ;
-+----------+--------+----------+-------------------------------------------------------------------------------------+
-; Port     ; Type   ; Severity ; Details                                                                             ;
-+----------+--------+----------+-------------------------------------------------------------------------------------+
-; q[15..4] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
-+----------+--------+----------+-------------------------------------------------------------------------------------+
-
-
-+--------------------------------------------------------------------------------------------------------------------+
-; Port Connectivity Checks: "register:srcReg"                                                                        ;
-+----------+--------+----------+-------------------------------------------------------------------------------------+
-; Port     ; Type   ; Severity ; Details                                                                             ;
-+----------+--------+----------+-------------------------------------------------------------------------------------+
-; q[15..4] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
-+----------+--------+----------+-------------------------------------------------------------------------------------+
-
-
-+-----------------------------------------------------+
-; Post-Synthesis Netlist Statistics for Top Partition ;
-+-----------------------+-----------------------------+
-; Type                  ; Count                       ;
-+-----------------------+-----------------------------+
-; arriav_lcell_comb     ; 1                           ;
-;     normal            ; 1                           ;
-;         0 data inputs ; 1                           ;
-; boundary_port         ; 114                         ;
-;                       ;                             ;
-; Max LUT depth         ; 0.00                        ;
-; Average LUT depth     ; 0.00                        ;
-+-----------------------+-----------------------------+
-
-
-+-------------------------------+
-; Elapsed Time Per Partition    ;
-+----------------+--------------+
-; Partition Name ; Elapsed Time ;
-+----------------+--------------+
-; Top            ; 00:00:00     ;
-+----------------+--------------+
-
-
 +-------------------------------+
 ; Analysis & Synthesis Messages ;
 +-------------------------------+
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
-<<<<<<< HEAD
     Info: Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
-    Info: Processing started: Tue Oct 18 17:24:14 2022
-=======
-    Info: Version 18.0.0 Build 614 04/24/2018 SJ Lite Edition
-    Info: Processing started: Wed Oct 19 16:23:34 2022
->>>>>>> 6fdedbbf5d586a85909adf85b8fba1134555fd38
+    Info: Processing started: Thu Oct 20 16:09:46 2022
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off cpu -c cpu
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
-Info (20030): Parallel compilation is enabled and will use 8 of the 8 processors detected
-Info (12021): Found 1 design units, including 1 entities, in source file psr_reg.v
-    Info (12023): Found entity 1: PSR_reg File: E:/3710/GroupProject/cs3710/PSR_reg.v Line: 2
-Info (12021): Found 1 design units, including 1 entities, in source file registerfile.v
-    Info (12023): Found entity 1: registerFile File: E:/3710/GroupProject/cs3710/registerFile.v Line: 11
+Info (20030): Parallel compilation is enabled and will use 2 of the 2 processors detected
+Info (12021): Found 1 design units, including 1 entities, in source file PSR_reg.v
+    Info (12023): Found entity 1: PSR_reg File: /home/ella/Documents/School/CS3710/cpu/PSR_reg.v Line: 2
+Info (12021): Found 1 design units, including 1 entities, in source file registerFile.v
+    Info (12023): Found entity 1: registerFile File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 11
 Info (12021): Found 1 design units, including 1 entities, in source file register.v
-    Info (12023): Found entity 1: register File: E:/3710/GroupProject/cs3710/register.v Line: 1
+    Info (12023): Found entity 1: register File: /home/ella/Documents/School/CS3710/cpu/register.v Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file cpu.v
-    Info (12023): Found entity 1: cpu File: E:/3710/GroupProject/cs3710/cpu.v Line: 1
+    Info (12023): Found entity 1: cpu File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file mux2.v
-    Info (12023): Found entity 1: mux2 File: E:/3710/GroupProject/cs3710/mux2.v Line: 1
+    Info (12023): Found entity 1: mux2 File: /home/ella/Documents/School/CS3710/cpu/mux2.v Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file alu.v
-<<<<<<< HEAD
     Info (12023): Found entity 1: alu File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 15
 Info (12021): Found 1 design units, including 1 entities, in source file aluTb.v
     Info (12023): Found entity 1: aluTb File: /home/ella/Documents/School/CS3710/cpu/aluTb.v Line: 3
 Info (12021): Found 1 design units, including 1 entities, in source file registerFile_tb.v
     Info (12023): Found entity 1: registerFile_tb File: /home/ella/Documents/School/CS3710/cpu/registerFile_tb.v Line: 3
-Warning (10236): Verilog HDL Implicit Net warning at cpu.v(40): created implicit net for "final_group1" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 40
-Warning (10236): Verilog HDL Implicit Net warning at cpu.v(40): created implicit net for "final_group2" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 40
+Warning (10236): Verilog HDL Implicit Net warning at cpu.v(39): created implicit net for "cond_group1" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 39
+Warning (10236): Verilog HDL Implicit Net warning at cpu.v(39): created implicit net for "cond_group2" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 39
+Error (10137): Verilog HDL Procedural Assignment error at cpu.v(25): object "aluOp" on left-hand side of assignment must have a variable data type File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 25
+Error (10137): Verilog HDL Procedural Assignment error at cpu.v(27): object "aluOp" on left-hand side of assignment must have a variable data type File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 27
+Error (10137): Verilog HDL Procedural Assignment error at cpu.v(29): object "aluOp" on left-hand side of assignment must have a variable data type File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 29
+Error (10137): Verilog HDL Procedural Assignment error at cpu.v(31): object "aluOp" on left-hand side of assignment must have a variable data type File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 31
+Error (10137): Verilog HDL Procedural Assignment error at cpu.v(33): object "aluOp" on left-hand side of assignment must have a variable data type File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 33
+Error (10137): Verilog HDL Procedural Assignment error at cpu.v(35): object "aluOp" on left-hand side of assignment must have a variable data type File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 35
+Error (10137): Verilog HDL Procedural Assignment error at cpu.v(37): object "aluOp" on left-hand side of assignment must have a variable data type File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 37
 Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(35): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 35
 Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(36): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 36
 Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(37): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 37
@@ -862,293 +235,29 @@ Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(84): Paramet
 Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(85): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 85
 Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(86): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 86
 Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(87): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 87
-Info (12127): Elaborating entity "cpu" for the top level hierarchy
-Warning (10034): Output port "adr" at cpu.v(6) has no driver File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
-Warning (10034): Output port "wd" at cpu.v(7) has no driver File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
-Warning (10034): Output port "memwrite" at cpu.v(5) has no driver File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 5
-Info (12128): Elaborating entity "register" for hierarchy "register:pcReg" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 28
-Info (12128): Elaborating entity "registerFile" for hierarchy "registerFile:rf" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 33
-Info (10648): Verilog HDL Display System Task info at registerFile.v(36): Loading register file File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 36
-Info (10648): Verilog HDL Display System Task info at registerFile.v(39): Done with loading register file File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 39
-Warning (10030): Net "regFile.data_a" at registerFile.v(32) has no driver or initial value, using a default initial value '0' File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 32
-Warning (10030): Net "regFile.waddr_a" at registerFile.v(32) has no driver or initial value, using a default initial value '0' File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 32
-Warning (10030): Net "regFile.we_a" at registerFile.v(32) has no driver or initial value, using a default initial value '0' File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 32
-Info (12128): Elaborating entity "mux2" for hierarchy "mux2:alu1" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 35
-Info (12128): Elaborating entity "alu" for hierarchy "alu:mainAlu" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 38
-Warning (10270): Verilog HDL Case Statement warning at alu.v(171): incomplete case statement has no default case item File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 171
-Warning (10270): Verilog HDL Case Statement warning at alu.v(210): incomplete case statement has no default case item File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 210
-Warning (10270): Verilog HDL Case Statement warning at alu.v(236): incomplete case statement has no default case item File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 236
-Warning (10270): Verilog HDL Case Statement warning at alu.v(249): incomplete case statement has no default case item File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 249
-Warning (10270): Verilog HDL Case Statement warning at alu.v(288): incomplete case statement has no default case item File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 288
-Warning (10270): Verilog HDL Case Statement warning at alu.v(314): incomplete case statement has no default case item File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 314
-Warning (10270): Verilog HDL Case Statement warning at alu.v(338): incomplete case statement has no default case item File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 338
-Info (12128): Elaborating entity "PSR_reg" for hierarchy "PSR_reg:PSRreg" File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 40
-=======
-    Info (12023): Found entity 1: alu File: E:/3710/GroupProject/cs3710/alu.v Line: 15
-Info (12021): Found 1 design units, including 1 entities, in source file alutb.v
-    Info (12023): Found entity 1: aluTb File: E:/3710/GroupProject/cs3710/aluTb.v Line: 3
-Info (12021): Found 1 design units, including 1 entities, in source file registerfile_tb.v
-    Info (12023): Found entity 1: registerFile_tb File: E:/3710/GroupProject/cs3710/registerFile_tb.v Line: 3
-Warning (10236): Verilog HDL Implicit Net warning at cpu.v(40): created implicit net for "final_group1" File: E:/3710/GroupProject/cs3710/cpu.v Line: 40
-Warning (10236): Verilog HDL Implicit Net warning at cpu.v(40): created implicit net for "final_group2" File: E:/3710/GroupProject/cs3710/cpu.v Line: 40
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(35): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 35
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(36): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 36
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(37): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 37
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(38): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 38
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(39): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 39
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(40): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 40
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(41): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 41
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(42): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 42
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(43): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 43
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(46): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 46
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(47): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 47
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(48): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 48
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(49): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 49
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(52): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 52
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(53): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 53
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(54): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 54
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(55): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 55
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(56): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 56
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(57): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 57
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(58): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 58
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(59): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 59
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(60): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 60
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(61): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 61
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(64): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 64
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(65): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 65
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(67): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 67
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(68): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 68
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(69): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 69
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(72): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 72
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(73): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 73
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(74): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 74
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(75): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 75
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(76): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 76
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(77): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 77
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(78): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 78
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(79): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 79
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(80): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 80
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(81): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 81
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(82): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 82
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(83): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 83
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(84): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 84
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(85): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 85
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(86): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 86
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(87): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: E:/3710/GroupProject/cs3710/alu.v Line: 87
-Info (12127): Elaborating entity "cpu" for the top level hierarchy
-Warning (10034): Output port "adr" at cpu.v(6) has no driver File: E:/3710/GroupProject/cs3710/cpu.v Line: 6
-Warning (10034): Output port "wd" at cpu.v(7) has no driver File: E:/3710/GroupProject/cs3710/cpu.v Line: 7
-Warning (10034): Output port "memwrite" at cpu.v(5) has no driver File: E:/3710/GroupProject/cs3710/cpu.v Line: 5
-Info (12128): Elaborating entity "register" for hierarchy "register:pcReg" File: E:/3710/GroupProject/cs3710/cpu.v Line: 28
-Info (12128): Elaborating entity "registerFile" for hierarchy "registerFile:rf" File: E:/3710/GroupProject/cs3710/cpu.v Line: 33
-Info (10648): Verilog HDL Display System Task info at registerFile.v(26): Loading register file File: E:/3710/GroupProject/cs3710/registerFile.v Line: 26
-Info (10648): Verilog HDL Display System Task info at registerFile.v(28): Done with loading register file File: E:/3710/GroupProject/cs3710/registerFile.v Line: 28
-Info (12128): Elaborating entity "mux2" for hierarchy "mux2:alu1" File: E:/3710/GroupProject/cs3710/cpu.v Line: 35
-Info (12128): Elaborating entity "alu" for hierarchy "alu:mainAlu" File: E:/3710/GroupProject/cs3710/cpu.v Line: 38
-Warning (10270): Verilog HDL Case Statement warning at alu.v(171): incomplete case statement has no default case item File: E:/3710/GroupProject/cs3710/alu.v Line: 171
-Warning (10270): Verilog HDL Case Statement warning at alu.v(210): incomplete case statement has no default case item File: E:/3710/GroupProject/cs3710/alu.v Line: 210
-Warning (10270): Verilog HDL Case Statement warning at alu.v(236): incomplete case statement has no default case item File: E:/3710/GroupProject/cs3710/alu.v Line: 236
-Warning (10270): Verilog HDL Case Statement warning at alu.v(249): incomplete case statement has no default case item File: E:/3710/GroupProject/cs3710/alu.v Line: 249
-Warning (10270): Verilog HDL Case Statement warning at alu.v(288): incomplete case statement has no default case item File: E:/3710/GroupProject/cs3710/alu.v Line: 288
-Warning (10270): Verilog HDL Case Statement warning at alu.v(314): incomplete case statement has no default case item File: E:/3710/GroupProject/cs3710/alu.v Line: 314
-Warning (10270): Verilog HDL Case Statement warning at alu.v(338): incomplete case statement has no default case item File: E:/3710/GroupProject/cs3710/alu.v Line: 338
-Info (12128): Elaborating entity "PSR_reg" for hierarchy "PSR_reg:PSRreg" File: E:/3710/GroupProject/cs3710/cpu.v Line: 40
->>>>>>> 6fdedbbf5d586a85909adf85b8fba1134555fd38
-Warning (12011): Net is missing source, defaulting to GND
-    Warning (12110): Net "en" is missing source, defaulting to GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 12
-Warning (12011): Net is missing source, defaulting to GND
-    Warning (12110): Net "en" is missing source, defaulting to GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 12
-Warning (12011): Net is missing source, defaulting to GND
-    Warning (12110): Net "en" is missing source, defaulting to GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 12
-Warning (12011): Net is missing source, defaulting to GND
-    Warning (12110): Net "en" is missing source, defaulting to GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 12
-Warning (12011): Net is missing source, defaulting to GND
-    Warning (12110): Net "en" is missing source, defaulting to GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 12
-Warning (12241): 2 hierarchies have connectivity warnings - see the Connectivity Checks report folder
-Warning (13024): Output pins are stuck at VCC or GND
-<<<<<<< HEAD
-    Warning (13410): Pin "memwrite" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 5
-    Warning (13410): Pin "adr[0]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
-    Warning (13410): Pin "adr[1]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
-    Warning (13410): Pin "adr[2]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
-    Warning (13410): Pin "adr[3]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
-    Warning (13410): Pin "adr[4]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
-    Warning (13410): Pin "adr[5]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
-    Warning (13410): Pin "adr[6]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
-    Warning (13410): Pin "adr[7]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
-    Warning (13410): Pin "adr[8]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
-    Warning (13410): Pin "adr[9]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
-    Warning (13410): Pin "adr[10]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
-    Warning (13410): Pin "adr[11]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
-    Warning (13410): Pin "adr[12]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
-    Warning (13410): Pin "adr[13]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
-    Warning (13410): Pin "adr[14]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
-    Warning (13410): Pin "adr[15]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 6
-    Warning (13410): Pin "wd[0]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
-    Warning (13410): Pin "wd[1]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
-    Warning (13410): Pin "wd[2]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
-    Warning (13410): Pin "wd[3]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
-    Warning (13410): Pin "wd[4]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
-    Warning (13410): Pin "wd[5]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
-    Warning (13410): Pin "wd[6]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
-    Warning (13410): Pin "wd[7]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
-    Warning (13410): Pin "wd[8]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
-    Warning (13410): Pin "wd[9]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
-    Warning (13410): Pin "wd[10]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
-    Warning (13410): Pin "wd[11]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
-    Warning (13410): Pin "wd[12]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
-    Warning (13410): Pin "wd[13]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
-    Warning (13410): Pin "wd[14]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
-    Warning (13410): Pin "wd[15]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 7
-    Warning (13410): Pin "condsOut[0]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 8
-    Warning (13410): Pin "condsOut[1]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 8
-    Warning (13410): Pin "condsOut[2]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 8
-    Warning (13410): Pin "condsOut[3]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 8
-    Warning (13410): Pin "condsOut[4]" is stuck at GND File: /home/ella/Documents/School/CS3710/cpu/cpu.v Line: 8
-Info (17049): 72 registers lost all their fanouts during netlist optimizations.
+Error (10161): Verilog HDL error at alu.v(132): object "pcOut" is not declared. Verify the object name is correct. If the name is correct, declare the object. File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 132
+Error (10161): Verilog HDL error at alu.v(159): object "pcOut" is not declared. Verify the object name is correct. If the name is correct, declare the object. File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 159
+Error (10161): Verilog HDL error at alu.v(164): object "pcOut" is not declared. Verify the object name is correct. If the name is correct, declare the object. File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 164
+Error (10161): Verilog HDL error at alu.v(172): object "pcOut" is not declared. Verify the object name is correct. If the name is correct, declare the object. File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 172
+Error (10161): Verilog HDL error at alu.v(177): object "pcOut" is not declared. Verify the object name is correct. If the name is correct, declare the object. File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 177
+Error (10161): Verilog HDL error at alu.v(185): object "pcOut" is not declared. Verify the object name is correct. If the name is correct, declare the object. File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 185
+Error (10161): Verilog HDL error at alu.v(190): object "pcOut" is not declared. Verify the object name is correct. If the name is correct, declare the object. File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 190
+Error (10161): Verilog HDL error at alu.v(198): object "pcOut" is not declared. Verify the object name is correct. If the name is correct, declare the object. File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 198
+Error (10161): Verilog HDL error at alu.v(203): object "pcOut" is not declared. Verify the object name is correct. If the name is correct, declare the object. File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 203
+Error (10161): Verilog HDL error at alu.v(211): object "pcOut" is not declared. Verify the object name is correct. If the name is correct, declare the object. File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 211
+Error (10161): Verilog HDL error at alu.v(216): object "pcOut" is not declared. Verify the object name is correct. If the name is correct, declare the object. File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 216
+Error (10161): Verilog HDL error at alu.v(224): object "pcOut" is not declared. Verify the object name is correct. If the name is correct, declare the object. File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 224
 Info (144001): Generated suppressed messages file /home/ella/Documents/School/CS3710/cpu/output_files/cpu.map.smsg
-=======
-    Warning (13410): Pin "memwrite" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 5
-    Warning (13410): Pin "adr[0]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 6
-    Warning (13410): Pin "adr[1]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 6
-    Warning (13410): Pin "adr[2]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 6
-    Warning (13410): Pin "adr[3]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 6
-    Warning (13410): Pin "adr[4]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 6
-    Warning (13410): Pin "adr[5]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 6
-    Warning (13410): Pin "adr[6]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 6
-    Warning (13410): Pin "adr[7]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 6
-    Warning (13410): Pin "adr[8]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 6
-    Warning (13410): Pin "adr[9]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 6
-    Warning (13410): Pin "adr[10]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 6
-    Warning (13410): Pin "adr[11]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 6
-    Warning (13410): Pin "adr[12]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 6
-    Warning (13410): Pin "adr[13]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 6
-    Warning (13410): Pin "adr[14]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 6
-    Warning (13410): Pin "adr[15]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 6
-    Warning (13410): Pin "wd[0]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 7
-    Warning (13410): Pin "wd[1]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 7
-    Warning (13410): Pin "wd[2]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 7
-    Warning (13410): Pin "wd[3]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 7
-    Warning (13410): Pin "wd[4]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 7
-    Warning (13410): Pin "wd[5]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 7
-    Warning (13410): Pin "wd[6]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 7
-    Warning (13410): Pin "wd[7]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 7
-    Warning (13410): Pin "wd[8]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 7
-    Warning (13410): Pin "wd[9]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 7
-    Warning (13410): Pin "wd[10]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 7
-    Warning (13410): Pin "wd[11]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 7
-    Warning (13410): Pin "wd[12]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 7
-    Warning (13410): Pin "wd[13]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 7
-    Warning (13410): Pin "wd[14]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 7
-    Warning (13410): Pin "wd[15]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 7
-    Warning (13410): Pin "condsOut[0]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 8
-    Warning (13410): Pin "condsOut[1]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 8
-    Warning (13410): Pin "condsOut[2]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 8
-    Warning (13410): Pin "condsOut[3]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 8
-    Warning (13410): Pin "condsOut[4]" is stuck at GND File: E:/3710/GroupProject/cs3710/cpu.v Line: 8
-Info (17049): 328 registers lost all their fanouts during netlist optimizations.
-Info (144001): Generated suppressed messages file E:/3710/GroupProject/cs3710/output_files/cpu.map.smsg
->>>>>>> 6fdedbbf5d586a85909adf85b8fba1134555fd38
-Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
-    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Warning (21074): Design contains 76 input pin(s) that do not drive logic
-    Warning (15610): No output dependent on input pin "clk" File: E:/3710/GroupProject/cs3710/cpu.v Line: 2
-    Warning (15610): No output dependent on input pin "reset" File: E:/3710/GroupProject/cs3710/cpu.v Line: 2
-    Warning (15610): No output dependent on input pin "ctrl[0]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 3
-    Warning (15610): No output dependent on input pin "ctrl[1]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 3
-    Warning (15610): No output dependent on input pin "ctrl[2]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 3
-    Warning (15610): No output dependent on input pin "ctrl[3]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 3
-    Warning (15610): No output dependent on input pin "ctrl[4]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 3
-    Warning (15610): No output dependent on input pin "ctrl[5]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 3
-    Warning (15610): No output dependent on input pin "ctrl[6]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 3
-    Warning (15610): No output dependent on input pin "ctrl[7]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 3
-    Warning (15610): No output dependent on input pin "ctrl[8]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 3
-    Warning (15610): No output dependent on input pin "ctrl[9]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 3
-    Warning (15610): No output dependent on input pin "memdata[0]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "memdata[1]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "memdata[2]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "memdata[3]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "memdata[4]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "memdata[5]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "memdata[6]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "memdata[7]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "memdata[8]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "memdata[9]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "memdata[10]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "memdata[11]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "memdata[12]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "memdata[13]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "memdata[14]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "memdata[15]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "srcAddr[0]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "srcAddr[1]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "srcAddr[2]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "srcAddr[3]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "srcAddr[4]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "srcAddr[5]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "srcAddr[6]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "srcAddr[7]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "srcAddr[8]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "srcAddr[9]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "srcAddr[10]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "srcAddr[11]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "srcAddr[12]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "srcAddr[13]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "srcAddr[14]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "srcAddr[15]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "dstAddr[0]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "dstAddr[1]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "dstAddr[2]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "dstAddr[3]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "dstAddr[4]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "dstAddr[5]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "dstAddr[6]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "dstAddr[7]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "dstAddr[8]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "dstAddr[9]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "dstAddr[10]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "dstAddr[11]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "dstAddr[12]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "dstAddr[13]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "dstAddr[14]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "dstAddr[15]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "imm[0]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "imm[1]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "imm[2]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "imm[3]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "imm[4]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "imm[5]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "imm[6]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "imm[7]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "imm[8]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "imm[9]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "imm[10]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "imm[11]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "imm[12]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "imm[13]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "imm[14]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-    Warning (15610): No output dependent on input pin "imm[15]" File: E:/3710/GroupProject/cs3710/cpu.v Line: 4
-Info (21057): Implemented 114 device resources after synthesis - the final resource count might be different
-    Info (21058): Implemented 76 input pins
-    Info (21059): Implemented 38 output pins
-<<<<<<< HEAD
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 187 warnings
-    Info: Peak virtual memory: 426 megabytes
-    Info: Processing ended: Tue Oct 18 17:24:44 2022
-    Info: Elapsed time: 00:00:30
-    Info: Total CPU time (on all processors): 00:00:51
-=======
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 184 warnings
-    Info: Peak virtual memory: 4800 megabytes
-    Info: Processing ended: Wed Oct 19 16:23:41 2022
-    Info: Elapsed time: 00:00:07
-    Info: Total CPU time (on all processors): 00:00:14
->>>>>>> 6fdedbbf5d586a85909adf85b8fba1134555fd38
+Error: Quartus Prime Analysis & Synthesis was unsuccessful. 19 errors, 47 warnings
+    Error: Peak virtual memory: 402 megabytes
+    Error: Processing ended: Thu Oct 20 16:10:02 2022
+    Error: Elapsed time: 00:00:16
+    Error: Total CPU time (on all processors): 00:00:30
 
 
 +------------------------------------------+
 ; Analysis & Synthesis Suppressed Messages ;
 +------------------------------------------+
-The suppressed messages can be found in E:/3710/GroupProject/cs3710/output_files/cpu.map.smsg.
+The suppressed messages can be found in /home/ella/Documents/School/CS3710/cpu/output_files/cpu.map.smsg.
 
 
