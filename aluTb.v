@@ -7,7 +7,8 @@ integer counter;
 reg cIn;
 reg[7:0] aluOp, aluIn1, aluIn2;
 wire[15:0] aluOut;
-wire[1:0] cond_group1;
+//wire[1:0] cond_group1;
+wire cond_group1;
 wire[2:0] cond_group2;
 wire[4:0] conds;
 
@@ -71,8 +72,8 @@ end
 always@(posedge clk) begin
 	$display("aluOp: %b, aluIn1: %b, aluIn2: %b, aluOut: %b, conds: %b",
 		aluOp, aluIn1, aluIn2, aluOut, conds);
-	$display("writeEn: %b, writeData: %b, srcAddr: %b, dstAddr: %b, readData1: %b, readData2: %b",
-		writeEn, writeData, srcAddr, dstAddr, readData1, readData2);
+//	$display("writeEn: %b, writeData: %b, srcAddr: %b, dstAddr: %b, readData1: %b, readData2: %b",
+	//	writeEn, writeData, srcAddr, dstAddr, readData1, readData2);
 	//$display("%b %d",counter,counter);
 	case(counter)
 		1: begin
@@ -177,7 +178,7 @@ always@(posedge clk) begin
 			aluOp <= 8'b10110000;
 			$display("Testing CMP...\n");
 		end
-		26: if(conds != 5'b00000)
+		/*26: if(conds != 5'b00000)
 				$display("ERROR IN CMP: Expected conds = 00000, got %d\n",
 					conds);
 		27: begin
@@ -242,7 +243,7 @@ always@(posedge clk) begin
 			dstAddr <= 8'b1;
 		end
 		44: if(readData1 != 8'b10101010)
-			$display("ERROR IN RF: Expected readData1 = 10101010, got %d\n",readData1);
+			$display("ERROR IN RF: Expected readData1 = 10101010, got %d\n",readData1); */
 		45: counter <= 0;
 		default: ;
 	endcase

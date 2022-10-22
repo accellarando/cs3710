@@ -1,12 +1,9 @@
-`timescale 1ns / 1ps
+//`timescale 1ns / 1ps
 /*
 REGISTER FILE: Provide arguments and hold results by instantiating 16 16-bit registers
-
 (-) Immediate to be sign-extended before ALU (concatenation)
 (-) Shifter
-
 (-) Program counter register and immediate register (make sure you can change these later on)
-
 (?) PSR = processor status register
 (X) Decoder
 */
@@ -31,28 +28,32 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 	
 	reg [SIZE-1:0] regFile [(1<<REGBITS)-1:0]; // Declare sixteen 16-bit registers in register file 
 
-	/* Reading relative path*/
+	// Reading relative path
 	initial begin
-	$display("Loading register file");
-	$readmemb("E:/3710/GroupProject/cs3710/reg.dat", regFile); // ! CHANGE TO YOUR LOCAL PATH !
-	$display("Done with loading register file"); 
+	$display("Loading Register File...");
+	//$readmemb("E:/3710/GroupProject/cs3710/reg.dat", regFile); // ! CHANGE TO YOUR LOCAL PATH !
+	$readmemb("C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/reg.dat", regFile);
+	$display("Done with loading Register File\n"); 
 	end
 	
 
-	/* Assigning */
+	//Assigning 
+	integer i;
+	
 	always @(posedge clk) begin
-		if(reset) begin
+		if(!reset) begin
 			// ?? all 16 registers are set to 16'b0
-			for(integer i = 0; i < SIZE; i = i + 1) begin 
+			for(i = 0; i < SIZE; i = i + 1) begin 
 				regFile[i] <= 0;							
 			end
 		end
 		else begin	
 			if(writeEn) begin
-				readData1 <= regFile[dstAddr];
-				readData2 <= regFile[srcAddr];
+				regFile[dstAddr] <= writeData;	// dstAddr is both read and write address (dual-port)
 			end
 		end
+		readData1 <= regFile[dstAddr];			// read ports have data inputs
+		readData2 <= regFile[srcAddr];
 	end
 
 endmodule 

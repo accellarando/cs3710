@@ -1,182 +1,167 @@
 m255
 K4
 z2
-!s11f vlog 2020.1 2020.02, Feb 28 2020
 13
 !s112 1.1
 !i10d 8192
 !i10e 25
 !i10f 100
 cModel Technology
-Z0 d/home/ella/Documents/School/CS3710/cpu/simulation/modelsim
+Z0 dC:/Users/bledy/OneDrive/Documents/GitHub/cs3710/simulation/modelsim
 valu
-!s110 1666070146
+Z1 !s110 1666255965
 !i10b 1
-!s100 HiD?lo^4AO0jYkI:]4EQU1
-Z1 !s11b Dg1SIo80bB@j0V0VzS_@n1
-I:kX1`Vm880_eQ7lXeR==U0
+!s100 JL6zD8FEYdg3RDhJ1F>PH1
+I=0cGf^ijP1ec[3FDRMW@K1
 Z2 VDg1SIo80bB@j0V0VzS_@n1
 R0
-w1666069932
-8/home/ella/Documents/School/CS3710/cpu/alu.v
-F/home/ella/Documents/School/CS3710/cpu/alu.v
-!i122 88
-L0 15 522
-Z3 OV;L;2020.1;71
+w1666249907
+8C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v
+FC:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v
+L0 15
+Z3 OV;L;10.5b;63
 r1
 !s85 0
 31
-!s108 1666070146.000000
-!s107 /home/ella/Documents/School/CS3710/cpu/alu.v|
-!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/ella/Documents/School/CS3710/cpu|/home/ella/Documents/School/CS3710/cpu/alu.v|
+Z4 !s108 1666255965.000000
+!s107 C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/Users/bledy/OneDrive/Documents/GitHub/cs3710|C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v|
 !i113 1
-Z4 o-vlog01compat -work work
-Z5 !s92 -vlog01compat -work work +incdir+/home/ella/Documents/School/CS3710/cpu
-Z6 tCvgOpt 0
+Z5 o-vlog01compat -work work
+Z6 !s92 -vlog01compat -work work +incdir+C:/Users/bledy/OneDrive/Documents/GitHub/cs3710
+Z7 tCvgOpt 0
 valuTb
-!s110 1666070920
-!i10b 1
-!s100 F;;JnX=3B;1RcU`<IUcmU3
 R1
-IBHfWE0<i2VGV<OUIli2BK0
+!i10b 1
+!s100 XHRH8J=dKmhEDe^@08PH]1
+IOKJQKd04Vz0ECe@l9L<6i1
 R2
 R0
-w1666070134
-8/home/ella/Documents/School/CS3710/cpu/aluTb.v
-F/home/ella/Documents/School/CS3710/cpu/aluTb.v
-!i122 95
-L0 3 253
+w1666255932
+8C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/aluTb.v
+FC:/Users/bledy/OneDrive/Documents/GitHub/cs3710/aluTb.v
+L0 3
 R3
 r1
 !s85 0
 31
-Z7 !s108 1666070920.000000
-!s107 /home/ella/Documents/School/CS3710/cpu/aluTb.v|
-!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/ella/Documents/School/CS3710/cpu|/home/ella/Documents/School/CS3710/cpu/aluTb.v|
-!i113 1
 R4
+!s107 C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/aluTb.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/Users/bledy/OneDrive/Documents/GitHub/cs3710|C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/aluTb.v|
+!i113 1
 R5
 R6
+R7
 nalu@tb
 vcpu
-Z8 !s110 1666070921
-!i10b 1
-!s100 A9?PJV<<`;8R?kRT68LlS3
 R1
-I7YkdQ8oSHi]c1;G>SBS8Q1
+!i10b 1
+!s100 J0@fNb<9G7IFH@4dGE>nU3
+ImF>2T^oXnZU_GjLFi7a`F1
 R2
 R0
-w1666069674
-8/home/ella/Documents/School/CS3710/cpu/cpu.v
-F/home/ella/Documents/School/CS3710/cpu/cpu.v
-!i122 96
-L0 1 45
+w1666251317
+8C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/cpu.v
+FC:/Users/bledy/OneDrive/Documents/GitHub/cs3710/cpu.v
+L0 1
 R3
 r1
 !s85 0
 31
+R4
+!s107 C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/cpu.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/Users/bledy/OneDrive/Documents/GitHub/cs3710|C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/cpu.v|
+!i113 1
+R5
+R6
 R7
-!s107 /home/ella/Documents/School/CS3710/cpu/cpu.v|
-!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/ella/Documents/School/CS3710/cpu|/home/ella/Documents/School/CS3710/cpu/cpu.v|
-!i113 1
-R4
-R5
-R6
 vmux2
-R8
-!i10b 1
-!s100 lFbRM;Q:gz[16m@jkhW7f1
 R1
-IQ1HMi4EFOc3aBe2SR<5WY3
+!i10b 1
+!s100 oAngYFlG@51jAh7M9H[Gh3
+I11H7DA[bNW5K=CPQ2V31;2
 R2
 R0
-w1665819355
-8/home/ella/Documents/School/CS3710/cpu/mux2.v
-F/home/ella/Documents/School/CS3710/cpu/mux2.v
-!i122 97
-L0 1 7
+Z8 w1666028913
+8C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/mux2.v
+FC:/Users/bledy/OneDrive/Documents/GitHub/cs3710/mux2.v
+L0 1
 R3
 r1
 !s85 0
 31
-Z9 !s108 1666070921.000000
-!s107 /home/ella/Documents/School/CS3710/cpu/mux2.v|
-!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/ella/Documents/School/CS3710/cpu|/home/ella/Documents/School/CS3710/cpu/mux2.v|
-!i113 1
 R4
+!s107 C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/mux2.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/Users/bledy/OneDrive/Documents/GitHub/cs3710|C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/mux2.v|
+!i113 1
 R5
 R6
+R7
 vPSR_reg
-R8
+!s110 1666255964
 !i10b 1
-!s100 3UJYEOcd<7mmCf5fJ>UB:2
-R1
-IZLc^TJZNo::`CaU3j`0j52
+!s100 <JM@;z:jdWUU3mG>17ma22
+I1Pg0E4==?QYVio`VXI^Mc1
 R2
 R0
-w1666034031
-8/home/ella/Documents/School/CS3710/cpu/PSR_reg.v
-F/home/ella/Documents/School/CS3710/cpu/PSR_reg.v
-!i122 98
-L0 2 26
+w1666133430
+8C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/PSR_reg.v
+FC:/Users/bledy/OneDrive/Documents/GitHub/cs3710/PSR_reg.v
+L0 2
 R3
 r1
 !s85 0
 31
-R9
-!s107 /home/ella/Documents/School/CS3710/cpu/PSR_reg.v|
-!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/ella/Documents/School/CS3710/cpu|/home/ella/Documents/School/CS3710/cpu/PSR_reg.v|
+Z9 !s108 1666255964.000000
+!s107 C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/PSR_reg.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/Users/bledy/OneDrive/Documents/GitHub/cs3710|C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/PSR_reg.v|
 !i113 1
-R4
 R5
 R6
+R7
 n@p@s@r_reg
 vregister
-R8
-!i10b 1
-!s100 BEO=z<VBleR:k2X^mGf380
 R1
-I^7cnCUko^F3YZkHYA`3NR3
+!i10b 1
+!s100 <c=n<FKEjIO8b>X7]F1;a1
+IPgKX;F[b;VO9?ijVZ?=[F2
 R2
 R0
-w1666002870
-8/home/ella/Documents/School/CS3710/cpu/register.v
-F/home/ella/Documents/School/CS3710/cpu/register.v
-!i122 99
-L0 1 12
+R8
+8C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/register.v
+FC:/Users/bledy/OneDrive/Documents/GitHub/cs3710/register.v
+L0 1
 R3
 r1
 !s85 0
 31
 R9
-!s107 /home/ella/Documents/School/CS3710/cpu/register.v|
-!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/ella/Documents/School/CS3710/cpu|/home/ella/Documents/School/CS3710/cpu/register.v|
+!s107 C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/register.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/Users/bledy/OneDrive/Documents/GitHub/cs3710|C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/register.v|
 !i113 1
-R4
 R5
 R6
+R7
 vregisterFile
-R8
-!i10b 1
-!s100 R4X=zFM^Z7eZCn:[F0hmH0
 R1
-IQGM7no:^MSWfEn2QdIZob2
+!i10b 1
+!s100 acCfc[_C7_aYiKWIB55a63
+IY4PYjUXU?SE=3G?CWHUh=3
 R2
 R0
-w1666068989
-8/home/ella/Documents/School/CS3710/cpu/registerFile.v
-F/home/ella/Documents/School/CS3710/cpu/registerFile.v
-!i122 100
-L0 21 43
+w1666251774
+8C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/registerFile.v
+FC:/Users/bledy/OneDrive/Documents/GitHub/cs3710/registerFile.v
+L0 18
 R3
 r1
 !s85 0
 31
-R9
-!s107 /home/ella/Documents/School/CS3710/cpu/registerFile.v|
-!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+/home/ella/Documents/School/CS3710/cpu|/home/ella/Documents/School/CS3710/cpu/registerFile.v|
-!i113 1
 R4
+!s107 C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/registerFile.v|
+!s90 -reportprogress|300|-vlog01compat|-work|work|+incdir+C:/Users/bledy/OneDrive/Documents/GitHub/cs3710|C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/registerFile.v|
+!i113 1
 R5
 R6
+R7
 nregister@file
