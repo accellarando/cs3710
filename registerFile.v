@@ -1,12 +1,4 @@
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-//`timescale 1ns / 1ps
-=======
 `timescale 1ns / 1ns
->>>>>>> Stashed changes
-=======
-`timescale 1ns / 1ns
->>>>>>> Stashed changes
 /*
 REGISTER FILE: Provide arguments and hold results by instantiating 16 16-bit registers
 <<<<<<< HEAD
@@ -39,8 +31,6 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 		
 	
 	reg [SIZE-1:0] regFile [(1<<REGBITS)-1:0]; // Declare sixteen 16-bit registers in register file 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 
 	// Reading relative path
 	initial begin
@@ -71,47 +61,3 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 	end
 
 endmodule 
-=======
-=======
->>>>>>> Stashed changes
-integer i;
-	/* Reading relative path*/
-	initial begin
-	$display("Loading register file");
-	//$readmemb("E:/3710/GroupProject/cs3710/reg.dat", regFile); // ! CHANGE TO YOUR LOCAL PATH !
-	$readmemb("/home/ella/Documents/School/CS3710/cpu/reg.dat",regFile);
-	$display("Done with loading register file"); 
-	end
-	
-
-	/* Assigning */
-	integer i;
-	
-	always @(posedge clk) begin
-	/*
-		if(!reset) begin
-			// ?? all 16 registers are set to 16'b0
-<<<<<<< HEAD
-=======
-			for(i = 0; i < SIZE; i = i + 1) begin 
->>>>>>> a88e35300db4a712c46adc2a56a53398e19eacbd
-				regFile[i] <= 0;							
-			
-		end
-		*/
-			if(writeEn) begin
-				regFile[dstAddr] <= writeData;	// dstAddr is both read and write address (dual-port)
-			end
-		readData1 <= regFile[dstAddr];			// read ports have data inputs
-		readData2 <= regFile[srcAddr];
-	end
-
-<<<<<<< HEAD
-endmodule  
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
-endmodule
->>>>>>> a88e35300db4a712c46adc2a56a53398e19eacbd
