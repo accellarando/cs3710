@@ -2,3 +2,4 @@
 !*.v
 !*.md
 !.gitignore
+!.qsf
