@@ -1,5 +1,9 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 //`timescale 1ns / 1ps
+=======
+`timescale 1ns / 1ns
+>>>>>>> Stashed changes
 =======
 `timescale 1ns / 1ns
 >>>>>>> Stashed changes
@@ -32,6 +36,7 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 	
 	reg [SIZE-1:0] regFile [(1<<REGBITS)-1:0]; // Declare sixteen 16-bit registers in register file 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 	// Reading relative path
 	initial begin
@@ -63,6 +68,8 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 
 endmodule 
 =======
+=======
+>>>>>>> Stashed changes
 integer i;
 	/* Reading relative path*/
 	initial begin
@@ -88,4 +95,7 @@ integer i;
 	end
 
 endmodule  
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes

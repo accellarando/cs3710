@@ -1,4 +1,5 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 // register for condition codes going into ALU with enable signal
 module PSR_reg
 	(
@@ -24,6 +25,8 @@ module PSR_reg
 			end
 	end
 =======
+=======
+>>>>>>> Stashed changes
 // register for condition codes going into ALU with enable signal
 module PSR_reg
 	(
@@ -48,5 +51,8 @@ module PSR_reg
 					final_group2 <= final_group2;
 			end
 	end
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 endmodule 

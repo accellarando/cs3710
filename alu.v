@@ -15,6 +15,7 @@
 module alu #(parameter WIDTH = 16)
             (	input 		[WIDTH-9:0] aluOp,
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 					input     	[WIDTH-1:0] aluIn1, aluIn2,	// regarding pcOut as 16-bit	
 					output reg 	[WIDTH-1:0] aluOut, 
 					output reg 	 cond_group1,	// FC bit
@@ -140,6 +141,8 @@ end
 endmodule				
 
 =======
+=======
+>>>>>>> Stashed changes
 					input     	[WIDTH-1:0] aluIn1, aluIn2, pcOut,	// regarding pcOut as 16-bit	
 					output reg 	[WIDTH-1:0] aluOut, 
 					output reg 	[1:0] cond_group1,	
@@ -222,6 +225,7 @@ endmodule
 		cond_group2 = 3'b000;
 			
 		casex(aluOp) // case expression to allow for don't care values in case comparison
+<<<<<<< Updated upstream
 		
 		/* Load & STORE: needs to use values in registers as memory addresses (possibly w/ immediate values (imm) added)
 		*		Put values through ALU (in some sore of "pass through" mode -- what we did)
@@ -230,6 +234,16 @@ endmodule
 		* 		Assuming "pass-through" means pass aluIn2 into aluOut, could mean aluOut = aluOut
 		*/
 		
+=======
+		
+		/* Load & STORE: needs to use values in registers as memory addresses (possibly w/ immediate values (imm) added)
+		*		Put values through ALU (in some sore of "pass through" mode -- what we did)
+		*		Passed through, no alteration occurred.
+		*		These register values were made to "somehow" be usable as memory addresses
+		* 		Assuming "pass-through" means pass aluIn2 into aluOut, could mean aluOut = aluOut
+		*/
+		
+>>>>>>> Stashed changes
 		LOAD:
 			begin
 				aluOut = aluIn2;
@@ -524,6 +538,7 @@ endmodule
 			end
 			
 		ANDI:
+<<<<<<< Updated upstream
 			begin
 				aluOut = aluIn1 & {{WIDTH-8{1'b0}}, aluIn2[WIDTH-9:0]};
 				if (aluOut == {WIDTH{1'b0}})
@@ -532,6 +547,16 @@ endmodule
 			
 		AND:
 			begin
+=======
+			begin
+				aluOut = aluIn1 & {{WIDTH-8{1'b0}}, aluIn2[WIDTH-9:0]};
+				if (aluOut == {WIDTH{1'b0}})
+					cond_group2[1] = 1'b1; // Z bit set to 1			
+			end
+			
+		AND:
+			begin
+>>>>>>> Stashed changes
 				aluOut = aluIn1 & aluIn2;
 				if (aluOut == {WIDTH{1'b0}})
 					cond_group2[1] = 1'b1; // Z bit set to 1			
@@ -646,5 +671,9 @@ endmodule
 	 endcase	
    end
 	
+<<<<<<< Updated upstream
+endmodule
+>>>>>>> Stashed changes
+=======
 endmodule
 >>>>>>> Stashed changes

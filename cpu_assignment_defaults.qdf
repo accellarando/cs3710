@@ -1,9 +1,15 @@
 # -------------------------------------------------------------------------- #
 #
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 # Copyright (C) 2020  Intel Corporation. All rights reserved.
 # Your use of Intel Corporation's design tools, logic functions 
 # and other software and tools, and any partner logic 
+=======
+# Copyright (C) 2018  Intel Corporation. All rights reserved.
+# Your use of Intel Corporation's design tools, logic functions 
+# and other software and tools, and its AMPP partner logic 
+>>>>>>> Stashed changes
 =======
 # Copyright (C) 2018  Intel Corporation. All rights reserved.
 # Your use of Intel Corporation's design tools, logic functions 
@@ -19,8 +25,12 @@
 # the sole purpose of programming logic devices manufactured by
 # Intel and sold by Intel or its authorized distributors.  Please
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 # refer to the applicable agreement for further details, at
 # https://fpgasoftware.intel.com/eula.
+=======
+# refer to the applicable agreement for further details.
+>>>>>>> Stashed changes
 =======
 # refer to the applicable agreement for further details.
 >>>>>>> Stashed changes
@@ -29,8 +39,13 @@
 #
 # Quartus Prime
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 # Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 # Date created = 12:42:48  October 17, 2022
+=======
+# Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
+# Date created = 17:02:01  October 17, 2022
+>>>>>>> Stashed changes
 =======
 # Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 # Date created = 17:02:01  October 17, 2022
@@ -781,7 +796,11 @@ set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS NOT_USED -section_id ?
 set_global_assignment -name EDA_RTL_SIM_MODE NOT_USED -section_id ?
 set_global_assignment -name EDA_MAINTAIN_DESIGN_HIERARCHY OFF -section_id ?
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST On -section_id ?
+=======
+set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST Off -section_id ?
+>>>>>>> Stashed changes
 =======
 set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST Off -section_id ?
 >>>>>>> Stashed changes

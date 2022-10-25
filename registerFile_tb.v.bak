@@ -63,7 +63,11 @@ module registerFile_tb();
 	end
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 endmodule
+=======
+endmodule
+>>>>>>> Stashed changes
 =======
 endmodule
 >>>>>>> Stashed changes

@@ -7,15 +7,21 @@ module registerFile_tb();
 	reg[15:0] 	writeData;
 	reg[3:0] 	srcAddr, dstAddr;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 	integer 		counter;
 	
 	/* Outputs */
 	wire[15:0] 	readData1, readData2;
 =======
+=======
+>>>>>>> Stashed changes
 	
 	/* Outputs */
 	wire[15:0] 	readData1, readData2;
 	wire counter;
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 	
 	/* Instantiate the Unit Under Test (UUT) */
@@ -34,6 +40,7 @@ module registerFile_tb();
 	initial begin
 		clk		<= 1'b0;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 		reset		<= 1'b1;		// active-low reset, toggle
 		#100;
 		reset		<= 1'b0;
@@ -48,6 +55,8 @@ module registerFile_tb();
 	/* Generate clock */
 	always #25 begin		// clock changes edge every 50 ns
 =======
+=======
+>>>>>>> Stashed changes
 		reset		<= 1'b1;	// active-low reset
 		writeEn	<= 1'b0;
 		counter 	<= 1'b0;		// for switch-case block in testing different write-read values
@@ -56,6 +65,9 @@ module registerFile_tb();
 	
 	/* Generate clock */
 	always #50 begin		// clock changes edge every 50 ns
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 		clk = !clk;
 	end
@@ -63,6 +75,7 @@ module registerFile_tb();
 	/* Adding stimulus testing */
 	// reference:	readData1 uses dstAddr
 	//					readData2 uses srcAddr
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 	// cases increment by 10's (for test bench simulation errors)
 	always @(posedge clk) begin
@@ -111,6 +124,8 @@ module registerFile_tb();
 			
 			// last case: set counter back to zero
 =======
+=======
+>>>>>>> Stashed changes
 	always @(posedge clk) begin
 		case(counter)
 			// @ Writing to a register
@@ -127,6 +142,9 @@ module registerFile_tb();
 			end
 			
 			// last case: set coutner back to zero
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 			
 			default : ;
@@ -136,7 +154,11 @@ module registerFile_tb();
 	end
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 endmodule
+=======
+endmodule
+>>>>>>> Stashed changes
 =======
 endmodule
 >>>>>>> Stashed changes

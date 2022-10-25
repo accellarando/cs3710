@@ -1,5 +1,8 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 Warning (10268): Verilog HDL information at alu.v(26): always construct contains both blocking and non-blocking assignments File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 26
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 Warning (10268): Verilog HDL information at aluTb.v(71): always construct contains both blocking and non-blocking assignments File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/aluTb.v Line: 71
