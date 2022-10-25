@@ -1,0 +1,16 @@
+module stateMachine(input nextStateButton, reset, clk,
+	input[15:0] addr,
+	output we,
+	output[15:0] dataOut)
+	
+	wire[3:0] thisState;
+	wire[3:0] nextState;
+	always@(posedge clk
+	always@(posedge nextStateButton) begin
+		//advance to next state
+		thisState = nextState;
+	end
+	
+	
+	
+endmodule 
