@@ -1,14 +1,6 @@
 Analysis & Synthesis report for cpu
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-Sat Oct 22 16:41:08 2022
-=======
-Tue Oct 18 15:49:57 2022
->>>>>>> Stashed changes
-=======
-Tue Oct 18 15:49:57 2022
->>>>>>> Stashed changes
-Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
+Tue Oct 25 16:54:26 2022
+Quartus Prime Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 
 
 ---------------------
@@ -18,17 +10,27 @@ Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
   2. Analysis & Synthesis Summary
   3. Analysis & Synthesis Settings
   4. Parallel Compilation
-  5. Analysis & Synthesis Messages
-  6. Analysis & Synthesis Suppressed Messages
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. User-Specified and Inferred Latches
+  9. General Register Statistics
+ 10. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 11. Parameter Settings for User Entity Instance: Top-level Entity: |cpuWithAlu
+ 12. Parameter Settings for User Entity Instance: alu:mainAlu
+ 13. Port Connectivity Checks: "alu:mainAlu"
+ 14. Post-Synthesis Netlist Statistics for Top Partition
+ 15. Elapsed Time Per Partition
+ 16. Analysis & Synthesis Messages
 
 
 
 ----------------
 ; Legal Notice ;
 ----------------
-Copyright (C) 2018  Intel Corporation. All rights reserved.
+Copyright (C) 2020  Intel Corporation. All rights reserved.
 Your use of Intel Corporation's design tools, logic functions 
-and other software and tools, and its AMPP partner logic 
+and other software and tools, and any partner logic 
 functions, and any output files from any of the foregoing 
 (including device programming or simulation files), and any 
 associated documentation or information are expressly subject 
@@ -38,34 +40,32 @@ the Intel FPGA IP License Agreement, or other applicable license
 agreement, including, without limitation, that your use is for
 the sole purpose of programming logic devices manufactured by
 Intel and sold by Intel or its authorized distributors.  Please
-refer to the applicable agreement for further details.
+refer to the applicable agreement for further details, at
+https://fpgasoftware.intel.com/eula.
 
 
 
-+---------------------------------------------------------------------------+
-; Analysis & Synthesis Summary                                              ;
-+-----------------------------+---------------------------------------------+
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-; Analysis & Synthesis Status ; Failed - Sat Oct 22 16:41:08 2022           ;
-=======
-; Analysis & Synthesis Status ; Failed - Tue Oct 18 15:49:57 2022           ;
->>>>>>> Stashed changes
-=======
-; Analysis & Synthesis Status ; Failed - Tue Oct 18 15:49:57 2022           ;
->>>>>>> Stashed changes
-; Quartus Prime Version       ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
-; Revision Name               ; cpu                                         ;
-; Top-level Entity Name       ; cpu                                         ;
-; Family                      ; Cyclone V                                   ;
-; Logic utilization (in ALMs) ; N/A until Partition Merge                   ;
-; Total registers             ; N/A until Partition Merge                   ;
-; Total pins                  ; N/A until Partition Merge                   ;
-; Total virtual pins          ; N/A until Partition Merge                   ;
-; Total block memory bits     ; N/A until Partition Merge                   ;
-; Total PLLs                  ; N/A until Partition Merge                   ;
-; Total DLLs                  ; N/A until Partition Merge                   ;
-+-----------------------------+---------------------------------------------+
++-------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                  ;
++---------------------------------+---------------------------------------------+
+; Analysis & Synthesis Status     ; Successful - Tue Oct 25 16:54:26 2022       ;
+; Quartus Prime Version           ; 20.1.1 Build 720 11/11/2020 SJ Lite Edition ;
+; Revision Name                   ; cpu                                         ;
+; Top-level Entity Name           ; cpuWithAlu                                  ;
+; Family                          ; Cyclone V                                   ;
+; Logic utilization (in ALMs)     ; N/A                                         ;
+; Total registers                 ; 0                                           ;
+; Total pins                      ; 29                                          ;
+; Total virtual pins              ; 0                                           ;
+; Total block memory bits         ; 0                                           ;
+; Total DSP Blocks                ; 0                                           ;
+; Total HSSI RX PCSs              ; 0                                           ;
+; Total HSSI PMA RX Deserializers ; 0                                           ;
+; Total HSSI TX PCSs              ; 0                                           ;
+; Total HSSI PMA TX Serializers   ; 0                                           ;
+; Total PLLs                      ; 0                                           ;
+; Total DLLs                      ; 0                                           ;
++---------------------------------+---------------------------------------------+
 
 
 +---------------------------------------------------------------------------------------------------------------------------+
@@ -74,7 +74,7 @@ refer to the applicable agreement for further details.
 ; Option                                                                          ; Setting            ; Default Value      ;
 +---------------------------------------------------------------------------------+--------------------+--------------------+
 ; Device                                                                          ; 5CSEMA5F31C6       ;                    ;
-; Top-level entity name                                                           ; cpu                ; cpu                ;
+; Top-level entity name                                                           ; cpuWithAlu         ; cpu                ;
 ; Family name                                                                     ; Cyclone V          ; Cyclone V          ;
 ; Use smart compilation                                                           ; Off                ; Off                ;
 ; Enable parallel Assembler and Timing Analyzer during compilation                ; On                 ; On                 ;
@@ -160,8 +160,8 @@ refer to the applicable agreement for further details.
 +----------------------------+-------------+
 ; Processors                 ; Number      ;
 +----------------------------+-------------+
-; Number detected on machine ; 8           ;
-; Maximum allowed            ; 4           ;
+; Number detected on machine ; 4           ;
+; Maximum allowed            ; 2           ;
 ;                            ;             ;
 ; Average used               ; 1.00        ;
 ; Maximum used               ; 1           ;
@@ -171,125 +171,237 @@ refer to the applicable agreement for further details.
 +----------------------------+-------------+
 
 
++---------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                      ;
++----------------------------------+-----------------+------------------------+-----------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type              ; File Name with Absolute Path                        ; Library ;
++----------------------------------+-----------------+------------------------+-----------------------------------------------------+---------+
+; alu.v                            ; yes             ; User Verilog HDL File  ; /home/ella/Documents/School/CS3710/cpu/alu.v        ;         ;
+; cpuWithAlu.v                     ; yes             ; User Verilog HDL File  ; /home/ella/Documents/School/CS3710/cpu/cpuWithAlu.v ;         ;
++----------------------------------+-----------------+------------------------+-----------------------------------------------------+---------+
+
+
++--------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary            ;
++---------------------------------------------+----------+
+; Resource                                    ; Usage    ;
++---------------------------------------------+----------+
+; Estimate of Logic utilization (ALMs needed) ; 25       ;
+;                                             ;          ;
+; Combinational ALUT usage for logic          ; 38       ;
+;     -- 7 input functions                    ; 4        ;
+;     -- 6 input functions                    ; 7        ;
+;     -- 5 input functions                    ; 3        ;
+;     -- 4 input functions                    ; 2        ;
+;     -- <=3 input functions                  ; 22       ;
+;                                             ;          ;
+; Dedicated logic registers                   ; 0        ;
+;                                             ;          ;
+; I/O pins                                    ; 29       ;
+;                                             ;          ;
+; Total DSP Blocks                            ; 0        ;
+;                                             ;          ;
+; Maximum fan-out node                        ; aluOp[1] ;
+; Maximum fan-out                             ; 13       ;
+; Total fan-out                               ; 188      ;
+; Average fan-out                             ; 1.96     ;
++---------------------------------------------+----------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                        ;
++----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------+-------------+--------------+
+; Compilation Hierarchy Node ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name     ; Entity Name ; Library Name ;
++----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------+-------------+--------------+
+; |cpuWithAlu                ; 38 (13)             ; 0 (0)                     ; 0                 ; 0          ; 29   ; 0            ; |cpuWithAlu             ; cpuWithAlu  ; work         ;
+;    |alu:mainAlu|           ; 25 (25)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |cpuWithAlu|alu:mainAlu ; alu         ; work         ;
++----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------+-------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
++---------------------------------------------------------------------------------------------------+
+; User-Specified and Inferred Latches                                                               ;
++----------------------------------------------------+---------------------+------------------------+
+; Latch Name                                         ; Latch Enable Signal ; Free of Timing Hazards ;
++----------------------------------------------------+---------------------+------------------------+
+; aluOp[0]                                           ; GND                 ; yes                    ;
+; aluOp[1]                                           ; GND                 ; yes                    ;
+; aluOp[2]                                           ; GND                 ; yes                    ;
+; Number of user-specified and inferred latches = 3  ;                     ;                        ;
++----------------------------------------------------+---------------------+------------------------+
+Note: All latches listed above may not be present at the end of synthesis due to various synthesis optimizations.
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 0     ;
+; Number of registers using Synchronous Clear  ; 0     ;
+; Number of registers using Synchronous Load   ; 0     ;
+; Number of registers using Asynchronous Clear ; 0     ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 0     ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                   ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output         ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------+
+; 8:1                ; 3 bits    ; 15 LEs        ; 15 LEs               ; 0 LEs                  ; No         ; |cpuWithAlu|alu:mainAlu|Selector18 ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+------------------------------------+
+
+
++----------------------------------------------------------------------------+
+; Parameter Settings for User Entity Instance: Top-level Entity: |cpuWithAlu ;
++----------------+-------+---------------------------------------------------+
+; Parameter Name ; Value ; Type                                              ;
++----------------+-------+---------------------------------------------------+
+; SIZE           ; 16    ; Signed Integer                                    ;
+; NUMREGS        ; 16    ; Signed Integer                                    ;
++----------------+-------+---------------------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++----------------------------------------------------------+
+; Parameter Settings for User Entity Instance: alu:mainAlu ;
++----------------+-------+---------------------------------+
+; Parameter Name ; Value ; Type                            ;
++----------------+-------+---------------------------------+
+; WIDTH          ; 16    ; Signed Integer                  ;
++----------------+-------+---------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "alu:mainAlu"                                                                                                                                               ;
++----------------+--------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------+
+; Port           ; Type   ; Severity ; Details                                                                                                                                          ;
++----------------+--------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------+
+; aluOp          ; Input  ; Warning  ; Input port expression (4 bits) is smaller than the input port (8 bits) it drives.  Extra input bit(s) "aluOp[7..4]" will be connected to GND.    ;
+; aluOp[7]       ; Input  ; Info     ; Stuck at GND                                                                                                                                     ;
+; aluIn1         ; Input  ; Warning  ; Input port expression (5 bits) is smaller than the input port (16 bits) it drives.  Extra input bit(s) "aluIn1[15..5]" will be connected to GND. ;
+; aluIn2         ; Input  ; Warning  ; Input port expression (5 bits) is smaller than the input port (16 bits) it drives.  Extra input bit(s) "aluIn2[15..5]" will be connected to GND. ;
+; aluOut[15..10] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed.                                                              ;
+; cond_group1    ; Output ; Warning  ; Output or bidir port (2 bits) is wider than the port expression (1 bits) it drives; bit(s) "cond_group1[1..1]" have no fanouts                   ;
+; cond_group1    ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed.                                                              ;
+; cond_group2    ; Output ; Warning  ; Output or bidir port (3 bits) is wider than the port expression (1 bits) it drives; bit(s) "cond_group2[2..1]" have no fanouts                   ;
+; cond_group2    ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed.                                                              ;
++----------------+--------+----------+--------------------------------------------------------------------------------------------------------------------------------------------------+
+
+
++-----------------------------------------------------+
+; Post-Synthesis Netlist Statistics for Top Partition ;
++-----------------------+-----------------------------+
+; Type                  ; Count                       ;
++-----------------------+-----------------------------+
+; arriav_lcell_comb     ; 38                          ;
+;     arith             ; 6                           ;
+;         0 data inputs ; 1                           ;
+;         2 data inputs ; 5                           ;
+;     extend            ; 4                           ;
+;         7 data inputs ; 4                           ;
+;     normal            ; 21                          ;
+;         2 data inputs ; 2                           ;
+;         3 data inputs ; 7                           ;
+;         4 data inputs ; 2                           ;
+;         5 data inputs ; 3                           ;
+;         6 data inputs ; 7                           ;
+;     shared            ; 7                           ;
+;         0 data inputs ; 2                           ;
+;         2 data inputs ; 5                           ;
+; boundary_port         ; 29                          ;
+;                       ;                             ;
+; Max LUT depth         ; 3.40                        ;
+; Average LUT depth     ; 2.86                        ;
++-----------------------+-----------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:01     ;
++----------------+--------------+
+
+
 +-------------------------------+
 ; Analysis & Synthesis Messages ;
 +-------------------------------+
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
-    Info: Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    Info: Processing started: Sat Oct 22 16:40:59 2022
-=======
-    Info: Processing started: Tue Oct 18 15:49:48 2022
->>>>>>> Stashed changes
-=======
-    Info: Processing started: Tue Oct 18 15:49:48 2022
->>>>>>> Stashed changes
+    Info: Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
+    Info: Processing started: Tue Oct 25 16:54:07 2022
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off cpu -c cpu
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
-Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
-Info (12021): Found 1 design units, including 1 entities, in source file psr_reg.v
-    Info (12023): Found entity 1: PSR_reg File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/PSR_reg.v Line: 2
-Info (12021): Found 1 design units, including 1 entities, in source file registerfile.v
-    Info (12023): Found entity 1: registerFile File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/registerFile.v Line: 18
+Info (20030): Parallel compilation is enabled and will use 2 of the 2 processors detected
+Info (12021): Found 1 design units, including 1 entities, in source file PSR_reg.v
+    Info (12023): Found entity 1: PSR_reg File: /home/ella/Documents/School/CS3710/cpu/PSR_reg.v Line: 2
+Info (12021): Found 1 design units, including 1 entities, in source file registerFile.v
+    Info (12023): Found entity 1: registerFile File: /home/ella/Documents/School/CS3710/cpu/registerFile.v Line: 22
 Info (12021): Found 1 design units, including 1 entities, in source file register.v
-    Info (12023): Found entity 1: register File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/register.v Line: 1
-Info (12021): Found 1 design units, including 1 entities, in source file cpu.v
-    Info (12023): Found entity 1: cpu File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/cpu.v Line: 1
+    Info (12023): Found entity 1: register File: /home/ella/Documents/School/CS3710/cpu/register.v Line: 1
+Warning (12019): Can't analyze file -- file cpu.v is missing
 Info (12021): Found 1 design units, including 1 entities, in source file mux2.v
-    Info (12023): Found entity 1: mux2 File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/mux2.v Line: 1
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-Error (10170): Verilog HDL syntax error at alu.v(21) near text: "reg";  expecting "(". Check for and fix any syntax errors that appear immediately before or at the specified keyword. The Intel FPGA Knowledge Database contains many articles with specific details on how to resolve this error. Visit the Knowledge Database at https://www.altera.com/support/support-resources/knowledge-base/search.html and search for this specific error message number. File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 21
-Warning (10090): Verilog HDL syntax warning at alu.v(226): extra block comment delimiter characters /* within block comment File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 226
-Warning (10090): Verilog HDL syntax warning at alu.v(460): extra block comment delimiter characters /* within block comment File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 460
-Error (10112): Ignored design unit "alu" at alu.v(1) due to previous errors File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 1
-Info (12021): Found 0 design units, including 0 entities, in source file alu.v
-=======
+    Info (12023): Found entity 1: mux2 File: /home/ella/Documents/School/CS3710/cpu/mux2.v Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file alu.v
-    Info (12023): Found entity 1: alu File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 15
->>>>>>> Stashed changes
-=======
-Info (12021): Found 1 design units, including 1 entities, in source file alu.v
-    Info (12023): Found entity 1: alu File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 15
->>>>>>> Stashed changes
-Info (12021): Found 1 design units, including 1 entities, in source file alutb.v
-    Info (12023): Found entity 1: aluTb File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/aluTb.v Line: 3
-Info (12021): Found 1 design units, including 1 entities, in source file registerfile_tb.v
-    Info (12023): Found entity 1: registerFile_tb File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/registerFile_tb.v Line: 3
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-Info (144001): Generated suppressed messages file C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/output_files/cpu.map.smsg
-Error: Quartus Prime Analysis & Synthesis was unsuccessful. 2 errors, 3 warnings
-    Error: Peak virtual memory: 4764 megabytes
-    Error: Processing ended: Sat Oct 22 16:41:08 2022
-=======
-=======
->>>>>>> Stashed changes
-Warning (10236): Verilog HDL Implicit Net warning at cpu.v(40): created implicit net for "final_group1" File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/cpu.v Line: 40
-Warning (10236): Verilog HDL Implicit Net warning at cpu.v(40): created implicit net for "final_group2" File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/cpu.v Line: 40
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(35): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 35
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(36): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 36
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(37): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 37
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(38): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 38
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(39): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 39
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(40): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 40
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(41): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 41
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(42): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 42
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(43): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 43
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(46): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 46
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(47): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 47
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(48): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 48
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(49): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 49
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(52): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 52
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(53): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 53
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(54): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 54
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(55): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 55
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(56): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 56
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(57): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 57
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(58): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 58
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(59): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 59
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(60): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 60
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(61): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 61
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(64): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 64
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(65): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 65
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(67): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 67
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(68): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 68
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(69): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 69
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(72): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 72
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(73): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 73
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(74): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 74
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(75): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 75
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(76): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 76
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(77): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 77
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(78): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 78
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(79): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 79
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(80): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 80
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(81): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 81
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(82): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 82
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(83): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 83
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(84): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 84
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(85): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 85
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(86): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 86
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(87): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 87
-Error (10137): Verilog HDL Procedural Assignment error at registerFile_tb.v(31): object "counter" on left-hand side of assignment must have a variable data type File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/registerFile_tb.v Line: 31
-Error (10137): Verilog HDL Procedural Assignment error at registerFile_tb.v(63): object "counter" on left-hand side of assignment must have a variable data type File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/registerFile_tb.v Line: 63
-Info (144001): Generated suppressed messages file C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/output_files/cpu.map.smsg
-Error: Quartus Prime Analysis & Synthesis was unsuccessful. 2 errors, 47 warnings
-    Error: Peak virtual memory: 4768 megabytes
-    Error: Processing ended: Tue Oct 18 15:49:57 2022
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-    Error: Elapsed time: 00:00:09
-    Error: Total CPU time (on all processors): 00:00:20
-
-
-+------------------------------------------+
-; Analysis & Synthesis Suppressed Messages ;
-+------------------------------------------+
-The suppressed messages can be found in C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/output_files/cpu.map.smsg.
+    Info (12023): Found entity 1: alu File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 15
+Info (12021): Found 1 design units, including 1 entities, in source file aluTb.v
+    Info (12023): Found entity 1: aluTb File: /home/ella/Documents/School/CS3710/cpu/aluTb.v Line: 3
+Info (12021): Found 1 design units, including 1 entities, in source file registerFile_tb.v
+    Info (12023): Found entity 1: registerFile_tb File: /home/ella/Documents/School/CS3710/cpu/registerFile_tb.v Line: 3
+Info (12021): Found 1 design units, including 1 entities, in source file cpuWithAlu.v
+    Info (12023): Found entity 1: cpuWithAlu File: /home/ella/Documents/School/CS3710/cpu/cpuWithAlu.v Line: 1
+Warning (10236): Verilog HDL Implicit Net warning at cpuWithAlu.v(37): created implicit net for "cond_group1" File: /home/ella/Documents/School/CS3710/cpu/cpuWithAlu.v Line: 37
+Warning (10236): Verilog HDL Implicit Net warning at cpuWithAlu.v(37): created implicit net for "cond_group2" File: /home/ella/Documents/School/CS3710/cpu/cpuWithAlu.v Line: 37
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(24): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 24
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(25): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 25
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(26): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 26
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(27): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 27
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(28): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 28
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(29): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 29
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(30): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 30
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(31): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 31
+Warning (10222): Verilog HDL Parameter Declaration warning at cpuWithAlu.v(13): Parameter Declaration in module "cpuWithAlu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/cpuWithAlu.v Line: 13
+Warning (10222): Verilog HDL Parameter Declaration warning at cpuWithAlu.v(14): Parameter Declaration in module "cpuWithAlu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/cpuWithAlu.v Line: 14
+Warning (10222): Verilog HDL Parameter Declaration warning at cpuWithAlu.v(15): Parameter Declaration in module "cpuWithAlu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/cpuWithAlu.v Line: 15
+Warning (10222): Verilog HDL Parameter Declaration warning at cpuWithAlu.v(16): Parameter Declaration in module "cpuWithAlu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/cpuWithAlu.v Line: 16
+Warning (10222): Verilog HDL Parameter Declaration warning at cpuWithAlu.v(17): Parameter Declaration in module "cpuWithAlu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/cpuWithAlu.v Line: 17
+Warning (10222): Verilog HDL Parameter Declaration warning at cpuWithAlu.v(18): Parameter Declaration in module "cpuWithAlu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/cpuWithAlu.v Line: 18
+Warning (10222): Verilog HDL Parameter Declaration warning at cpuWithAlu.v(19): Parameter Declaration in module "cpuWithAlu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/cpuWithAlu.v Line: 19
+Warning (10222): Verilog HDL Parameter Declaration warning at cpuWithAlu.v(20): Parameter Declaration in module "cpuWithAlu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: /home/ella/Documents/School/CS3710/cpu/cpuWithAlu.v Line: 20
+Info (12127): Elaborating entity "cpuWithAlu" for the top level hierarchy
+Warning (10240): Verilog HDL Always Construct warning at cpuWithAlu.v(22): inferring latch(es) for variable "aluOp", which holds its previous value in one or more paths through the always construct File: /home/ella/Documents/School/CS3710/cpu/cpuWithAlu.v Line: 22
+Info (10041): Inferred latch for "aluOp[0]" at cpuWithAlu.v(24) File: /home/ella/Documents/School/CS3710/cpu/cpuWithAlu.v Line: 24
+Info (10041): Inferred latch for "aluOp[1]" at cpuWithAlu.v(24) File: /home/ella/Documents/School/CS3710/cpu/cpuWithAlu.v Line: 24
+Info (10041): Inferred latch for "aluOp[2]" at cpuWithAlu.v(24) File: /home/ella/Documents/School/CS3710/cpu/cpuWithAlu.v Line: 24
+Info (10041): Inferred latch for "aluOp[3]" at cpuWithAlu.v(24) File: /home/ella/Documents/School/CS3710/cpu/cpuWithAlu.v Line: 24
+Info (12128): Elaborating entity "alu" for hierarchy "alu:mainAlu" File: /home/ella/Documents/School/CS3710/cpu/cpuWithAlu.v Line: 37
+Warning (10270): Verilog HDL Case Statement warning at alu.v(45): incomplete case statement has no default case item File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 45
+Warning (10240): Verilog HDL Always Construct warning at alu.v(39): inferring latch(es) for variable "cond_group1", which holds its previous value in one or more paths through the always construct File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 39
+Warning (10240): Verilog HDL Always Construct warning at alu.v(39): inferring latch(es) for variable "cOut", which holds its previous value in one or more paths through the always construct File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 39
+Info (10041): Inferred latch for "cOut" at alu.v(39) File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 39
+Info (10041): Inferred latch for "cond_group1[1]" at alu.v(39) File: /home/ella/Documents/School/CS3710/cpu/alu.v Line: 39
+Warning (12241): 1 hierarchies have connectivity warnings - see the Connectivity Checks report folder
+Info (286030): Timing-Driven Synthesis is running
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Warning (21074): Design contains 2 input pin(s) that do not drive logic
+    Warning (15610): No output dependent on input pin "clk" File: /home/ella/Documents/School/CS3710/cpu/cpuWithAlu.v Line: 2
+    Warning (15610): No output dependent on input pin "reset" File: /home/ella/Documents/School/CS3710/cpu/cpuWithAlu.v Line: 2
+Info (21057): Implemented 67 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 19 input pins
+    Info (21059): Implemented 10 output pins
+    Info (21061): Implemented 38 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 28 warnings
+    Info: Peak virtual memory: 432 megabytes
+    Info: Processing ended: Tue Oct 25 16:54:26 2022
+    Info: Elapsed time: 00:00:19
+    Info: Total CPU time (on all processors): 00:00:44
 
 
