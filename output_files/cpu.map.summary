@@ -1,15 +1,7 @@
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-Analysis & Synthesis Status : Failed - Sat Oct 22 16:41:08 2022
-=======
-Analysis & Synthesis Status : Failed - Tue Oct 18 15:49:57 2022
->>>>>>> Stashed changes
-=======
-Analysis & Synthesis Status : Failed - Tue Oct 18 15:49:57 2022
->>>>>>> Stashed changes
+Analysis & Synthesis Status : Failed - Tue Oct 25 16:14:31 2022
 Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 Revision Name : cpu
-Top-level Entity Name : cpu
+Top-level Entity Name : cpuWithAlu
 Family : Cyclone V
 Logic utilization (in ALMs) : N/A until Partition Merge
 Total registers : N/A until Partition Merge

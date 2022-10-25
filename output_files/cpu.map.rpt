@@ -1,13 +1,5 @@
 Analysis & Synthesis report for cpu
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-Sat Oct 22 16:41:08 2022
-=======
-Tue Oct 18 15:49:57 2022
->>>>>>> Stashed changes
-=======
-Tue Oct 18 15:49:57 2022
->>>>>>> Stashed changes
+Tue Oct 25 16:14:31 2022
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -45,18 +37,10 @@ refer to the applicable agreement for further details.
 +---------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                              ;
 +-----------------------------+---------------------------------------------+
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-; Analysis & Synthesis Status ; Failed - Sat Oct 22 16:41:08 2022           ;
-=======
-; Analysis & Synthesis Status ; Failed - Tue Oct 18 15:49:57 2022           ;
->>>>>>> Stashed changes
-=======
-; Analysis & Synthesis Status ; Failed - Tue Oct 18 15:49:57 2022           ;
->>>>>>> Stashed changes
+; Analysis & Synthesis Status ; Failed - Tue Oct 25 16:14:31 2022           ;
 ; Quartus Prime Version       ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name               ; cpu                                         ;
-; Top-level Entity Name       ; cpu                                         ;
+; Top-level Entity Name       ; cpuWithAlu                                  ;
 ; Family                      ; Cyclone V                                   ;
 ; Logic utilization (in ALMs) ; N/A until Partition Merge                   ;
 ; Total registers             ; N/A until Partition Merge                   ;
@@ -74,7 +58,7 @@ refer to the applicable agreement for further details.
 ; Option                                                                          ; Setting            ; Default Value      ;
 +---------------------------------------------------------------------------------+--------------------+--------------------+
 ; Device                                                                          ; 5CSEMA5F31C6       ;                    ;
-; Top-level entity name                                                           ; cpu                ; cpu                ;
+; Top-level entity name                                                           ; cpuWithAlu         ; cpu                ;
 ; Family name                                                                     ; Cyclone V          ; Cyclone V          ;
 ; Use smart compilation                                                           ; Off                ; Off                ;
 ; Enable parallel Assembler and Timing Analyzer during compilation                ; On                 ; On                 ;
@@ -177,112 +161,46 @@ refer to the applicable agreement for further details.
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    Info: Processing started: Sat Oct 22 16:40:59 2022
-=======
-    Info: Processing started: Tue Oct 18 15:49:48 2022
->>>>>>> Stashed changes
-=======
-    Info: Processing started: Tue Oct 18 15:49:48 2022
->>>>>>> Stashed changes
+    Info: Processing started: Tue Oct 25 16:14:22 2022
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off cpu -c cpu
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
 Info (12021): Found 1 design units, including 1 entities, in source file psr_reg.v
     Info (12023): Found entity 1: PSR_reg File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/PSR_reg.v Line: 2
 Info (12021): Found 1 design units, including 1 entities, in source file registerfile.v
-    Info (12023): Found entity 1: registerFile File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/registerFile.v Line: 18
+    Info (12023): Found entity 1: registerFile File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/registerFile.v Line: 22
 Info (12021): Found 1 design units, including 1 entities, in source file register.v
     Info (12023): Found entity 1: register File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/register.v Line: 1
-Info (12021): Found 1 design units, including 1 entities, in source file cpu.v
-    Info (12023): Found entity 1: cpu File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/cpu.v Line: 1
 Info (12021): Found 1 design units, including 1 entities, in source file mux2.v
     Info (12023): Found entity 1: mux2 File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/mux2.v Line: 1
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-Error (10170): Verilog HDL syntax error at alu.v(21) near text: "reg";  expecting "(". Check for and fix any syntax errors that appear immediately before or at the specified keyword. The Intel FPGA Knowledge Database contains many articles with specific details on how to resolve this error. Visit the Knowledge Database at https://www.altera.com/support/support-resources/knowledge-base/search.html and search for this specific error message number. File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 21
-Warning (10090): Verilog HDL syntax warning at alu.v(226): extra block comment delimiter characters /* within block comment File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 226
-Warning (10090): Verilog HDL syntax warning at alu.v(460): extra block comment delimiter characters /* within block comment File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 460
-Error (10112): Ignored design unit "alu" at alu.v(1) due to previous errors File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 1
-Info (12021): Found 0 design units, including 0 entities, in source file alu.v
-=======
 Info (12021): Found 1 design units, including 1 entities, in source file alu.v
     Info (12023): Found entity 1: alu File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 15
->>>>>>> Stashed changes
-=======
-Info (12021): Found 1 design units, including 1 entities, in source file alu.v
-    Info (12023): Found entity 1: alu File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 15
->>>>>>> Stashed changes
 Info (12021): Found 1 design units, including 1 entities, in source file alutb.v
     Info (12023): Found entity 1: aluTb File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/aluTb.v Line: 3
 Info (12021): Found 1 design units, including 1 entities, in source file registerfile_tb.v
     Info (12023): Found entity 1: registerFile_tb File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/registerFile_tb.v Line: 3
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
+Info (12021): Found 1 design units, including 1 entities, in source file cpuwithalu.v
+    Info (12023): Found entity 1: cpuWithAlu File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/cpuWithAlu.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file hexto7seg.v
+    Info (12023): Found entity 1: hexTo7Seg File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/hexTo7Seg.v Line: 5
+Info (12021): Found 1 design units, including 1 entities, in source file cpuwithdatapath.v
+    Info (12023): Found entity 1: cpuWithDatapath File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/cpuWithDatapath.v Line: 1
+Warning (10236): Verilog HDL Implicit Net warning at cpuWithAlu.v(29): created implicit net for "cond_group1" File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/cpuWithAlu.v Line: 29
+Warning (10236): Verilog HDL Implicit Net warning at cpuWithAlu.v(29): created implicit net for "cond_group2" File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/cpuWithAlu.v Line: 29
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(24): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 24
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(25): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 25
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(26): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 26
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(27): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 27
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(28): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 28
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(29): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 29
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(30): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 30
+Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(31): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 31
+Error (10053): Verilog HDL error at alu.v(122): can't index object "cond_group1" with zero packed or unpacked array dimensions File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 122
+Error (10161): Verilog HDL error at alu.v(134): object "aloOut" is not declared. Verify the object name is correct. If the name is correct, declare the object. File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 134
 Info (144001): Generated suppressed messages file C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/output_files/cpu.map.smsg
-Error: Quartus Prime Analysis & Synthesis was unsuccessful. 2 errors, 3 warnings
-    Error: Peak virtual memory: 4764 megabytes
-    Error: Processing ended: Sat Oct 22 16:41:08 2022
-=======
-=======
->>>>>>> Stashed changes
-Warning (10236): Verilog HDL Implicit Net warning at cpu.v(40): created implicit net for "final_group1" File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/cpu.v Line: 40
-Warning (10236): Verilog HDL Implicit Net warning at cpu.v(40): created implicit net for "final_group2" File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/cpu.v Line: 40
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(35): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 35
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(36): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 36
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(37): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 37
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(38): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 38
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(39): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 39
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(40): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 40
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(41): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 41
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(42): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 42
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(43): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 43
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(46): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 46
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(47): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 47
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(48): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 48
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(49): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 49
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(52): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 52
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(53): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 53
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(54): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 54
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(55): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 55
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(56): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 56
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(57): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 57
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(58): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 58
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(59): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 59
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(60): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 60
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(61): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 61
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(64): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 64
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(65): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 65
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(67): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 67
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(68): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 68
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(69): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 69
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(72): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 72
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(73): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 73
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(74): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 74
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(75): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 75
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(76): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 76
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(77): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 77
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(78): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 78
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(79): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 79
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(80): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 80
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(81): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 81
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(82): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 82
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(83): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 83
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(84): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 84
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(85): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 85
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(86): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 86
-Warning (10222): Verilog HDL Parameter Declaration warning at alu.v(87): Parameter Declaration in module "alu" behaves as a Local Parameter Declaration because the module has a Module Parameter Port List File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/alu.v Line: 87
-Error (10137): Verilog HDL Procedural Assignment error at registerFile_tb.v(31): object "counter" on left-hand side of assignment must have a variable data type File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/registerFile_tb.v Line: 31
-Error (10137): Verilog HDL Procedural Assignment error at registerFile_tb.v(63): object "counter" on left-hand side of assignment must have a variable data type File: C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/registerFile_tb.v Line: 63
-Info (144001): Generated suppressed messages file C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/output_files/cpu.map.smsg
-Error: Quartus Prime Analysis & Synthesis was unsuccessful. 2 errors, 47 warnings
-    Error: Peak virtual memory: 4768 megabytes
-    Error: Processing ended: Tue Oct 18 15:49:57 2022
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+Error: Quartus Prime Analysis & Synthesis was unsuccessful. 2 errors, 11 warnings
+    Error: Peak virtual memory: 4763 megabytes
+    Error: Processing ended: Tue Oct 25 16:14:31 2022
     Error: Elapsed time: 00:00:09
     Error: Total CPU time (on all processors): 00:00:20
 

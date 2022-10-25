@@ -1,13 +1,5 @@
 Flow report for cpu
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-Sat Oct 22 16:41:08 2022
-=======
-Tue Oct 18 15:49:57 2022
->>>>>>> Stashed changes
-=======
-Tue Oct 18 15:49:57 2022
->>>>>>> Stashed changes
+Tue Oct 25 16:14:31 2022
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -48,18 +40,10 @@ refer to the applicable agreement for further details.
 +---------------------------------------------------------------------------+
 ; Flow Summary                                                              ;
 +-----------------------------+---------------------------------------------+
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-; Flow Status                 ; Flow Failed - Sat Oct 22 16:41:08 2022      ;
-=======
-; Flow Status                 ; Flow Failed - Tue Oct 18 15:49:57 2022      ;
->>>>>>> Stashed changes
-=======
-; Flow Status                 ; Flow Failed - Tue Oct 18 15:49:57 2022      ;
->>>>>>> Stashed changes
+; Flow Status                 ; Flow Failed - Tue Oct 25 16:14:31 2022      ;
 ; Quartus Prime Version       ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name               ; cpu                                         ;
-; Top-level Entity Name       ; cpu                                         ;
+; Top-level Entity Name       ; cpuWithAlu                                  ;
 ; Family                      ; Cyclone V                                   ;
 ; Device                      ; 5CSEMA5F31C6                                ;
 ; Timing Models               ; Final                                       ;
@@ -78,27 +62,18 @@ refer to the applicable agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-; Start date & time ; 10/22/2022 16:40:59 ;
-=======
-; Start date & time ; 10/18/2022 15:49:48 ;
->>>>>>> Stashed changes
-=======
-; Start date & time ; 10/18/2022 15:49:48 ;
->>>>>>> Stashed changes
+; Start date & time ; 10/25/2022 16:14:22 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; cpu                 ;
 +-------------------+---------------------+
 
 
-<<<<<<< Updated upstream
 +-------------------------------------------------------------------------------------------------------------------------------------------------+
 ; Flow Non-Default Global Settings                                                                                                                ;
 +--------------------------------------+----------------------------------------+---------------+-------------+-----------------------------------+
 ; Assignment Name                      ; Value                                  ; Default Value ; Entity Name ; Section Id                        ;
 +--------------------------------------+----------------------------------------+---------------+-------------+-----------------------------------+
-; COMPILER_SIGNATURE_ID                ; 110760108615377.166647845931548        ; --            ; --          ; --                                ;
+; COMPILER_SIGNATURE_ID                ; 110760108615377.166673606215148        ; --            ; --          ; --                                ;
 ; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --            ; --          ; registerFile_tb                   ;
 ; EDA_DESIGN_INSTANCE_NAME             ; NA                                     ; --            ; --          ; aluTb                             ;
 ; EDA_GENERATE_FUNCTIONAL_NETLIST      ; Off                                    ; --            ; --          ; eda_board_design_timing           ;
@@ -118,37 +93,14 @@ refer to the applicable agreement for further details.
 ; EDA_TIME_SCALE                       ; 1 ps                                   ; --            ; --          ; eda_simulation                    ;
 ; MAX_CORE_JUNCTION_TEMP               ; 85                                     ; --            ; --          ; --                                ;
 ; MIN_CORE_JUNCTION_TEMP               ; 0                                      ; --            ; --          ; --                                ;
-; PARTITION_COLOR                      ; -- (Not supported for targeted family) ; --            ; --          ; Top                               ;
-; PARTITION_FITTER_PRESERVATION_LEVEL  ; -- (Not supported for targeted family) ; --            ; --          ; Top                               ;
-; PARTITION_NETLIST_TYPE               ; -- (Not supported for targeted family) ; --            ; --          ; Top                               ;
+; PARTITION_COLOR                      ; -- (Not supported for targeted family) ; --            ; cpuWithAlu  ; Top                               ;
+; PARTITION_FITTER_PRESERVATION_LEVEL  ; -- (Not supported for targeted family) ; --            ; cpuWithAlu  ; Top                               ;
+; PARTITION_NETLIST_TYPE               ; -- (Not supported for targeted family) ; --            ; cpuWithAlu  ; Top                               ;
 ; POWER_BOARD_THERMAL_MODEL            ; None (CONSERVATIVE)                    ; --            ; --          ; --                                ;
 ; POWER_PRESET_COOLING_SOLUTION        ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW  ; --            ; --          ; --                                ;
 ; PROJECT_OUTPUT_DIRECTORY             ; output_files                           ; --            ; --          ; --                                ;
+; TOP_LEVEL_ENTITY                     ; cpuWithAlu                             ; cpu           ; --          ; --                                ;
 +--------------------------------------+----------------------------------------+---------------+-------------+-----------------------------------+
-=======
-+------------------------------------------------------------------------------------------------------------------------------------------------+
-; Flow Non-Default Global Settings                                                                                                               ;
-+-------------------------------------+----------------------------------------+---------------+-------------+-----------------------------------+
-; Assignment Name                     ; Value                                  ; Default Value ; Entity Name ; Section Id                        ;
-+-------------------------------------+----------------------------------------+---------------+-------------+-----------------------------------+
-; COMPILER_SIGNATURE_ID               ; 110760108615377.166612978831660        ; --            ; --          ; --                                ;
-; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --          ; eda_board_design_timing           ;
-; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --          ; eda_board_design_boundary_scan    ;
-; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --          ; eda_board_design_signal_integrity ;
-; EDA_GENERATE_FUNCTIONAL_NETLIST     ; Off                                    ; --            ; --          ; eda_board_design_symbol           ;
-; EDA_OUTPUT_DATA_FORMAT              ; Verilog Hdl                            ; --            ; --          ; eda_simulation                    ;
-; EDA_SIMULATION_TOOL                 ; ModelSim-Altera (Verilog)              ; <None>        ; --          ; --                                ;
-; EDA_TIME_SCALE                      ; 1 ps                                   ; --            ; --          ; eda_simulation                    ;
-; MAX_CORE_JUNCTION_TEMP              ; 85                                     ; --            ; --          ; --                                ;
-; MIN_CORE_JUNCTION_TEMP              ; 0                                      ; --            ; --          ; --                                ;
-; PARTITION_COLOR                     ; -- (Not supported for targeted family) ; --            ; --          ; Top                               ;
-; PARTITION_FITTER_PRESERVATION_LEVEL ; -- (Not supported for targeted family) ; --            ; --          ; Top                               ;
-; PARTITION_NETLIST_TYPE              ; -- (Not supported for targeted family) ; --            ; --          ; Top                               ;
-; POWER_BOARD_THERMAL_MODEL           ; None (CONSERVATIVE)                    ; --            ; --          ; --                                ;
-; POWER_PRESET_COOLING_SOLUTION       ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW  ; --            ; --          ; --                                ;
-; PROJECT_OUTPUT_DIRECTORY            ; output_files                           ; --            ; --          ; --                                ;
-+-------------------------------------+----------------------------------------+---------------+-------------+-----------------------------------+
->>>>>>> Stashed changes
 
 
 +--------------------------------------------------------------------------------------------------------------------------+
@@ -156,15 +108,7 @@ refer to the applicable agreement for further details.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-; Analysis & Synthesis ; 00:00:09     ; 1.0                     ; 4764 MB             ; 00:00:20                           ;
-=======
-; Analysis & Synthesis ; 00:00:09     ; 1.0                     ; 4768 MB             ; 00:00:20                           ;
->>>>>>> Stashed changes
-=======
-; Analysis & Synthesis ; 00:00:09     ; 1.0                     ; 4768 MB             ; 00:00:20                           ;
->>>>>>> Stashed changes
+; Analysis & Synthesis ; 00:00:09     ; 1.0                     ; 4763 MB             ; 00:00:20                           ;
 ; Total                ; 00:00:09     ; --                      ; --                  ; 00:00:20                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
