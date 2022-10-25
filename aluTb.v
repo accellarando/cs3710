@@ -74,23 +74,8 @@ end
 always@(posedge clk) begin
 	$display("aluOp: %b, aluIn1: %b, aluIn2: %b, aluOut: %b, conds: %b",
 		aluOp, aluIn1, aluIn2, aluOut, conds);
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-//	$display("writeEn: %b, writeData: %b, srcAddr: %b, dstAddr: %b, readData1: %b, readData2: %b",
-	//	writeEn, writeData, srcAddr, dstAddr, readData1, readData2);
-=======
 	$display("writeEn: %b, writeData: %b, srcAddr: %b, dstAddr: %b, readData1: %b, readData2: %b",
 		writeEn, writeData, srcAddr, dstAddr, readData1, readData2);
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
-	$display("writeEn: %b, writeData: %b, srcAddr: %b, dstAddr: %b, readData1: %b, readData2: %b",
-		writeEn, writeData, srcAddr, dstAddr, readData1, readData2);
->>>>>>> Stashed changes
-	//$display("%b %d",counter,counter);
-=======
-	//$display("%b %b",counter,counter);
->>>>>>> a88e35300db4a712c46adc2a56a53398e19eacbd
 	case(counter)
 		1: begin
 			//and
@@ -194,93 +179,6 @@ always@(posedge clk) begin
 			aluOp <= 16'b10110000;
 			$display("Testing CMP...\n");
 		end
-<<<<<<< HEAD
-		/*26: if(conds != 5'b00000)
-				$display("ERROR IN CMP: Expected conds = 00000, got %d\n",
-=======
-		26: if(conds != 5'b00000)
-				$display("ERROR IN CMP: Expected conds = 00000, got %b\n",
->>>>>>> a88e35300db4a712c46adc2a56a53398e19eacbd
-					conds);
-		27: begin
-			aluIn1 <= 16'b00000001;
-			aluIn2 <= 16'b01111111;
-		end
-		28: if(conds != 5'b01010)
-				$display("ERROR IN CMP: Expected conds = 01010, got %b\n",
-					conds);
-		29: begin
-			aluIn1 <= 16'b00000001;
-			aluIn2 <= 16'b00000001;
-		end
-		30: if(conds != 5'b00100)
-				$display("ERROR IN CMP: Expected conds = 00100, got %b\n",
-					conds);
-		31: begin
-			aluOp <= 8'b10000000;
-			$display("Testing LSH...\n");
-		end
-		32: if(aluOut != 16'b00000010 || conds != 5'b00000)
-				$display("ERROR IN LSH: Expected aluOut = 00000010, conds = 00000, got %b, %b\n",
-					aluOut, conds);
-		33: begin
-			aluOp <= 8'b10000010;
-			$display("Testing RSH...\n");
-		end
-		34: if(aluOut != 16'b00000000 || conds != 5'b00000)
-				$display("ERROR IN RSH: Expected aluOut = 00000000, conds = 00000, got %b, %b\n",
-					aluOut, conds);
-		35: begin
-			aluOp <= 8'b10001000;
-			aluIn1 <= 16'b10000001;
-			aluIn2 <= 16'b00000001;
-			$display("Testing arithmetic LSH...\n");
-		end
-		36: if(aluOut != 16'b10000010 || conds != 5'b00000)
-				$display("ERROR IN ARITH LSH: Expected aluOut = 10000010, conds = 00000, got %b, %b\n",
-					aluOut, conds);
-		37: begin
-			aluOp <= 16'b10000111;
-			$display("Testing arithmetic RSH...\n");
-		end
-		38: if(aluOut != 16'b10000000 || conds != 5'b00000)
-				$display("ERROR IN ARITH RSH: Expected aluOut = 10000000, conds = 00000, got %b, %b\n",
-					aluOut, conds);
-		39: begin
-			aluOp <= 8'b00001111;
-			$display("Testing NOT...\n");
-		end
-		40: if(aluOut != 16'b01111110 || conds != 5'b00000)
-				$display("ERROR IN NOT: Expected aluOut = 01111110, conds = 00000, got %b, %b\n",
-					aluOut, conds);
-		41: aluIn1 <= 16'b11111111;
-		42: if(aluOut != 16'b0 || conds != 5'b01000)
-				$display("ERROR IN RSH: Expected aluOut = 00000000, conds = 01000, got %b, %b\n",
-					aluOut, conds);
-		43: begin
-			writeEn <= 1;
-			writeData <= 16'b10101010;
-			srcAddr <= 16'b1;
-			dstAddr <= 16'b1;
-		end
-<<<<<<< HEAD
-		44: if(readData1 != 8'b10101010)
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-			$display("ERROR IN RF: Expected readData1 = 10101010, got %d\n",readData1); */
-=======
-			$display("ERROR IN RF: Expected readData1 = 10101010, got %d\n",readData1);
->>>>>>> Stashed changes
-=======
-			$display("ERROR IN RF: Expected readData1 = 10101010, got %d\n",readData1);
->>>>>>> Stashed changes
-		45: counter <= 0;
-		default: ;
-=======
-		44: if(readData1 != 16'b10101010)
-			$display("ERROR IN RF: Expected readData1 = 10101010, got %b\n",readData1);
-		default: counter <= 1;
->>>>>>> a88e35300db4a712c46adc2a56a53398e19eacbd
 	endcase
 	
 
