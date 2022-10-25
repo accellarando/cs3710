@@ -7,7 +7,7 @@ module cpuWithDatapath #(parameter SIZE=16, NUMREGS=16)
 		
 	wire we;
 	reg[SIZE-1:0] addr, dataIn, dataOut;
-	stateMachine fsm(nextStateButton,addr,we,dataIn);
+	stateMachine fsm(nextStateButton,reset,addr,we,dataIn);
 	
 	memory mem(we, clk, addr, dataIn, dataOut);
 	hexTo7Seg readDataDecode(dataOut[3:0], readData);
