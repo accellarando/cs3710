@@ -68,26 +68,26 @@ module registerFile_tb();
 			//---------------------------FIX CASES
 			
 			// @ Re-write to Register 1 
-			30: begin
-				$display("INITIALIZE -> Data-in = %b, Enable = %d, Register to write = %d\n", writeData, writeEn, dstAddr);
-				$display("TRY -> rewrite 2 to Register 0");
-				
-				if(readData1 == 16'd2)
-					$display("SUCCESS: write/read to Register 0\n");
-				else
-					$display("FAILURE: write/read to Register 0 -> EXPECTED = %b, ACTUAL %b\n", 16'd2, readData1);
-			end
-			
-			// @ Reset registers 
-			40: begin
-				$display("INITIALIZE -> Data-in = %b, Enable = %d, Register to write = %d\n", writeData, writeEn, dstAddr);
-				$display("TRY -> rewrite 2 to Register 0");
-				
-				if(readData1 == 16'd2)
-					$display("SUCCESS: write/read to Register 0\n");
-				else
-					$display("FAILURE: write/read to Register 0 -> EXPECTED = %b, ACTUAL %b\n", 16'd2, readData1);
-			end
+//			30: begin
+//				$display("INITIALIZE -> Data-in = %b, Enable = %d, Register to write = %d\n", writeData, writeEn, dstAddr);
+//				$display("TRY -> rewrite 2 to Register 0");
+//				
+//				if(readData1 == 16'd2)
+//					$display("SUCCESS: write/read to Register 0\n");
+//				else
+//					$display("FAILURE: write/read to Register 0 -> EXPECTED = %b, ACTUAL %b\n", 16'd2, readData1);
+//			end
+//			
+//			// @ Reset registers 
+//			40: begin
+//				$display("INITIALIZE -> Data-in = %b, Enable = %d, Register to write = %d\n", writeData, writeEn, dstAddr);
+//				$display("TRY -> rewrite 2 to Register 0");
+//				
+//				if(readData1 == 16'd2)
+//					$display("SUCCESS: write/read to Register 0\n");
+//				else
+//					$display("FAILURE: write/read to Register 0 -> EXPECTED = %b, ACTUAL %b\n", 16'd2, readData1);
+//			end
 			
 			endcase
 			end
