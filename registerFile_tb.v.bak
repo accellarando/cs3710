@@ -62,4 +62,8 @@ module registerFile_tb();
 		counter <= counter + 1; // increment counter value each pos-edge of the clock to test cases subseqently
 	end
 
+<<<<<<< Updated upstream
 endmodule
+=======
+endmodule
+>>>>>>> Stashed changes

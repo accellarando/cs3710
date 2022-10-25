@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 //`timescale 1ns / 1ps
+=======
+`timescale 1ns / 1ns
+>>>>>>> Stashed changes
 /*
 REGISTER FILE: Provide arguments and hold results by instantiating 16 16-bit registers
 (-) Immediate to be sign-extended before ALU (concatenation)
@@ -27,6 +31,7 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 		
 	
 	reg [SIZE-1:0] regFile [(1<<REGBITS)-1:0]; // Declare sixteen 16-bit registers in register file 
+<<<<<<< Updated upstream
 
 	// Reading relative path
 	initial begin
@@ -57,3 +62,30 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 	end
 
 endmodule 
+=======
+integer i;
+	/* Reading relative path*/
+	initial begin
+	$display("Loading register file");
+	$readmemb("E:/3710/GroupProject/cs3710/reg.dat", regFile); // ! CHANGE TO YOUR LOCAL PATH !
+	$display("Done with loading register file"); 
+	end
+	
+
+	/* Assigning */
+	always @(posedge clk) begin
+		if(reset) begin
+			// ?? all 16 registers are set to 16'b0
+				regFile[i] <= 0;							
+			
+		end
+		else begin	
+			if(writeEn) begin
+				readData1 <= regFile[dstAddr];
+				readData2 <= regFile[srcAddr];
+			end
+		end
+	end
+
+endmodule  
+>>>>>>> Stashed changes

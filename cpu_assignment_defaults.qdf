@@ -1,8 +1,14 @@
 # -------------------------------------------------------------------------- #
 #
+<<<<<<< Updated upstream
 # Copyright (C) 2020  Intel Corporation. All rights reserved.
 # Your use of Intel Corporation's design tools, logic functions 
 # and other software and tools, and any partner logic 
+=======
+# Copyright (C) 2018  Intel Corporation. All rights reserved.
+# Your use of Intel Corporation's design tools, logic functions 
+# and other software and tools, and its AMPP partner logic 
+>>>>>>> Stashed changes
 # functions, and any output files from any of the foregoing 
 # (including device programming or simulation files), and any 
 # associated documentation or information are expressly subject 
@@ -12,14 +18,23 @@
 # agreement, including, without limitation, that your use is for
 # the sole purpose of programming logic devices manufactured by
 # Intel and sold by Intel or its authorized distributors.  Please
+<<<<<<< Updated upstream
 # refer to the applicable agreement for further details, at
 # https://fpgasoftware.intel.com/eula.
+=======
+# refer to the applicable agreement for further details.
+>>>>>>> Stashed changes
 #
 # -------------------------------------------------------------------------- #
 #
 # Quartus Prime
+<<<<<<< Updated upstream
 # Version 20.1.1 Build 720 11/11/2020 SJ Lite Edition
 # Date created = 12:42:48  October 17, 2022
+=======
+# Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
+# Date created = 17:02:01  October 17, 2022
+>>>>>>> Stashed changes
 #
 # -------------------------------------------------------------------------- #
 #
@@ -765,7 +780,11 @@ set_global_assignment -name EDA_GENERATE_POWER_INPUT_FILE Off -section_id ?
 set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS NOT_USED -section_id ?
 set_global_assignment -name EDA_RTL_SIM_MODE NOT_USED -section_id ?
 set_global_assignment -name EDA_MAINTAIN_DESIGN_HIERARCHY OFF -section_id ?
+<<<<<<< Updated upstream
 set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST On -section_id ?
+=======
+set_global_assignment -name EDA_GENERATE_FUNCTIONAL_NETLIST Off -section_id ?
+>>>>>>> Stashed changes
 set_global_assignment -name EDA_WRITE_DEVICE_CONTROL_PORTS Off -section_id ?
 set_global_assignment -name EDA_SIMULATION_VCD_OUTPUT_TCL_FILE Off -section_id ?
 set_global_assignment -name EDA_SIMULATION_VCD_OUTPUT_SIGNALS_TO_TCL_FILE "All Except Combinational Logic Element Outputs" -section_id ?

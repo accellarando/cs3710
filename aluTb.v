@@ -72,8 +72,13 @@ end
 always@(posedge clk) begin
 	$display("aluOp: %b, aluIn1: %b, aluIn2: %b, aluOut: %b, conds: %b",
 		aluOp, aluIn1, aluIn2, aluOut, conds);
+<<<<<<< Updated upstream
 //	$display("writeEn: %b, writeData: %b, srcAddr: %b, dstAddr: %b, readData1: %b, readData2: %b",
 	//	writeEn, writeData, srcAddr, dstAddr, readData1, readData2);
+=======
+	$display("writeEn: %b, writeData: %b, srcAddr: %b, dstAddr: %b, readData1: %b, readData2: %b",
+		writeEn, writeData, srcAddr, dstAddr, readData1, readData2);
+>>>>>>> Stashed changes
 	//$display("%b %d",counter,counter);
 	case(counter)
 		1: begin
@@ -243,7 +248,11 @@ always@(posedge clk) begin
 			dstAddr <= 8'b1;
 		end
 		44: if(readData1 != 8'b10101010)
+<<<<<<< Updated upstream
 			$display("ERROR IN RF: Expected readData1 = 10101010, got %d\n",readData1); */
+=======
+			$display("ERROR IN RF: Expected readData1 = 10101010, got %d\n",readData1);
+>>>>>>> Stashed changes
 		45: counter <= 0;
 		default: ;
 	endcase
