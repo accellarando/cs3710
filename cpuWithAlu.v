@@ -2,12 +2,20 @@ module cpuWithAlu #(parameter SIZE=16, NUMREGS=16)
 	(input clk, reset,
 		input[4:0] switchesLeft,
 		input[4:0] switchesRight,
+		/*
 		input plusButton, minusButton, 
 			andButton, orButton, xorButton, 
 			shlButton, shrButton,
+		*/
+		input andButton, minusButton, shlButton,
 		output[9:0] leds);
 	reg[3:0] aluOp;
 	wire[15:0] aluOut;
+	
+	assign plusButton = 1'b1;
+	assign orButton = 1'b1;
+	assign xorButton = 1'b1;
+	assign shrButton = 1'b1;
 	
 	//always block to figure out aluop
 	parameter AND		=	4'b0000;
@@ -19,20 +27,22 @@ module cpuWithAlu #(parameter SIZE=16, NUMREGS=16)
 	parameter SLL 		= 	4'b0110; 	// shift Left logical
 	parameter SRL 		= 	4'b0111;
 	always@(*) begin
-		if(plusButton)
+		if(!plusButton)
 			aluOp = ADD;
-		else if(minusButton)
+		else if(!minusButton)
 			aluOp = SUB;
-		else if(andButton)
+		else if(!andButton)
 			aluOp = AND;
-		else if(orButton)
+		else if(!orButton)
 			aluOp = OR;
-		else if(xorButton)
+		else if(!xorButton)
 			aluOp = XOR;
-		else if(shlButton)
+		else if(!shlButton)
 			aluOp = SLL;
-		else if(shrButton)
+		else if(!shrButton)
 			aluOp = SRL;
+		else
+			aluOp = SLL;
 	end
 	alu mainAlu(aluOp, switchesLeft, switchesRight, aluOut, cond_group1, cond_group2);
 	

@@ -1,10 +1,10 @@
 module stateMachine(input nextStateButton, reset,
-	output[15:0] addr,
-	output we,
-	output[15:0] dataOut);
+	output reg [15:0] addr,
+	output reg we,
+	output reg [15:0] dataOut);
 	
-	wire[3:0] thisState;
-	wire[3:0] nextState;
+	reg[3:0] thisState;
+	reg[3:0] nextState;
 	always@(negedge reset) begin
 		thisState <= 4'd0;
 		nextState <= 4'd0;
