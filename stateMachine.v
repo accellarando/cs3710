@@ -1,7 +1,29 @@
 module stateMachine(input nextStateButton, reset,
-	output reg [15:0] addr,
-	output reg we,
-	output reg [15:0] dataOut);
+	output reg [15:0] addr1, addr2,
+	output reg we1, we2,
+	output reg [15:0] dataOut1, dataOut2, hex); 
+	
+	/* Hex is like "dataOutFinal", 
+	
+	
+	// *** Need to apply logic to comsider 2 separate addresses's write and data!!! ***
+	// Adjust below!
+	
+	
+	 REASON: 	output LEDs can only be represented by 1 variable at a time.
+					since two separate addresses/data, either needs to be represented to the LEDs
+	THEREFORE:
+					always loop needs to consider which dataOut needs to be given to 7seg for
+					controlling the LEDs. depending on the state.
+					
+					States to consider, what should be included in them (among other things of course):
+					reset -- hex should be dataOut1 --> hex <= dataOut1
+					initialize ram -- values into dram
+					use ram -- past state put values into dram, now get em and use them
+					return to ram -- past state used ram values, put em back
+					change and output -- adjusting addr1 and addr2, assigning: hex <= dataOut2
+					
+	*/
 	
 	reg[3:0] thisState;
 	reg[3:0] nextState;
