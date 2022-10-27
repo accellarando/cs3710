@@ -6,10 +6,10 @@ module registerFile_tb();
 	reg			writeEn;
 	reg[15:0] 	writeData;
 	reg[3:0] 	srcAddr, dstAddr;
+	integer 		counter;
 	
 	/* Outputs */
 	wire[15:0] 	readData1, readData2;
-	integer counter;
 	
 	/* Outputs */
 	/* Instantiate the Unit Under Test (UUT) */
@@ -27,19 +27,19 @@ module registerFile_tb();
 	/* Initializing inputs */
 	initial begin
 		clk		<= 1'b0;
-		reset		<= 1'b1;		// active-low reset, toggle
+		reset		<= 1'b1;		// active-low reset
 		#100;
 		reset		<= 1'b0;
 		#100;
 		reset		<= 1'b1;
 		writeEn	<= 1'b0;
-		#100;					// wait 100 ns for global reset to finish
+		#100;						// toggle 100 ns for global reset to finish
 		counter 	= 0;			// for switch-case block in testing different write-read values
 
 	end
 	
 	/* Generate clock */
-	always #25 begin		// clock changes edge every 50 ns
+	always #50 begin		// clock changes edge every 50 ns
 		clk = !clk;
 	end
 	
@@ -89,9 +89,10 @@ module registerFile_tb();
 //					$display("FAILURE: write/read to Register 0 -> EXPECTED = %b, ACTUAL %b\n", 16'd2, readData1);
 //			end
 			
-			endcase
-			end
-			
-			
-			// last case: set counter back to zero=======
+			default : ;
+		endcase
+	
+		counter <= counter + 1; // increment counter value each pos-edge of the clock to test cases subseqently
+	end
+
 endmodule
