@@ -34,7 +34,7 @@ module stateMachine(input nextStateButton, reset,
 	always@(posedge nextStateButton) begin
 		//advance to next state
 		thisState <= nextState;
-		if(nextState == 4'd15)
+		if(nextState == 4'd9)
 			nextState <= 4'd0;
 		else
 			nextState <= nextState + 1;
@@ -78,7 +78,28 @@ module stateMachine(input nextStateButton, reset,
 				we2 <= 1'd1;
 			end
 			//Now test that those values are still in memory...
-			
+			4'd6: begin
+				addr1 <= 16'd0;
+				addr2 <= 16'd16;
+				we1 <= 1'd0;
+				we2 <= 1'd0;
+			end
+			4'd7: begin
+				addr1 <= 16'd32;
+				addr2 <= 16'd48;
+				we1 <= 1'd0;
+				we2 <= 1'd0;
+			end
+			4'd8: begin
+				addr1 <= 16'd64;
+				addr2 <= 16'd80;
+				we1 <= 1'd0;
+				we2 <= 1'd0;
+			end
+			default: begin
+				we1 <= 1'd0;
+				we2 <= 1'd0;
+			end
 			
 		endcase
 	end
