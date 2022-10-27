@@ -1,18 +1,13 @@
 `timescale 1ns / 1ns
+
 /*
-REGISTER FILE: Provide arguments and hold results by instantiating 16 16-bit registers
-<<<<<<< HEAD
-(-) Immediate to be sign-extended before ALU (concatenation)
+REGISTER FILE: Provide arguments and hold results by instantiating 16 16-bit registers(-) Immediate to be sign-extended before ALU (concatenation)
 (-) Shifter
 (-) Program counter register and immediate register (make sure you can change these later on)
 (?) PSR = processor status register
 (X) Decoder
-*/
-//-----------------------------------
-/*
-=======
 
->>>>>>> a88e35300db4a712c46adc2a56a53398e19eacbd
+
 @ 2 read ports	[output]:	Reads 2 args from register file to feed ALU
 @ 1 write port [input]:		Writes back the result data
 									Enables write to reg 
@@ -25,23 +20,24 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 	input[SIZE-1:0] 				writeData,					//	16-bit Data in
 	input[REGBITS-1:0]			srcAddr, dstAddr,			// 4-bit wide read addresses	
 	output reg[SIZE-1:0] 		readData1, readData2		// 16-bit Data out
-	
-	//	registerFile #(SIZE, REGBITS) rf(clk, reset, pcOut, aluOut, srcOut, dstOut, d1, d2);
 	);
 		
 	
 	reg [SIZE-1:0] regFile [(1<<REGBITS)-1:0]; // Declare sixteen 16-bit registers in register file 
 
-	// Reading relative path
+	/* Reading relative path*/
 	initial begin
 	$display("Loading Register File...");
-	//$readmemb("E:/3710/GroupProject/cs3710/reg.dat", regFile); // ! CHANGE TO YOUR LOCAL PATH !
-	$readmemb("C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/reg.dat", regFile);
+	
+	/* ! CHANGE TO YOUR LOCAL PATH ! */
+	$readmemb("E:/3710/GroupProject/cs3710/reg.dat", regFile);
+	//$readmemb("C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/reg.dat", regFile);
+	
 	$display("Done with loading Register File\n"); 
 	end
 	
 
-	//Assigning 
+	/* Assigning */ 
 	integer i;
 	
 	always @(posedge clk) begin
