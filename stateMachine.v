@@ -42,24 +42,44 @@ module stateMachine(input nextStateButton, reset,
 	always@(*) begin
 		case(thisState)
 			4'd0: begin
-				addr <= 16'd0;
-				we <= 1'd0;
-				dataOut <= 16'd1;
+				addr1 <= 16'd0;
+				addr2 <= 16'd16;
+				we1 <= 1'd0;
+				we2 <= 1'd0;
+				dataOut1 <= 16'd1;
+				dataOut2 <= 16'd2;
 			end
-			4'd1: we <= 1'd1;
+			4'd1: begin
+				we1 <= 1'd1;
+				we2 <= 1'd1;
+			end
 			4'd2: begin
-				addr <= 16'd16;
-				we <= 1'd0;
-				dataOut <= 16'd2;
+				addr1 <= 16'd32;
+				addr2 <= 16'd48;
+				we1 <= 1'd0;
+				we2 <= 1'd0;
+				dataOut1 <= 16'd3;
+				dataOut2 <= 16'd4;
 			end
-			4'd3: we <= 1'd1;
+			4'd3: begin
+				we1 <= 1'd1;
+				we2 <= 1'd1;
+			end
 			4'd4: begin
-				addr <= 16'd32;
-				we <= 1'd0;
-				dataOut <= 16'd3;
+				addr1 <= 16'd64;
+				addr2 <= 16'd80;
+				we1 <= 1'd0;
+				we2 <= 1'd0;
+				dataOut1 <= 16'd5;
+				dataOut2 <= 16'd6;
 			end
-			4'd5: we <= 1'd1;
-			//am I on the right track here?
+			4'd5: begin
+				we1 <= 1'd1;
+				we2 <= 1'd1;
+			end
+			//Now test that those values are still in memory...
+			
+			
 		endcase
 	end
 	
