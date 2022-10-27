@@ -2,7 +2,7 @@ module cpuWithDatapath #(parameter SIZE=16, NUMREGS=16)
 	(input clk,
 		reset, nextStateButton, // Ella, if you can figure how to implement nextStateButton in the fsm, would be perfect!
 		//output [9:0] leds
-		output[6:0] led0, led1, led2, led3,
+		output[6:0] led0, led1, led2, led3);
 	//	output[6:0] readData, // What would read/write data be, and be for?
 	//	output[6:0] writeData);
 		
@@ -30,10 +30,10 @@ module cpuWithDatapath #(parameter SIZE=16, NUMREGS=16)
 	
 	
 	
-	hexTo7Seg hexDecode0(hex[3:0], led0)
-	hexTo7Seg hexDecode1(hex[7:4], led1)
-	hexTo7Seg hexDecode2(hex[11:8], led2)
-	hexTo7Seg hexDecode3(hex[15:12], led3)
+	hexTo7Seg hexDecode0(hex[3:0], led0);
+	hexTo7Seg hexDecode1(hex[7:4], led1);
+	hexTo7Seg hexDecode2(hex[11:8], led2);
+	hexTo7Seg hexDecode3(hex[15:12], led3);
 	
 	//assign leds = addr[9:0];
 endmodule 
