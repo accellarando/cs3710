@@ -8,16 +8,16 @@ required by instructions in handling operations within the processor/CPU.
 
 Datapath Staging: Fetch -> Decode -> Execute
 ****************************************************************************
-Reference Module(s): cpuWithDatapath.v
-							statemachine.v ?
-							registerfile.v ?
-							PSR.v	?
-							alu.v ?
+Reference Module(s):	cpuWithDatapath.v
+							statemachine.v (?)
+							registerfile.v (?)
+							PSR.v	(?)
+							alu.v (?)
 
 ------------!FIX!------------
-FETCH 				>> get instr, program counter
-OPCODE/INSTR		>> 
-CONDITION CODES	>>
+FETCH >> get instr, program counter
+OPCODE/INSTR
+CONDITION CODES
 
 */
 module datapath_tb();
