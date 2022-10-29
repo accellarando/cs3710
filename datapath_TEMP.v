@@ -1,4 +1,5 @@
-module datapath #(parameter SIZE = 16) (
+// TEMP FILE FOR HOW TO POSSIBLY ORGANIZE DATAPATH
+module datapath_TEMP #(parameter SIZE = 16) (
 //	POSSIBLE INPUTS TO CONSIDER
 //	-immediate or regfile's dataout
 //		+(immediate) zeroextend/signextend
