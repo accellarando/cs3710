@@ -1,5 +1,5 @@
 // TEMP FILE FOR HOW TO POSSIBLY ORGANIZE DATAPATH
-module datapath_TEMP #(parameter SIZE = 16) (
+
 //	POSSIBLE INPUTS TO CONSIDER
 //	-immediate or regfile's dataout
 //		+(immediate) zeroextend/signextend
@@ -15,11 +15,10 @@ module datapath_TEMP #(parameter SIZE = 16) (
 //	-memory access for ports (outside of datapath)
 //		+write data, data addr, i/o input data, enable write(?)
 		
-	
-	
-	/* Outputs */
 //	POSSIBLE OUTPUTS TO CONSIDER
 //	-current instruction from mem
 //	-program counter
 //	-current flag set
+
+module datapath_TEMP #(parameter SIZE = 16) (
 	);
