@@ -16,8 +16,8 @@ REGISTER FILE: Provide arguments and hold results by instantiating 16 16-bit reg
 */	
 module registerFile #(parameter SIZE = 16, REGBITS = 4) (	
 	input								clk, reset,
-	input 							writeEn1, writeEn2,		// enable signals
-	input[SIZE-1:0] 				writeData1, writeData2, //	16-bit Data ins
+	input 							writeEn,						// enable signal
+	input[SIZE-1:0] 				writeData,					//	16-bit Data in
 	input[REGBITS-1:0]			srcAddr, dstAddr,			// 4-bit wide read addresses	
 	output reg[SIZE-1:0] 		readData1, readData2		// 16-bit Data out
 	);
@@ -27,14 +27,14 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 
 	/* Reading relative path*/
 	initial begin
-		$display("Loading Register File...");
-		
-		/* ! CHANGE TO YOUR LOCAL PATH ! */
-		//$readmemb("E:/3710/GroupProject/cs3710/reg.dat", regFile);
-		//$readmemb("C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/reg.dat", regFile);
-		$readmemb("/home/ella/Documents/School/CS3710/cpu/reg.dat", regFile);
-		
-		$display("Done with loading Register File\n"); 
+	$display("Loading Register File...");
+	
+	/* ! CHANGE TO YOUR LOCAL PATH ! */
+	//$readmemb("E:/3710/GroupProject/cs3710/reg.dat", regFile);
+	//$readmemb("C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/reg.dat", regFile);
+	$readmemb("/home/ella/Documents/School/CS3710/cpu/reg.dat", regFile);
+	
+	$display("Done with loading Register File\n"); 
 	end
 	
 
@@ -49,10 +49,9 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 			end
 		end
 		else begin	
-			if(writeEn1) 
-				regFile[dstAddr] <= writeData1;
-			if(writeEn2)
-				regFile[srcAddr] <= writeData2;
+			if(writeEn) begin
+				regFile[dstAddr] <= writeData;	// dstAddr is both read and write address (dual-port)
+			end
 		end
 		readData1 <= regFile[dstAddr];			// read ports have data inputs
 		readData2 <= regFile[srcAddr];
