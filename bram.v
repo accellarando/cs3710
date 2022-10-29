@@ -12,8 +12,9 @@ module bram
 	// Declare the RAM variable
 	reg [DATA_WIDTH-1:0] ram[2**ADDR_WIDTH-1:0]; // possibly switch to 0:2**ADDR_WIDTH - 1
 	initial begin
-		$display("Loading memory");
+		$display("Loading memory...");
 		$readmemb("<path-to-your-file>/fib-b.dat", ram); //change to correct path to .dat file
+		$display("Done.");
 	end
 
 	// Port A 
