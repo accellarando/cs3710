@@ -13,7 +13,18 @@
 */	
 
 module alu #(parameter WIDTH = 16)
-            (	input 		[WIDTH-9:0] aluOp,
+ 
+
+// *** 	NEED TO UPDATE INPUTS/OUTPUTS TO MATCH CURRENT FORMAT AND 
+//			REDO CODE TO MATCH ITS PURPOSE ***
+
+
+
+
+
+
+ 
+			  (	input 		[WIDTH-9:0] aluOp,
 					input     	[WIDTH-1:0] aluIn1, aluIn2,	// regarding pcOut as 16-bit	
 					input 		[4:0] flags_in,
 					output reg 	[WIDTH-1:0] aluOut, 

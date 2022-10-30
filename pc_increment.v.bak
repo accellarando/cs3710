@@ -1,9 +1,7 @@
 // Increments before heading into PC mux, then PC counter
-module pc_increment
-	(	
-		input [15:0] PC,
-		output [15:0] PC_next
-	);
+module pc_increment (PC, offset, PC_next);
+	input [15:0] pC,
+	output [15:0] PC_next;
 	
 	// if offset high ==> PC subtraction/decrement
 	//	otherwise ==> PC addition/increment

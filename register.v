@@ -5,8 +5,8 @@ module register #(parameter SIZE=16)
 
 	always @(posedge clk) begin
 		if(~reset)
-			q = 0;
+			q <= 0;
 		else
-			q = d;
+			q <= d;
 	end
 endmodule 

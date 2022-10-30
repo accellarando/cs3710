@@ -1,7 +1,7 @@
 // register/ counter for PC
 module pc_counter
 	(input clk, reset, en,
-	input [15:0] q,
+	input [15:0] q
 	output reg [15:0] q_out
 	);
 

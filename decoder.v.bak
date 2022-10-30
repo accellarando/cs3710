@@ -8,7 +8,7 @@ module decoder
 		output [3:0] mux1_en, mux2_en,
 		output [2:0] inst_type,
 		output writeback_en
-	);
+	)
 
 
 endmodule

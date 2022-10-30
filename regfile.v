@@ -5,7 +5,7 @@ module regfile
 		input [15:0] alu_bus, inputs_received,
 		output [15:0] demo_reg1, mux1_out, mux2_out
 		//output [15:0] registers [0:15];
-	)
+	);
 	
 	wire [15:0] registers [0:15];
 	// some always clk on doing these below, do later

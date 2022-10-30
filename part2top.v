@@ -55,7 +55,7 @@ decoder decode (flags_out, instr_out, rDest_in, alu_immed, opcodes, mux1_en, mux
 
 PC_data2 = 16'h0;
 ram2_en = 1'h0;
-dram ram(PC_addr1, PC_addr2, PC_data1, PC_data2, ram1_en, ram2_en, clk, ram1_out, ram2_out);
+bram ram(PC_addr1, PC_addr2, PC_data1, PC_data2, ram1_en, ram2_en, clk, ram1_out, ram2_out);
 
 
 
