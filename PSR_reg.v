@@ -1,27 +1,23 @@
-// register for condition codes going into ALU with enable signal
+// register for flags going into ALU with enable signal
 module PSR_reg
 	(input reset, clk, en,
-	input [1:0] cond_group1, // 2 flags, C and F
-	input [2:0] cond_group2, // 3 flags, L, Z, and N
-	output reg [1:0] final_group1, 
-	output reg [2:0] final_group2
+	input [4:0] flags, // 5 flags, C, F, L, Z, N
+	output reg [4:0] flags_out
 	);
 
 	always @(posedge clk) begin
 		if(reset) begin
-			final_group1 <= 2'b00;
-			final_group2 <= 3'b000;
+			flags <= 5'b00000;
 		end
 		else
 			begin
 				if(en) begin
-					final_group1 <= cond_group1;
-					final_group2 <= cond_group2;
+					flags_out <= flags;
 				end
 				else begin
-					final_group1 <= final_group1;
-					final_group2 <= final_group2;
+					flags_out <= flags_out;
 				end
 			end
 	end
+	
 endmodule 

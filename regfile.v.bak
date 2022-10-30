@@ -1,0 +1,18 @@
+module regfile 
+	(
+		input clk, reset, mux_1_en, mux_2_en,
+		input [4:0] regfile_en,
+		input [15:0] alu_bus, inputs_received,
+		output [15:0] demo_reg_1, 
+		output [15:0] registers [0:15];
+	)
+	
+reg_mux_1 mux_1()
+
+reg_mux_2 mux_2();
+
+	
+	
+	
+endmodule
+	
