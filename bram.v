@@ -6,7 +6,7 @@ module bram
 (
 	input [(DATA_WIDTH-1):0] data_a, data_b, addr_a, addr_b, ex_inputs,
 	input clk, we_a, we_b,
-	output reg [(DATA_WIDTH-1):0] q_a, q_b, ex_outputs,
+	output reg [(DATA_WIDTH-1):0] q_a, q_b, ex_outputs
 );
 
 	// Declare the RAM variable
@@ -21,7 +21,7 @@ module bram
 	always @ (posedge clk)
 	begin
 		if (we_a) begin
-			if(addr_a[(ADDR_WIDTH-1):(ADDR_WIDTH-4)] == 4'xF) begin
+			if(addr_a[(ADDR_WIDTH-1):(ADDR_WIDTH-4)] == 4'hF) begin
 				//writing to external
 				ex_outputs <= data_a;
 				q_a <= ex_inputs;
@@ -32,7 +32,7 @@ module bram
 			end
 		end
 		else begin
-			if(addr_a[(ADDR_WIDTH-1):(ADDR_WIDTH-4)] == 4'xF)
+			if(addr_a[(ADDR_WIDTH-1):(ADDR_WIDTH-4)] == 4'hF)
 				q_a <= ex_inputs;
 			else
 				q_a <= ram[addr_a];
@@ -43,7 +43,7 @@ module bram
 	always @ (posedge clk)
 	begin
 		if (we_b) begin
-			if(addr_b[(ADDR_WIDTH-1):(ADDR_WIDTH-4)] == 4'xF) begin
+			if(addr_b[(ADDR_WIDTH-1):(ADDR_WIDTH-4)] == 4'hF) begin
 				//writing to external
 				ex_outputs <= data_b;
 				q_b <= ex_inputs;
@@ -54,7 +54,7 @@ module bram
 			end
 		end
 		else begin
-			if(addr_b[(ADDR_WIDTH-1):(ADDR_WIDTH-4)] == 4'xF)
+			if(addr_b[(ADDR_WIDTH-1):(ADDR_WIDTH-4)] == 4'hF)
 				q_b <= ex_inputs;
 			else
 				q_b <= ram[addr_b];

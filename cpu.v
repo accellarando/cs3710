@@ -1,8 +1,8 @@
-module cpu (#parameter SIZE=16) (input clk, reset,
+module cpu #(parameter SIZE=16) (input clk, reset,
 	//Bunch of inputs for control signals until we
 	//get to that assignment
 	MemW1e, MemW2e, RegWe, psr_en,
-	LUIm, Movm, RWm
+	LUIm, Movm, RWm,
 	input [1:0] PCm, A2m,
 	input[3:0] AluOp,
 	input[(SIZE-1):0] switches,
@@ -10,7 +10,7 @@ module cpu (#parameter SIZE=16) (input clk, reset,
 	//ultimately, only output from mem-mapped IO
 	output[(SIZE-1):0] PC, AluOut,
 		RegR1, RegR2, RegW,
-		MemR1, MemR2, MemW1, MemW1,
+		MemR1, MemR2, MemW1, MemW2,
 	output[1:0] flags1out,
 	output[2:0] flags2out,
 	leds);
@@ -24,7 +24,7 @@ module cpu (#parameter SIZE=16) (input clk, reset,
 	
 	//Different modules that we need
 	register 		PCreg(reset, clk, PcMuxOut, MemAddr1);
-	register			instrReg(reset, clk, MemR1, instr)
+	register			instrReg(reset, clk, MemR1, instr);
 	bram 				RAM(MemW1, MemW2, 
 							MemAddr1, MemAddr2, 
 							switches, 
@@ -48,7 +48,7 @@ module cpu (#parameter SIZE=16) (input clk, reset,
 	mux3 PCmux(PCm, nextPc, RegR1, aluOut, PcMuxOut);
 	mux2 RWritemux(RWm, RegR2, MovMuxOut, RegW);
 	mux2 MovMux(Movm, A2MuxOut, aluOut, MovMuxOut);
-	mux3 Alu2Mux(A2m, RegR2, {{(SIZE-4)1'b0}{instr[3:0]}}, seImm); //zero extend that? or sign extend...
+	mux3 Alu2Mux(A2m, RegR2, {{(SIZE-4){1'b0}},{instr[3:0]}}, seImm); //zero extend that? or sign extend...
 	mux2 LuiMux(LUIm, RegR1, 16'd8, LuiMuxOut);
 	
 endmodule 
