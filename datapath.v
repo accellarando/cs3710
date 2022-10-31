@@ -1,65 +1,105 @@
-// TEMP FILE FOR HOW TO POSSIBLY ORGANIZE DATAPATH
+// Documentation:
+// CURRENT ASSIGNMENT -> 
+// NEXT ASSIGNMENT -> instruction decoding, control state machine (FSM), I/O support configurations for our project
 
-//	POSSIBLE INPUTS TO CONSIDER
-//	-immediate or regfile's dataout
-//		+(immediate) zeroextend/signextend
-//	-select output for whatever alu/shfiting/store or copy to mem
-//	-set flags
-//		+flag for writing to mem, store instr in reg, left shift immediate, get new instr from mem
-//	-alu opcodes
-//	-enable register to write
-//	-program counter
-//		+instr if dataout or pc
-//		+pc increment, next pc is output
-//	
-//	-memory access for ports (outside of datapath)
-//		+write data, data addr, i/o input data, enable write(?)
-		
-//	POSSIBLE OUTPUTS TO CONSIDER
-//	-current instruction from mem
-//	-program counter
-//	-current flag set
-
+// datapath module same as cpu module
 module datapath #(parameter SIZE = 16) (
-	/* INPUTS* */
-	input
+	input clk, reset,
 	
-	/* OUTPUTS */
-	output reg[SIZE-1:0] PC
+	/* Temporary controller FSM: control signals*/
+	input MemW1en, MemW2en, RFen, PSRen,		// enable signals (modules: bram, registerFile)
+	input Movm, RWm,								// mux select signals (MoveMux, RWriteMux)
+	input[1:0] PCm, A2m, LUIm,					// mux select signals (PCMux, ALU2Mux, LUIMux)
+	input[3:0] AluOp,
+	input[SIZE-1:0] switches,					// simulate on board
+	
+	output[SIZE-1:0] AluOut,
+	output[SIZE-1:0] RFwrite, RFread1, RFread2,						// register file data input and outputs
+	output[SIZE-1:0] MemWrite1, MemWrite2, MemRead1, MemRead2,	// bram memory access data input and output  
+	output[1:0] flags1out,
+	output[2:0] flags2out,
+	output[9:0] leds															// simulate on board
+	
+	// Program counter register (?) -> working without controller FSM -> MUXES
+	input pcIncrement;			// (condition if single-cycle should continue) to move to the next PC
+	input pcNextOut;				// (condtion for Branches and Jumps) next PC should be the output 
+	input pcInstr;					// (condition for Branches and Jumps) either modify the PC or the alu input
+	output reg [SIZE-1:0] PC;
+	
 	);
 	
-	/* INSTANTIATE MODULES */
-	registerFile regfile (
+	// declare vars (?)
+	reg [SIZE-1 : 0] nextPC;	// register that overwrites PC 
+	
+	// EXAMPLE PC mux (?) to change
+	always @(*) begin
+		if (~reset) nextPC <= PC;
+		else if (pcContinue) nextPC <= PC + 1;
+		else if (pcOverwrite) nextPC <= outputReg;
+		else nextPC <= PC;
+    end
+	
+	/* Instantiate internal nets */
+	wire[(SIZE-1):0] MemAddr1, MemAddr2;
+	wire[(SIZE-1):0] seImm;
+	wire[(SIZE-1):0] PcMuxOut, LuiMuxOut, A2MuxOut, movMuxOut;	// temporary controller FSM: mux output
+	wire[(SIZE-1):0] instr, nextPc;
+	wire[1:0] flags1;
+	wire[2:0] flags2;
+	
+	/* Instantiate modules */
+	register		PC_Reg(.clk(clk), .reset(reset), .d(PcMuxOut), .q(MemAddr1));
+	
+	register		Instr_Reg(.clk(clk), .reset(reset), .d(MemR1), .q(instr));
+	
+	
+	bram	RAM(
 		.clk(clk),
-		.reset(reset),
-		.writeEn(writeEn),
-		.writeData(writeData),
-		.srcAddr(srcAddr),
-		.dstAddr(dstAddr),
-		.readData1(readData1),
-		.readData2(readData2)
+		.we_a(MemW1en), .we_b(MemW2en),
+		.data_a(MemWrite1), .data_b(MemWrite2), 
+		.addr_a(MemAddr1), .addr_b(MemAddr2), 
+		.ex_inputs(switches),
+		
+		.q_a(MemRead1), .q_b(MemRead2), 
+		.ex_outputs(leds)
 	);
 	
-	/* PROGRAM COUNTER */
-//	PC as a loadable counter: 
-//	-Load the counter for the update and displacement functions (muxes) and count the counter for the increment-the-pc function
-//	-[advantage] May not have to use the complete datapath for each PC increment
-
-//	Datapath PC operations:
-//	-PC needs to be incremented by one word of 16-bits (the normal case)
-//	-Added to a sign-extended displacement (for branches)
-//	-Loaded from a register (for jumps)
-//	-JAL instr -> PC needs a path to regfile so that PC+1 (addr of the next instr following the JAL) can be stored in the link register, no reads
-
-// Consider possible PC issues:
-//	-[un/signed arithmetic] Unsigned PC that is operated on by a two's complement ALU
-//		+unsigned PC can directly addr 0 - 64k locations (each location is a 16-bit word) == 64k words in the addr space w/ each word being 16-bits
-//		+(subtraction) unsigned # w/ MSB of 1 binary added to a signed # w/ MSB of 1 -> overflow
+	registerFile	regFile(
+		.clk(clk), .reset(reset),
+		.writeEn(RFen), .writeData(RFwrite),
+		.srcAddr(instr[11:8]), .dstAddr(instr[3:0]),
+		
+		.readData1(RegR1), .readData2(RegR2)
 	
-//	[mini mips] flopenr    #(WIDTH)  pcreg(clk, reset, pcen, nextpc, pc);
-
-
-	// Immediate zero-extend or sign-extend
+	);
 	
+	// signExtender 	se(instr[7:0], seImm);
+	
+	alu	myAlu(
+		.aluOp(aluOp),
+		.aluIn1(LuiMuxOut), .aluIn2A2MuxOut
+		
+		.aluOut(aluOut),
+		.cond_group1(flags1), .cond_group2(flags2)
+	);
+	
+	PSR_reg	psr(
+		.clk(clk), .reset(reset), 
+		.en(PSRen),
+		.cond_group1(flags1), .cond_group2(flags2),
+		
+		.final_group1(flags1out), .final_group2(flags2out)
+	);
+	
+	//incrementer		pci(clk,MemAddr1,nextPc);
 
-endmodule
+	
+	
+	/* Temporary controller FSM: muxes */
+	mux3 PCmux(PCm, nextPc, RegR1, aluOut, PcMuxOut);
+	mux3 RWritemux(RWm, MemR2, nextPc, MovMuxOut, RFwrite);
+	mux2 MovMux(Movm, A2MuxOut, aluOut, MovMuxOut);
+	mux3 Alu2Mux(A2m, RegR2, {{(SIZE-4){1'b0}},{instr[3:0]}}, seImm); //zero extend that? or sign extend...
+	mux3 LuiMux(LUIm, RegR1, MemAddr1, 16'd8, LuiMuxOut);
+	
+endmodule 
