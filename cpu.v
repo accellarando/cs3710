@@ -46,7 +46,7 @@ module cpu #(parameter SIZE=16) (input clk, reset,
 	
 	//Now for the muxes.
 	mux3 PCmux(PCm, nextPc, RegR1, aluOut, PcMuxOut);
-	mux3 RWritemux(RWm, RegR2, nextPc, MovMuxOut, RegW);
+	mux3 RWritemux(RWm, MemR2, nextPc, MovMuxOut, RegW);
 	mux2 MovMux(Movm, A2MuxOut, aluOut, MovMuxOut);
 	mux3 Alu2Mux(A2m, RegR2, {{(SIZE-4){1'b0}},{instr[3:0]}}, seImm); //zero extend that? or sign extend...
 	mux2 LuiMux(LUIm, RegR1, 16'd8, LuiMuxOut);
