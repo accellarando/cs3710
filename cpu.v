@@ -13,7 +13,7 @@ module cpu #(parameter SIZE=16) (input clk, reset,
 		MemR1, MemR2, MemW1, MemW2,
 	output[1:0] flags1out,
 	output[2:0] flags2out,
-	leds);
+	output[9:0] leds);
 	
 	//Instantiate internal nets
 	wire[(SIZE-1):0] MemAddr1, MemAddr2, seImm, 
