@@ -1,7 +1,7 @@
 module stateMachine(input nextStateButton, reset,
 	output reg [15:0] addr1, addr2,
 	output reg we1, we2,
-	output reg [15:0] dataOut1, dataOut2, hex); 
+	output reg [15:0] dataOut1, dataOut2); 
 	
 	/* Hex is like "dataOutFinal", 
 	
@@ -42,8 +42,8 @@ module stateMachine(input nextStateButton, reset,
 	always@(*) begin
 		case(thisState)
 			4'd0: begin
-				addr1 <= 16'd0;
-				addr2 <= 16'd16;
+				addr1 <= 16'd1;
+				addr2 <= 16'd2;
 				we1 <= 1'd0;
 				we2 <= 1'd0;
 				dataOut1 <= 16'd1;
@@ -54,8 +54,8 @@ module stateMachine(input nextStateButton, reset,
 				we2 <= 1'd1;
 			end
 			4'd2: begin
-				addr1 <= 16'd32;
-				addr2 <= 16'd48;
+				addr1 <= 16'd3;
+				addr2 <= 16'd4;
 				we1 <= 1'd0;
 				we2 <= 1'd0;
 				dataOut1 <= 16'd3;
@@ -66,8 +66,8 @@ module stateMachine(input nextStateButton, reset,
 				we2 <= 1'd1;
 			end
 			4'd4: begin
-				addr1 <= 16'd64;
-				addr2 <= 16'd80;
+				addr1 <= 16'd5;
+				addr2 <= 16'd6;
 				we1 <= 1'd0;
 				we2 <= 1'd0;
 				dataOut1 <= 16'd5;
@@ -79,20 +79,20 @@ module stateMachine(input nextStateButton, reset,
 			end
 			//Now test that those values are still in memory...
 			4'd6: begin
-				addr1 <= 16'd0;
-				addr2 <= 16'd16;
+				addr1 <= 16'd1;
+				addr2 <= 16'd2;
 				we1 <= 1'd0;
 				we2 <= 1'd0;
 			end
 			4'd7: begin
-				addr1 <= 16'd32;
-				addr2 <= 16'd48;
+				addr1 <= 16'd3;
+				addr2 <= 16'd4;
 				we1 <= 1'd0;
 				we2 <= 1'd0;
 			end
 			4'd8: begin
-				addr1 <= 16'd64;
-				addr2 <= 16'd80;
+				addr1 <= 16'd5;
+				addr2 <= 16'd6;
 				we1 <= 1'd0;
 				we2 <= 1'd0;
 			end
