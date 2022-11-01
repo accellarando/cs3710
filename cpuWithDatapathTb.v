@@ -2,6 +2,7 @@
 module cpuWithDatapathTb();
 
 initial begin
+/*
 	reset = 1'b1;
 	nextStateButton = 1'b1;
 	#200;
@@ -20,6 +21,7 @@ initial begin
 	#200;
 	nextStateButton = 1'b1;
 	$display("...");
+	*/
 end
 
 endmodule 

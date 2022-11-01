@@ -25,5 +25,5 @@ module cpuWithDatapath #(parameter SIZE=16, NUMREGS=16)
 	hexTo7Seg hexerRead(dataOut1[3:0],readData);
 	hexTo7Seg hexerWrite(dataIn1[3:0],writeData);
 	
-	assign leds = addr[9:0];
+	assign leds = addr1[9:0];
 endmodule 
