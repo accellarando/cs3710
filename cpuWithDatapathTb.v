@@ -43,7 +43,8 @@ initial begin
 	nextStateButton = 1'b0;
 	#200;
 	nextStateButton = 1'b1;
-	$display("...");
+	$display(".Read data: %b, should be ...", readData);
+	$display(".Write data: %b, should be ...", writeData);
 end
 
 endmodule 
