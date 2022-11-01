@@ -13,7 +13,7 @@
 */	
 
 module alu #(parameter WIDTH = 16)
-            (	input 		[WIDTH-9:0] aluOp,
+            (	input 		[3:0] aluOp,
 					input     	[WIDTH-1:0] aluIn1, aluIn2,	// regarding pcOut as 16-bit	
 					output reg 	[WIDTH-1:0] aluOut, 
 					output reg	[1:0]cond_group1,	// FC bits
