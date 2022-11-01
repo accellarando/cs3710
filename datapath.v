@@ -44,7 +44,7 @@ module datapath #(parameter SIZE = 16) (
 	register		PC_Reg(.clk(clk), .reset(reset), .d(PcMuxOut), .q(MemAddr1));
 	
 	//incrementer		pci(clk,MemAddr1,nextPc);
-	MemAddr1 + 1
+	//MemAddr1 + 1
 	
 	register		Instr_Reg(.clk(clk), .reset(reset), .d(MemRead1), .q(instr)); // input comes from bram  
 	
@@ -109,15 +109,10 @@ module datapath #(parameter SIZE = 16) (
 		
 	mux3 	Alu2Mux(
 		.s(A2m),
-		.a(RFread2), .b( {instr[3:0]}} ), .c( {{8{instr[7]}}, instr} ),	// c-input sign-extend the immediate back to 16-bits
+		.a(RFread2), .b( {instr[3:0]}} ), .c( {{8{instr[7]}}, instr} ),	// c-input sign-extend the immediate back to 16-bits (!) change to immd concate
 		//.a(RFread2), .b( {instr[3:0]}} ), .c( {{(SIZE-4){1'b0}} ), //zero extend that? or sign extend...
 		.out(seImm)
 	);
-	
-	wire [WIDTH - 1 : 0] luiImmd; // 8-bit left shifted immediate
-   reg [WIDTH - 1 : 0]  immd; // Immediate retrieved from instruction
-	// 8-Bit left shit for LUI instructions
-   assign luiImmd = immd << 8;
 	
 	
 	reg [SIZE-1:0] immd; 		// immediate from instruction (will be instr[7:0])
