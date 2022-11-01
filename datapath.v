@@ -121,6 +121,7 @@ module datapath #(parameter SIZE = 16) (
 	
 	
 	reg [SIZE-1:0] immd; 		// immediate from instruction (will be instr[7:0])
+	assign immd = {8{instr[7]}};
 	wire[SIZE-1:0] luiImmd;
 	assign luiImmd = immd << 8;
 	
