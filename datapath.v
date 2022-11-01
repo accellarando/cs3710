@@ -18,26 +18,19 @@ module datapath #(parameter SIZE = 16) (
 	output[SIZE-1:0] MemWrite1, MemWrite2, MemRead1, MemRead2,	// bram memory access data input and output  
 	output[1:0] flags1out,
 	output[2:0] flags2out,
-	output[9:0] leds															// simulate on board
+	output[9:0] leds,															// simulate on board
 	
 	// Program counter register (?) -> working without controller FSM -> MUXES
-	input pcIncrement;			// (condition if single-cycle should continue) to move to the next PC
-	input pcNextOut;				// (condtion for Branches and Jumps) next PC should be the output 
-	input pcInstr;					// (condition for Branches and Jumps) either modify the PC or the alu input
-	output reg [SIZE-1:0] PC;
+	input pcNexten,				// enable signal to move/continue to the next PC
+	input pcNextOut,				// (condtion for Branches and Jumps) next PC should be the output 
+	input pcInstr,					// (condition for Branches and Jumps) either modify the PC or the alu input
+	output reg [SIZE-1:0] PC
 	
 	);
 	
 	// declare vars (?)
 	reg [SIZE-1 : 0] nextPC;	// register that overwrites PC 
 	
-	// EXAMPLE PC mux (?) to change
-	always @(*) begin
-		if (~reset) nextPC <= PC;
-		else if (pcContinue) nextPC <= PC + 1;
-		else if (pcOverwrite) nextPC <= outputReg;
-		else nextPC <= PC;
-    end
 	
 	/* Instantiate internal nets */
 	wire[(SIZE-1):0] MemAddr1, MemAddr2;
@@ -50,7 +43,11 @@ module datapath #(parameter SIZE = 16) (
 	/* Instantiate modules */
 	register		PC_Reg(.clk(clk), .reset(reset), .d(PcMuxOut), .q(MemAddr1));
 	
-	register		Instr_Reg(.clk(clk), .reset(reset), .d(MemR1), .q(instr));
+	//incrementer		pci(clk,MemAddr1,nextPc);
+	MemAddr1 + 1
+	
+	register		Instr_Reg(.clk(clk), .reset(reset), .d(MemRead1), .q(instr)); // input comes from bram  
+	
 	
 	
 	bram	RAM(
@@ -69,15 +66,13 @@ module datapath #(parameter SIZE = 16) (
 		.writeEn(RFen), .writeData(RFwrite),
 		.srcAddr(instr[11:8]), .dstAddr(instr[3:0]),
 		
-		.readData1(RegR1), .readData2(RegR2)
+		.readData1(RFread1), .readData2(RFread2)
 	
 	);
-	
-	// signExtender 	se(instr[7:0], seImm);
-	
+		
 	alu	myAlu(
 		.aluOp(aluOp),
-		.aluIn1(LuiMuxOut), .aluIn2A2MuxOut
+		.aluIn1(LuiMuxOut), .aluIn2(A2MuxOut),
 		
 		.aluOut(aluOut),
 		.cond_group1(flags1), .cond_group2(flags2)
@@ -91,18 +86,17 @@ module datapath #(parameter SIZE = 16) (
 		.final_group1(flags1out), .final_group2(flags2out)
 	);
 	
-	//incrementer		pci(clk,MemAddr1,nextPc);
 
 	/* Temporary controller FSM: muxes */
 	mux3 	PCmux(
 		.s(PCm),
-		.a(nextPc), .b(RegR1), .c(aluOut),
+		.a(nextPc), .b(RFread1), .c(aluOut),
 		.out(PcMuxOut)
 	);
 	
 	mux3 	RWritemux(
 		.s(RWm),
-		.a(MemR2), .b(nextPc), .c(MovMuxOut),
+		.a(MemRead2), .b(nextPc), .c(MovMuxOut),
 		.out(RFwrite)
 	);
 	
@@ -112,17 +106,35 @@ module datapath #(parameter SIZE = 16) (
 		.in1(A2MuxOut), .in2(aluOut),
 		.out(MovMuxOut)
 	);
-	
+		
 	mux3 	Alu2Mux(
 		.s(A2m),
-		.a(RegR2), .b({{(SIZE-4){1'b0}}), .c({instr[3:0]}}), //zero extend that? or sign extend...
+		.a(RFread2), .b( {instr[3:0]}} ), .c( {{8{instr[7]}}, instr} ),	// c-input sign-extend the immediate back to 16-bits
+		//.a(RFread2), .b( {instr[3:0]}} ), .c( {{(SIZE-4){1'b0}} ), //zero extend that? or sign extend...
 		.out(seImm)
 	);
 	
-	mux3 	LuiMux(
+	wire [WIDTH - 1 : 0] luiImmd; // 8-bit left shifted immediate
+   reg [WIDTH - 1 : 0]  immd; // Immediate retrieved from instruction
+	// 8-Bit left shit for LUI instructions
+   assign luiImmd = immd << 8;
+	
+	
+	reg [SIZE-1:0] immd; 		// immediate from instruction (will be instr[7:0])
+	wire[SIZE-1:0] luiImmd;
+	assign luiImmd = immd << 8;
+	
+	
+	mux2 	LuiMux(
 		.s(LUIm),
-		.a(RegR1), .b(MemAddr1), .c(16'd8),
+		.in1(RFread1), .in2(luiImmd),
 		.out(LuiMuxOut)
+	);
+	
+//	mux3 	LuiMux(
+//		.s(LUIm),
+//		.a(RFread1), .b(MemAddr1), .c(16'd8),
+//		.out(LuiMuxOut)
 	);
 	
 endmodule 
