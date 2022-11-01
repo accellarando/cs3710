@@ -44,11 +44,8 @@ module datapath #(parameter SIZE = 16) (
 	register		PC_Reg(.clk(clk), .reset(reset), .d(PcMuxOut), .q(MemAddr1));
 	
 	//incrementer		pci(clk,MemAddr1,nextPc);
-<<<<<<< HEAD
 	assign nextPc = MemAddr1 + 1;
-=======
-	//MemAddr1 + 1
->>>>>>> a88eb540d6b384e17d17f0e45bccf0be0c7082d3
+
 	
 	register		Instr_Reg(.clk(clk), .reset(reset), .d(MemRead1), .q(instr)); // input comes from bram  
 	
@@ -120,7 +117,7 @@ module datapath #(parameter SIZE = 16) (
 	
 	
 	reg [SIZE-1:0] immd; 		// immediate from instruction (will be instr[7:0])
-	assign immd = {8{instr[7]}};
+	assign immd = instr[7:0];
 	wire[SIZE-1:0] luiImmd;
 	assign luiImmd = immd << 8;
 	
