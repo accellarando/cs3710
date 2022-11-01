@@ -1,11 +1,6 @@
 module mux4 #(parameter WIDTH=16)(
-<<<<<<< HEAD
 	input[1:0] s, 
 	input[WIDTH-1:0] a, b, c, d,
-=======
-	input[1:0] s,
-	input[WIDTH-1:0] a, b, c,d,
->>>>>>> 60c9d5cc39c5e032e0aca7aa64dfa7c82db1eb05
 	output reg[WIDTH-1:0] out);
 	
 	always@(*) begin
