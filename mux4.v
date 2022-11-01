@@ -1,6 +1,6 @@
 module mux4 #(parameter WIDTH=16)(
-	input[1:0] s,
-	input[WIDTH-1:0] a, b, c,d,
+	input[1:0] s, 
+	input[WIDTH-1:0] a, b, c, d,
 	output reg[WIDTH-1:0] out);
 	
 	always@(*) begin

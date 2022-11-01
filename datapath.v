@@ -95,12 +95,11 @@ module datapath #(parameter SIZE = 16) (
 		.out(PcMuxOut)
 	);
 	
-	mux4 	RWritemux(
+	mux4 RWritemux(
 		.s(RWm),
-		.a(MemRead2), .b(nextPc), .c(MovMuxOut), .d(luiImmd),
+		.a(MemRead2), .b(nextPc), .c(MovMuxOut), .d(luiImmd)
 		.out(RFwrite)
 	);
-	
 
 	mux2 	MovMux(
 		.s(Movm),
