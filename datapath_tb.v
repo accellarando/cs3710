@@ -30,7 +30,7 @@ module datapath_tb();
 	
 	/* Temporary controller FSM: control signals*/
 	reg MemW1en, MemW2en, RFen, PSRen,		// enable signals (modules: bram, registerFile)
-	input Movm, RWm,									// mux select signals (MoveMux, RWriteMux)
+	r Movm, RWm,									// mux select signals (MoveMux, RWriteMux)
 	input[1:0] PCm, A2m, LUIm,						// mux select signals (PCMux, ALU2Mux, LUIMux)
 	input[3:0] AluOp,
 	input[SIZE-1:0] switches,						// simulate on board
