@@ -106,16 +106,18 @@ module datapath #(parameter SIZE = 16) (
 		.in1(A2MuxOut), .in2(aluOut),
 		.out(MovMuxOut)
 	);
-		
+	
+	//wire[SIZE-1:0] seImm;
+	assign seImm = instr[7] ? {{8{1'b1}},instr[7:0]} : {{8{1'b0}},instr[7:0]};
 	mux3 	Alu2Mux(
 		.s(A2m),
-		.a(RFread2), .b( {instr[3:0]}} ), .c( {{8{instr[7]}}, instr} ),	// c-input sign-extend the immediate back to 16-bits (!) change to immd concate
+		.a(RFread2), .b( {instr[3:0]} ), .c( seImm ),	// c-input sign-extend the immediate back to 16-bits (!) change to immd concate
 		//.a(RFread2), .b( {instr[3:0]}} ), .c( {{(SIZE-4){1'b0}} ), //zero extend that? or sign extend...
 		.out(seImm)
 	);
 	
 	
-	reg [SIZE-1:0] immd; 		// immediate from instruction (will be instr[7:0])
+	wire [SIZE-1:0] immd; 		// immediate from instruction (will be instr[7:0])
 	assign immd = instr[7:0];
 	wire[SIZE-1:0] luiImmd;
 	assign luiImmd = immd << 8;
@@ -132,6 +134,6 @@ module datapath #(parameter SIZE = 16) (
 //		.s(LUIm),
 //		.a(RFread1), .b(MemAddr1), .c(16'd8),
 //		.out(LuiMuxOut)
-	);
+	//);
 	
 endmodule 
