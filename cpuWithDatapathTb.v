@@ -1,4 +1,29 @@
-module memoryTb();
+`timescale 1ns / 1ps
+module cpuWithDatapath_tb ();
+
+//input
+reg clk, reset, nextStateButton,
+reg [4:0] switchesLeft,
+reg [4:0] switchesRight,
+
+//output
+
+wire [9:0] leds,
+wire[6:0] readData, 
+wire[6:0] writeData);
+
+
+cpuWithDatapath uutCWD(
+	.clk(clk),
+	.reset(reset),
+	.nextStateButton(nextStateButton),
+	.switchesLeft(switchesLeft),
+	.switchesRight(switchesRight),
+	.leds(leds),
+	.readData(ReadData),
+	.writeData(writeData)
+	
+);
 
 initial begin
 	reset = 1'b1;
