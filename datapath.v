@@ -123,8 +123,8 @@ module datapath #(parameter SIZE = 16) (
 	
 	mux2 	LuiMux(
 		.s(LUIm),
-		.in1(RFread1), .in2(luiImmd),
-		.out(LuiMuxOut)
+		.in1(instr), .in2(luiImmd),
+		.out(RFWrite)
 	);
 	
 //	mux3 	LuiMux(
