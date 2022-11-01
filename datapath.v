@@ -8,10 +8,10 @@ module datapath #(parameter SIZE = 16) (
 	
 	/* Temporary controller FSM: control signals*/
 	input MemW1en, MemW2en, RFen, PSRen,		// enable signals (modules: bram, registerFile)
-	input Movm, RWm,								// mux select signals (MoveMux, RWriteMux)
-	input[1:0] PCm, A2m, LUIm,					// mux select signals (PCMux, ALU2Mux, LUIMux)
+	input Movm, RWm,									// mux select signals (MoveMux, RWriteMux)
+	input[1:0] PCm, A2m, LUIm,						// mux select signals (PCMux, ALU2Mux, LUIMux)
 	input[3:0] AluOp,
-	input[SIZE-1:0] switches,					// simulate on board
+	input[SIZE-1:0] switches,						// simulate on board
 	
 	output[SIZE-1:0] AluOut,
 	output[SIZE-1:0] RFwrite, RFread1, RFread2,						// register file data input and outputs
@@ -93,13 +93,36 @@ module datapath #(parameter SIZE = 16) (
 	
 	//incrementer		pci(clk,MemAddr1,nextPc);
 
-	
-	
 	/* Temporary controller FSM: muxes */
-	mux3 PCmux(PCm, nextPc, RegR1, aluOut, PcMuxOut);
-	mux3 RWritemux(RWm, MemR2, nextPc, MovMuxOut, RFwrite);
-	mux2 MovMux(Movm, A2MuxOut, aluOut, MovMuxOut);
-	mux3 Alu2Mux(A2m, RegR2, {{(SIZE-4){1'b0}},{instr[3:0]}}, seImm); //zero extend that? or sign extend...
-	mux3 LuiMux(LUIm, RegR1, MemAddr1, 16'd8, LuiMuxOut);
+	mux3 	PCmux(
+		.s(PCm),
+		.a(nextPc), .b(RegR1), .c(aluOut),
+		.out(PcMuxOut)
+	);
+	
+	mux3 	RWritemux(
+		.s(RWm),
+		.a(MemR2), .b(nextPc), .c(MovMuxOut),
+		.out(RFwrite)
+	);
+	
+
+	mux2 	MovMux(
+		.s(Movm),
+		.in1(A2MuxOut), .in2(aluOut),
+		.out(MovMuxOut)
+	);
+	
+	mux3 	Alu2Mux(
+		.s(A2m),
+		.a(RegR2), .b({{(SIZE-4){1'b0}}), .c({instr[3:0]}}), //zero extend that? or sign extend...
+		.out(seImm)
+	);
+	
+	mux3 	LuiMux(
+		.s(LUIm),
+		.a(RegR1), .b(MemAddr1), .c(16'd8),
+		.out(LuiMuxOut)
+	);
 	
 endmodule 
