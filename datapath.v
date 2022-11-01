@@ -66,7 +66,7 @@ module datapath #(parameter SIZE = 16) (
 		
 	alu	myAlu(
 		.aluOp(aluOp),
-		.aluIn1(LuiMuxOut), .aluIn2(A2MuxOut),
+		.aluIn1(RFread1), .aluIn2(A2MuxOut), //rfread1
 		
 		.aluOut(aluOut),
 		.cond_group1(flags1), .cond_group2(flags2)
@@ -110,10 +110,10 @@ module datapath #(parameter SIZE = 16) (
 	);
 	
 	
-//	wire [SIZE-1:0] immd; 		// immediate from instruction (will be instr[7:0])
-//	assign immd = instr[7:0];
-//	wire[SIZE-1:0] luiImmd;
-//	assign luiImmd = immd << 8;
+	wire [SIZE-1:0] immd; 		// immediate from instruction (will be instr[7:0])
+	assign immd = instr[7:0];
+	wire[SIZE-1:0] luiImmd;
+	assign luiImmd = immd << 8;
 
 	/*
 	mux2 	LuiMux(
