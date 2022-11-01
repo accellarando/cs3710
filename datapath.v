@@ -13,19 +13,12 @@ module datapath #(parameter SIZE = 16) (
 	input[3:0] AluOp,
 	input[SIZE-1:0] switches,						// simulate on board
 	
-	output[SIZE-1:0] AluOut,
+	output[SIZE-1:0] PC, AluOut,
 	output[SIZE-1:0] RFwrite, RFread1, RFread2,						// register file data input and outputs
 	output[SIZE-1:0] MemWrite1, MemWrite2, MemRead1, MemRead2,	// bram memory access data input and output  
 	output[1:0] flags1out,
 	output[2:0] flags2out,
 	output[9:0] leds,															// simulate on board
-	
-	// Program counter register (?) -> working without controller FSM -> MUXES
-	input pcNexten,				// enable signal to move/continue to the next PC
-	input pcNextOut,				// (condtion for Branches and Jumps) next PC should be the output 
-	input pcInstr,					// (condition for Branches and Jumps) either modify the PC or the alu input
-	output reg [SIZE-1:0] PC
-	
 	);
 	
 	// declare vars (?)
@@ -117,11 +110,11 @@ module datapath #(parameter SIZE = 16) (
 	);
 	
 	
-	wire [SIZE-1:0] immd; 		// immediate from instruction (will be instr[7:0])
-	assign immd = instr[7:0];
-	wire[SIZE-1:0] luiImmd;
-	assign luiImmd = immd << 8;
-	
+//	wire [SIZE-1:0] immd; 		// immediate from instruction (will be instr[7:0])
+//	assign immd = instr[7:0];
+//	wire[SIZE-1:0] luiImmd;
+//	assign luiImmd = immd << 8;
+
 	/*
 	mux2 	LuiMux(
 		.s(LUIm),
