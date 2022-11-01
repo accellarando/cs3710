@@ -44,7 +44,8 @@ module datapath #(parameter SIZE = 16) (
 	register		PC_Reg(.clk(clk), .reset(reset), .d(PcMuxOut), .q(MemAddr1));
 	
 	//incrementer		pci(clk,MemAddr1,nextPc);
-	//MemAddr1 + 1
+	assign nextPc = MemAddr1 + 1;
+
 	
 	register		Instr_Reg(.clk(clk), .reset(reset), .d(MemRead1), .q(instr)); // input comes from bram  
 	
@@ -94,10 +95,16 @@ module datapath #(parameter SIZE = 16) (
 		.out(PcMuxOut)
 	);
 	
+<<<<<<< HEAD
 	
 	mux4 RWritemux(
 		.s(RWm),
 		.a(MemRead2), .b(nextPc), .c(MovMuxOut), .d(luiImmd)
+=======
+	mux4 	RWritemux(
+		.s(RWm),
+		.a(MemRead2), .b(nextPc), .c(MovMuxOut), .d(luiImmd),
+>>>>>>> 60c9d5cc39c5e032e0aca7aa64dfa7c82db1eb05
 		.out(RFwrite)
 	);
 
@@ -116,16 +123,17 @@ module datapath #(parameter SIZE = 16) (
 	
 	
 	reg [SIZE-1:0] immd; 		// immediate from instruction (will be instr[7:0])
-	assign immd = {8{instr[7]}};
+	assign immd = instr[7:0];
 	wire[SIZE-1:0] luiImmd;
 	assign luiImmd = immd << 8;
 	
-	
+	/*
 	mux2 	LuiMux(
 		.s(LUIm),
 		.in1(instr), .in2(luiImmd),
 		.out(RFWrite)
 	);
+	*/
 	
 //	mux3 	LuiMux(
 //		.s(LUIm),
