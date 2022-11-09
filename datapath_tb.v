@@ -14,30 +14,35 @@ Reference Module(s):	cpuWithDatapath.v
 							PSR.v	(?)
 							alu.v (?)
 
-------------!FIX!------------
-FETCH >> get instr, program counter
-OPCODE/INSTR
-CONDITION CODES
+---------ALU OP-----------
+parameter AND		=	4'b0000;
+parameter OR		=	4'b0001;
+parameter XOR 		= 	4'b0010;
+parameter ADD 		= 	4'b0011;
+parameter SUB		=	4'b0100;
+parameter NOT 		= 	4'b0101;
+parameter SLL 		= 	4'b0110;
+parameter SRL 		= 	4'b0111;
 
 */
 module datapath_tb();
-	/* Inputs */
 	reg 			clk, reset;
 	
-//	POSSIBLE INPUTS TO CONSIDER
-//	-immediate or regfile's dataout
-//		+(immediate) zeroextend/signextend
-//	-select output for whatever alu/shfiting/store or copy to mem
-//	-set flags
-//		+flag for writing to mem, store instr in reg, left shift immediate, get new instr from mem
-//	-alu opcodes
-//	-enable register to write
-//	-program counter
-//		+instr if dataout or pc
-//		+pc increment, next pc is output
-//	
-//	-memory access for ports (outside of datapath)
-//		+write data, data addr, i/o input data, enable write(?)
+	/* Temporary controller FSM: control signals*/
+	reg MemW1en, MemW2en, RFen, PSRen,		// enable signals (modules: bram, registerFile)
+	r Movm, RWm,									// mux select signals (MoveMux, RWriteMux)
+	input[1:0] PCm, A2m, LUIm,						// mux select signals (PCMux, ALU2Mux, LUIMux)
+	input[3:0] AluOp,
+	input[SIZE-1:0] switches,						// simulate on board
+	
+	output[SIZE-1:0] AluOut,
+	output[SIZE-1:0] RFwrite, RFread1, RFread2,						// register file data input and outputs
+	output[SIZE-1:0] MemWrite1, MemWrite2, MemRead1, MemRead2,	// bram memory access data input and output  
+	output[1:0] flags1out,
+	output[2:0] flags2out,
+	output[9:0] leds,															// simulate on board
+	
+
 		
 	
 	
