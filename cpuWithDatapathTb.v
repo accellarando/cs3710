@@ -14,6 +14,7 @@ always #20
 
 initial begin
 	clk = 1'b0;
+
 	reset = 1'b1;
 	nextStateButton = 1'b1;
 	#200;
