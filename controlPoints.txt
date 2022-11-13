@@ -1,0 +1,17 @@
+Control Points:
+---------------
+
+Register Enable Signals:
+	PSRen
+Write Enable Signals:
+	MemW1en
+	MemW2en
+	RFen
+1-bit Mux Select Signals:
+	Movm
+2-bit Mux Select Signals:
+	RWm
+	PCm
+	A2m
+ALU Control: (4 bits)
+	AluOp 
