@@ -43,7 +43,7 @@ BRANCH	-> cond, write to pc
 module controller #(parameter SIZE = 16) (
 	/* Inputs */
 	input clk, reset,
-	input[SIZE-1:0] instr // instruction bits
+	input[SIZE-1:0] instr, // instruction bits
 	//input[3:0] op,	 	(?) operation bits -> instr[31:26]
 	//input zero, 			(?) program counter enable (MINIMIPS)
 	
