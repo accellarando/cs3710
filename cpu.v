@@ -1,18 +1,22 @@
 module cpu #(parameter SIZE=16) (input clk, reset,
 	//Bunch of inputs for control signals until we
 	//get to that assignment
+	/*
 	MemW1e, MemW2e, RegWe, psr_en,
 	Movm, RWm,
 	input [1:0] PCm, A2m, LUIm,
 	input[3:0] AluOp,
+	*/
 	input[(SIZE-1):0] switches,
 	//have a bunch of outputs for testing purposes.
 	//ultimately, only output from mem-mapped IO
+	/*
 	output[(SIZE-1):0] PC, AluOut,
 		RegR1, RegR2, RegW,
 		MemR1, MemR2, MemW1, MemW2,
 	output[1:0] flags1out,
 	output[2:0] flags2out,
+	*/
 	output[9:0] leds);
 	
 	//Instantiate internal nets

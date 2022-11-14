@@ -7,7 +7,7 @@ module datapath #(parameter SIZE = 16) (
 	input clk, reset,
 	
 	/* Temporary controller FSM: control signals*/
-	input MemW1en, MemW2en, RFen, PSRen,		// enable signals (modules: bram, registerFile)
+	input MemW1en, MemW2en, RFen, PSRen, PCen,		// enable signals (modules: bram, registerFile)
 	input Movm, 									// mux select signals (MoveMux, RWriteMux)
 	input[1:0] PCm, A2m, RWm,//LUIm,						// mux select signals (PCMux, ALU2Mux, LUIMux)
 	input[3:0] AluOp,
@@ -17,8 +17,8 @@ module datapath #(parameter SIZE = 16) (
 	output[SIZE-1:0] RFwrite, RFread1, RFread2,						// register file data input and outputs
 	output[SIZE-1:0] MemWrite1, MemWrite2, MemRead1, MemRead2,	// bram memory access data input and output  
 	output[1:0] flags1out,
-	output[2:0] flags2out,
-	output[9:0] leds,															// simulate on board
+	output[2:0] flags2out
+	//, output[9:0] leds,													// simulate on board
 	);
 	
 	// declare vars (?)
@@ -34,7 +34,7 @@ module datapath #(parameter SIZE = 16) (
 	wire[2:0] flags2;
 	
 	/* Instantiate modules */
-	register		PC_Reg(.clk(clk), .reset(reset), .d(PcMuxOut), .q(MemAddr1));
+	en_register		PC_Reg(.clk(clk), .reset(reset), .d(PcMuxOut), .q(MemAddr1), .en(PCen));
 	
 	//incrementer		pci(clk,MemAddr1,nextPc);
 	assign nextPc = MemAddr1 + 1;
