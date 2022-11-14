@@ -160,15 +160,15 @@ module controller #(parameter SIZE = 16) (
 	
 	/* Flags */
 	// for checking within the condition codes
-	wire carry, flag, low, zero, negative;
+	wire carry, flag, low, zero, neg;
 	assign carry		= flag1[0];
 	assign flag			= flag1[1];
 	assign low			= flag2[0];
 	assign zero			= flag2[1];
-	assign negative	= flag2[2];
+	assign neg			= flag2[2];
 	
 	/* State Register */
-	reg[3:0] state, nextState; // state variables register variables
+	reg[3:0] state, nextState;
 	
 	always @(posedge clk)
 		if(~reset)	state <= FETCH;
@@ -180,10 +180,24 @@ module controller #(parameter SIZE = 16) (
 		case(state)
 			FETCH: nextState <= DECODE;
 			/* Instruction Decoder */
-			DECODE:	case(op)
-							TEST: nextState <= OPERATION;
-							//MOV: datapath muxes allow src reg to be written back w/o mod to dst reg (func code bits to set alu func to pass a val thru unmodded)
-							default: nextstate <= FETCH; // never reaches
+			DECODE:	case(op)	// first decode with OP Code
+						 4'b0000: nextState <= ;		// R-type instr OP code -> decode w/ OP Code Extended
+						 4'b0001: nextState <= ANDI;
+						 4'b0010: nextState <= ORI;
+						 4'b0011: nextState <= XORI;
+						 4'b0100: nextState <= ;		// STOR, LOAD, JAL
+						 4'b0101: nextState <= ADDI;
+						 //4'b0110: nextState <= ADDUI;
+						 4'b0111: nextState <= 
+						 4'b1000: nextState <= 
+						 4'b1001: nextState <= 
+						 4'b1010: nextState <= 
+						 4'b1011: nextState <= 
+						 4'b1100: nextState <=
+						 4'b1101: nextState <=
+						 4'b1110: nextState <=
+						 4'b1111: nextState <=
+						 default: nextstate <= FETCH; // never reaches
 						endcase
 				
 			//s0: if (in-signal) nextState <= s1;
@@ -234,6 +248,9 @@ module controller #(parameter SIZE = 16) (
 			
 			BRANCH: begin
 			end
+			
+			//MOV: datapath muxes allow src reg to be written back w/o mod to dst reg (func code bits to set alu func to pass a val thru unmodded)
+
 			
 			default: nextstate <= FETCH; // (!) CHANGE
 
