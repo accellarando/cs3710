@@ -36,10 +36,13 @@ module alu #(parameter WIDTH = 16)
 		
 					
 	always@(*) begin // maybe always at ALUIn1, ALUIn2, carryIn, and maybe aluOp? dependent on opcodes though
-      cond_group1[0] <= tmp[WIDTH];
+      //cond_group1[0] <= tmp[WIDTH];
+		//set conds to 0, set them to something else if warranted below
+		cond_group2[2:0] = 3'b0;
+		cond_group1[1:0] = 2'b0;
 		aluOut <= {WIDTH{1'b0}};
 		//cond_group1 <= 1'b0;
-		cond_group2 <= 3'b000;
+		//cond_group2 <= 3'b000;
 		 
 		
 	casex(aluOp)
@@ -50,27 +53,18 @@ module alu #(parameter WIDTH = 16)
 					begin
 						cond_group2[1] <= 1'b1; // Z bit set to 1
 					end
-				else 
-					begin
-						cond_group2[1] <= 1'b0; // Else, Z bit set to 0
-						//cond_group1[1:0] = 2'b0; // C and F bit to 0
-						cond_group2[0] <= 1'b0; // L bit to 0
-						cond_group2[2] <= 1'b0; // N bit to 0	
-					end
 		 end
 	OR: begin
 			aluOut <= aluIn1 | aluIn2;
 				if (aluOut == {WIDTH{1'b0}})
 					begin
 						cond_group2[1] <= 1'b1; // Z bit set to 1
-					
 					end
 		 end
 	XOR: begin
 			aluOut <= aluIn1 ^ aluIn2;
 			if (aluOut == {WIDTH{1'b0}})
 					cond_group2[1] <= 1'b1; // Z bit set to 1
-			
 	     end
 		
 	ADD: begin

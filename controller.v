@@ -27,18 +27,46 @@ output[9:0] leds,															// simulate
 
 
 
-/* File to substitue stateMachine.v (controller = FSM/state Machine)
+/*
 --------------------------------------------------------------------
 [SUMMARY]
-The control unit is responsible for setting all the control signals
+- The control unit is responsible for setting all the control signals
 so that each instruction is executed properly for the datapath.
+
+- With using a FSM for control, each state also
+specifies a set of outputs that are asserted when the machine is in 
+that state. 
+
+- A FSM can be implemented with a temporary register that holds
+the current state and a block of combinational logic that determines both the
+data-path signals to be asserted and the next state.
 --------------------------------------------------------------------
-[INSTRUCTIONS]
+[DOCUMENT REQUIREMENTS]
+- Register-to-Register (including immediate versions) operations
+- Load and Store operations
+- Conditional and Unconditional Branches/Jumps
+- Jump and Link
+
 FETCH = retrieve instruction
 DECODE = looks at op code once instruction from fetch is updated
 JAL		-> store next instr, write to reg, jump, write to pc
 JUMP		-> cond, write to pc = go to target addr
 BRANCH	-> cond, write to pc
+--------------------------------------------------------------------
+
+[R-TYPE INSTRUCTIONS]
+[I-TYPE INSTRUCTIONS]
+[SHIFT]
+labels = {}
+jpoint_instrs = {}
+RType = ['ADD', 'ADDU', 'ADDC', 'ADDCU', 'SUB', 'CMP', 'CMPU', 'AND', 'OR', 'XOR']
+Immediates = ['ADDI', 'ADDUI', 'ADDCI', 'ADDCUI', 'SUBI', 'CMPI', 'CMPUI', 'ANDI', 'ORI', 'XORI']
+Shift = ['LSH', 'RSH', 'ALSH', 'ARSH']
+ImmdShift = ['LSHI', 'RSHI', 'ALSHI', 'ARSHI']
+Branch = ['BEQ', 'BNE', 'BGE', 'BCS', 'BCC', 'BHI', 'BLS', 'BLO', 'BHS', 'BGT', 'BLE', 'BFS', 'BFC', 'BLT', 'BUC']
+Jump = ['JEQ', 'JNE', 'JGE', 'JCS', 'JCC', 'JHI', 'JLS', 'JLO', 'JHS', 'JGT', 'JLE', 'JFS', 'JFC', 'JLT', 'JUC']
+REGISTERS = ['%r0', '%r1', '%r2', '%r3', '%r4', '%r5', '%r6', '%r7', '%r8', '%r9', '%r10', '%r11', '%r12', '%r13', '%r14', '%r15']
+
 */
 module controller #(parameter SIZE = 16) (
 	/* Inputs */
@@ -103,7 +131,8 @@ module controller #(parameter SIZE = 16) (
 		if(~reset)	state <= FETCH;
 		else			state <= nextState;
 	
-	/* Next State Combinational Logic */
+	/* Next State Generation Combinational Logic */
+	// maps the current state and the inputs to a new state
 	always @(*) begin
 		case(state)
 			FETCH: nextState <= DECODE;
@@ -115,13 +144,13 @@ module controller #(parameter SIZE = 16) (
 			DECODE:	case(op)
 							TEST: nextState <= OPERATION;
 							
-							default: nextstate <= FETCH; // should never reach
+							default: nextstate <= FETCH; // never reaches
 						endcase
 			
 	end
 
 	/* Combinational Output Logic*/
-	// generates the outputs from each state
+	// generates the outputs from each state as datapath control signals
 	always @(*) begin
 		// set all outputs to zero
 		RFen <= 0; PSRen <= 0;
@@ -131,6 +160,7 @@ module controller #(parameter SIZE = 16) (
 		Movm <= 0;
 		A2m <= 2'b00; RWm <= 2'b00;
 		// conditionally assert the outputs
+		// for each state, every output/control signal needs to be explicitly assigned
 		case(state)
 			FETCH: begin
 				//PCm 	<= 2'bxx; // increment pc (?)
@@ -162,6 +192,8 @@ module controller #(parameter SIZE = 16) (
 			
 			BRANCH: begin
 			end
+			
+			default: nextstate <= FETCH; // (!) CHANGE
 
 	end
 endmodule 
