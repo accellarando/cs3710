@@ -21,10 +21,7 @@ the data path.
 fields (including sign extension or zero extension), and register enables
 -------------------------------------------------------------------------
 FETCH = retrieve instr from mem
-DECODE = split retrieved instr into 2 parts
--opcode (operation code)
--operand (addr in mem where data will be read from or written to
-depending on the operation)
+DECODE = split retrieved instr into 2 parts: OP Code and Operand
 [R-TYPE INSTRUCTIONS]
 ADD
 SUB
@@ -91,7 +88,7 @@ module controller #(parameter SIZE = 16) (
 	/* Inputs */
 	input clk, reset,
 	input[SIZE-1:0] instr,	// instruction bits
-	input zero,					// program counter enable -> check minimips
+	//input zero,					// program counter enable -> check minimips
 	input flag1, flag2,
 	
 	/* Outputs !! RENAME */
@@ -171,7 +168,7 @@ module controller #(parameter SIZE = 16) (
 	reg[3:0] state, nextState;
 	
 	always @(posedge clk)
-		if(~reset)	state <= FETCH;
+		if (~reset)	state <= FETCH;
 		else			state <= nextState;
 	
 	/* Next State Combinational Logic */
@@ -179,29 +176,61 @@ module controller #(parameter SIZE = 16) (
 	always @(*) begin
 		case(state)
 			FETCH: nextState <= DECODE;
-			/* Instruction Decoder */
-			DECODE:	case(op)	// first decode with OP Code
-						 4'b0000: nextState <= ;		// R-type instr OP code -> decode w/ OP Code Extended
-						 4'b0001: nextState <= ANDI;
-						 4'b0010: nextState <= ORI;
-						 4'b0011: nextState <= XORI;
-						 4'b0100: nextState <= ;		// STOR, LOAD, JAL
-						 4'b0101: nextState <= ADDI;
-						 //4'b0110: nextState <= ADDUI;
-						 4'b0111: nextState <= 
-						 4'b1000: nextState <= 
-						 4'b1001: nextState <= 
-						 4'b1010: nextState <= 
-						 4'b1011: nextState <= 
-						 4'b1100: nextState <=
-						 4'b1101: nextState <=
-						 4'b1110: nextState <=
-						 4'b1111: nextState <=
-						 default: nextstate <= FETCH; // never reaches
+			/* Instruction Decoder (Op code) */
+			DECODE:	case(op) // first decode with Op Code
+							4'b0000: nextState <= ; 		// Op code: R-Type Instructions -> decode Op code extend
+																	// ADD, ADDU, ADDC, MUL, SUB, SUBC, CMP, AND, OR, XOR, MO
+							4'b0001: nextState <= ANDI;
+							4'b0010: nextState <= ORI;
+							4'b0011: nextState <= XORI;
+							4'b0100: nextState <= ;			// OP Code: Memory Access, Jump and Link Instructions -> decode Op code extend
+																	// STOR, LOAD, JAL
+							4'b0101: nextState <= ADDI;
+							//4'b0110: nextState <= ADDUI;
+							//4'b0111: nextState <= ADDCI;
+							4'b1000:	begin						// OP Code: Shift Instructions -> decode Op code extend
+								/* PSEDUO CODE
+								if (cond) nextState <= SHFT;  -> LSH, RSH, ALSH, ARSH
+								else		 nextState <= SHFTI; -> LSHI, RSHI, ALSHI, ARSHI
+								*/
+								end
+							4'b1001: nextState <= SUBI;
+							//4'b1010: nextState <= SUBCI;
+							//4'b1011: nextState <= CMPI;
+							//4'b1100: nextState <= Bcond;
+							4'b1101: nextState <= MOVI;
+							//4'b1110: nextState <= MULI;
+							4'b1111: nextState <= LUI;
+							// !!! make CLR instr
+							default: nextstate <= FETCH;	// never reaches
 						endcase
-				
-			//s0: if (in-signal) nextState <= s1;
+			ADD:
+			SUB:
+			AND:
+			OR:
+			XOR:
+			MOV:
 			
+			ADDI:
+			SUBI: 
+			ANDI:
+			ORI:	
+			XORI: 
+			MOVI: 
+			LUI:	
+			
+			LOAD: 
+			STOR:	
+			
+			BRANCH:
+			JUMP:	
+			JAL:  
+			
+			SHFT:	
+			SHFTI:
+			CLR:  
+			default: nextState <= FETCH; // never reaches
+		endcase
 	end
 
 	/* Combinational Output Logic*/
@@ -260,7 +289,15 @@ module controller #(parameter SIZE = 16) (
 endmodule 
 
 /* For Reference (IGNORE)
-
+--------
+PYTHON ASSEMBLER:
+RType = ['ADD', 'ADDU', 'ADDC', 'ADDCU', 'SUB', 'CMP', 'CMPU', 'AND', 'OR', 'XOR']
+Immediates = ['ADDI', 'ADDUI', 'ADDCI', 'ADDCUI', 'SUBI', 'CMPI', 'CMPUI', 'ANDI', 'ORI', 'XORI']
+Shift = ['LSH', 'RSH', 'ALSH', 'ARSH']
+ImmdShift = ['LSHI', 'RSHI', 'ALSHI', 'ARSHI']
+Branch = ['BEQ', 'BNE', 'BGE', 'BCS', 'BCC', 'BHI', 'BLS', 'BLO', 'BHS', 'BGT', 'BLE', 'BFS', 'BFC', 'BLT', 'BUC']
+Jump = ['JEQ', 'JNE', 'JGE', 'JCS', 'JCC', 'JHI', 'JLS', 'JLO', 'JHS', 'JGT', 'JLE', 'JFS', 'JFC', 'JLT', 'JUC']
+--------
 MINIMIPS: 
 input            clk, reset, 
 input      [5:0] op,												// instr[31:26]					  
