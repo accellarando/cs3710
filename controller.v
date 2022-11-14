@@ -19,14 +19,7 @@ the data path.
 - Jump and Link
 - Instruction Decode: mux settings, register file addressing, immediate
 fields (including sign extension or zero extension), and register enables
-
-FETCH = retrieve instruction
-DECODE = looks at op code once instruction from fetch is updated
-JAL		-> store next instr, write to reg, jump, write to pc
-JUMP		-> cond, write to pc = go to target addr
-BRANCH	-> cond, write to pc
 -------------------------------------------------------------------------
-[
 FETCH = retrieve instr from mem
 DECODE = split retrieved instr into 2 parts
 -opcode (operation code)
@@ -35,20 +28,22 @@ depending on the operation)
 [R-TYPE INSTRUCTIONS]
 ADD
 SUB
-CMP or SLT (set less than)
 AND
 OR
 XOR
 MOV
 
+CMP?
+
 [I-TYPE INSTRUCTIONS]
 ADDI
 SUBI
-CMPI
 ANDI
 ORI
 XORI
 MOVI
+
+CMPI?
 
 LUI
 BRANCH -> cond codes
@@ -63,18 +58,17 @@ CLR
 [J-TYPE]
 JAL
 JUMP -> cond codes
-JCOND?
 
-write under "SHIFT" with macros/shorthand for assembly sequences/condcodes?
+
+SHFT
+SHFTI
+make macros for:
 LSH
-RSH
-ALSH
-ARSH
-
 LSHI
+RSH
 RSHI
-ALSHI
-ARSHI
+(alu.v SLL SLR)
+
 
 cond codes
 'EQ' : EQ,
@@ -96,53 +90,82 @@ cond codes
 module controller #(parameter SIZE = 16) (
 	/* Inputs */
 	input clk, reset,
-	input[SIZE-1:0] instr, // instruction bits
-	//input[3:0] op,	 	(?) operation bits -> instr[31:26]
-	//input zero, 			(?) program counter enable (MINIMIPS)
+	input[SIZE-1:0] instr,	// instruction bits
+	input zero,					// program counter enable -> check minimips
+	input flag1, flag2,
 	
-	/* Outputs (from datapath) !!RENAME */
+	/* Outputs !! RENAME */
 	output reg RFen, PSRen,			// Register File controller
 	output reg[3:0] AluOp,			// ALU controller
-	output reg PCm, 					// PC controller
+	output reg PCm, PCen 			// PC controller
 	output reg MemW1en, MemW2en,	// Memory (BRAM) controller
 	output reg Movm, 					// other muxes
 	output reg[1:0] A2m, RWm 		// other muxes
 	); 
 	
-	reg[3:0] op;
-	op = instr[15:12];
+	// split instruction into opcode and opcode extend  for state encodings
+	reg[3:0] op, opExt; 
+	op 	= instr[15:12];
+	opExt	= instr[7:4];
+	
 	
 	/* State Name Parameters */
 	// allows for changing of state encodings
-	parameter FETCH	= 4'b0000;
-	parameter DECODE	= 4'b0001;
+	parameter FETCH	= 5'b00000;
+	parameter DECODE	= 5'b00001;
+
+	parameter ADD		= 5'b00010;
+	parameter SUB		= 5'b00011;
+	parameter AND		= 5'b00100;
+	parameter OR		= 5'b00101;
+	parameter XOR     = 5'b00110;
+	parameter MOV     = 5'b00111;
 	
-	// from ALU.v
-	parameter AND		=	4'b0000;
-	parameter OR		=	4'b0001;
-	parameter XOR 		= 	4'b0010;
-	parameter ADD 		= 	4'b0011;
-	parameter SUB		=	4'b0100;
-	parameter NOT 		= 	4'b0101;
-	parameter SLL 		= 	4'b0110;
-	parameter SRL 		= 	4'b0111;
+	parameter ADDI		= 5'b01000;
+	parameter SUBI    = 5'b01001;
+	parameter ANDI    = 5'b01011;
+	parameter ORI		= 5'b01100;
+	parameter XORI    = 5'b01101;
+	parameter MOVI    = 5'b01110;
+	parameter LUI		= 5'b01111;
+
+	parameter LOAD    = 5'b10000;
+	parameter STOR		= 5'b10001;
+
+	parameter BRANCH  = 5'b10010;
+	parameter JUMP		= 5'b10011;
+	parameter JAL     = 5'b10100;
+
+	parameter SHFT		= 5'b10101;
+	parameter SHFTI   = 5'b10110;
+	parameter CLR     = 5'b10111;
 	
-	// to implement
-	parameter LUI		= 4'b;
-	parameter JAL		= 4'b;  
-	parameter JUMP		= 4'b;
-	parameter BRANCH	= 4'b; // conditional branch
-	parameter CLR		= 4'b;
+	/* Condition Codes */
+	parameter EQ		= 4'b0000;
+	parameter NE		= 4'b0001;
+	parameter CS		= 4'b0010;
+	parameter CC		= 4'b0011;
+	parameter HI		= 4'b0100;
+	parameter LS		= 4'b0101;
+	parameter GT		= 4'b0110;
+	parameter LE		= 4'b0111;
+	parameter FS		= 4'b1000;
+	parameter FC		= 4'b1001;
+	parameter LO		= 4'b1010;
+	parameter HS		= 4'b1011;
+	parameter LT		= 4'b1100;
+	parameter GE		= 4'b1101;
+	parameter UC		= 4'b1110;
+	parameter NJ		= 4'b1111; 
 	
-	/* Instruction Types & Condition Checks */
-	parameter 
-	
-	/* (?) Flags */
-	// C = carry 
-	// L = low
-	// F = flag
-	// Z = comparison (equal)
-	// N = negative 
+	/* Flags */
+	// for checking within the condition codes
+	wire carry, flag, low, zero, negative;
+	assign carry		= flag1[0];
+	assign flag			= flag1[1];
+	assign low			= flag2[0];
+	assign zero			= flag2[1];
+	assign negative	= flag2[2];
 	
 	/* State Register */
 	reg[3:0] state, nextState; // state variables register variables
@@ -156,16 +179,14 @@ module controller #(parameter SIZE = 16) (
 	always @(*) begin
 		case(state)
 			FETCH: nextState <= DECODE;
-			
 			/* Instruction Decoder */
-			//
 			DECODE:	case(op)
 							TEST: nextState <= OPERATION;
 							//MOV: datapath muxes allow src reg to be written back w/o mod to dst reg (func code bits to set alu func to pass a val thru unmodded)
 							default: nextstate <= FETCH; // never reaches
 						endcase
 				
-			s0: if (in-signal) nextState <= s1;
+			//s0: if (in-signal) nextState <= s1;
 			
 	end
 
@@ -194,6 +215,7 @@ module controller #(parameter SIZE = 16) (
 			LUI: begin
 			// (?) current state = immd val read from instr 
 			// next state = register file write port	.writeData(RFwrite)
+				PCm	<= 2'00;
 				RWm 	<= 2'b11;	// RWritemux: .d(luiImmd)
 				RFen 	<= 1; 		// enable registerFile write
 			end
@@ -202,7 +224,7 @@ module controller #(parameter SIZE = 16) (
 			// next pc -> reg file
 			// immd -> next pc
 			// (?) set write register to r15
-				PCm	<= 2'b00;	// PCmux: memAddr+1 = .a(nextPC) 
+				PCm	<= 2'b01;	// PCmux: memAddr+1 = .a(nextPC) 
 				RWm	<= 2'b01;	// RWritemux: .b(nextPC)
 				RFen 	<= 1;			// enable registerFile write
 			end
@@ -217,6 +239,7 @@ module controller #(parameter SIZE = 16) (
 
 	end
 	
+	// !! assign PCen = PCwrite | (PCWriteCond & zero);
 endmodule 
 
 /* For Reference (IGNORE)
