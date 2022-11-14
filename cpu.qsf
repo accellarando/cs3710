@@ -39,10 +39,10 @@
 
 set_global_assignment -name FAMILY "Cyclone V"
 set_global_assignment -name DEVICE 5CSEMA5F31C6
-set_global_assignment -name TOP_LEVEL_ENTITY datapath
+set_global_assignment -name TOP_LEVEL_ENTITY cpuWithAlu
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 20.1.1
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "18:44:55  OCTOBER 14, 2022"
-set_global_assignment -name LAST_QUARTUS_VERSION "18.0.0 Lite Edition"
+set_global_assignment -name LAST_QUARTUS_VERSION "18.1.0 Lite Edition"
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
@@ -114,3 +114,5 @@ set_global_assignment -name VERILOG_FILE cpu.v
 set_global_assignment -name VERILOG_FILE mux3.v
 set_global_assignment -name VERILOG_FILE cpuWithDatapathTb.v
 set_global_assignment -name VERILOG_FILE mux4.v
+
+set_global_assignment -name VERILOG_FILE final_cpu_tb.v
