@@ -19,12 +19,6 @@ the data path.
 - Jump and Link
 - Instruction Decode: mux settings, register file addressing, immediate
 fields (including sign extension or zero extension), and register enables
-
-FETCH = retrieve instruction
-DECODE = looks at op code once instruction from fetch is updated
-JAL		-> store next instr, write to reg, jump, write to pc
-JUMP		-> cond, write to pc = go to target addr
-BRANCH	-> cond, write to pc
 -------------------------------------------------------------------------
 [
 FETCH = retrieve instr from mem
@@ -158,14 +152,13 @@ module controller #(parameter SIZE = 16) (
 			FETCH: nextState <= DECODE;
 			
 			/* Instruction Decoder */
-			//
 			DECODE:	case(op)
 							TEST: nextState <= OPERATION;
 							//MOV: datapath muxes allow src reg to be written back w/o mod to dst reg (func code bits to set alu func to pass a val thru unmodded)
 							default: nextstate <= FETCH; // never reaches
 						endcase
 				
-			s0: if (in-signal) nextState <= s1;
+			//s0: if (in-signal) nextState <= s1;
 			
 	end
 
