@@ -57,12 +57,15 @@ mem access instr:
 LOAD
 STOR
 
+other:
+CLR
+
 [J-TYPE]
 JAL
 JUMP -> cond codes
 JCOND?
 
-write under "SHIFT" with cond codes?
+write under "SHIFT" with macros/shorthand for assembly sequences/condcodes?
 LSH
 RSH
 ALSH
@@ -72,6 +75,23 @@ LSHI
 RSHI
 ALSHI
 ARSHI
+
+cond codes
+'EQ' : EQ,
+'NE' : NE,
+'GE' : GE,
+'CS' : CS,
+'CC' : CC,
+'HI' : HI,
+'LS' : LS,
+'LO' : LO,
+'HS' : HS,
+'GT' : GT,
+'LE' : LE,
+'FS' : FS,
+'FC' : FC,
+'LT' : LT,
+'UC' : UC
 */
 module controller #(parameter SIZE = 16) (
 	/* Inputs */
@@ -80,18 +100,13 @@ module controller #(parameter SIZE = 16) (
 	//input[3:0] op,	 	(?) operation bits -> instr[31:26]
 	//input zero, 			(?) program counter enable (MINIMIPS)
 	
-	/* Outputs (from datapath) */
+	/* Outputs (from datapath) !!RENAME */
 	output reg RFen, PSRen,			// Register File controller
 	output reg[3:0] AluOp,			// ALU controller
 	output reg PCm, 					// PC controller
 	output reg MemW1en, MemW2en,	// Memory (BRAM) controller
 	output reg Movm, 					// other muxes
 	output reg[1:0] A2m, RWm 		// other muxes
-	
-//	input nextStateButton, reset,
-//	output reg [15:0] addr1, addr2,
-//	output reg we1, we2,
-//	output reg [15:0] dataOut1, dataOut2
 	); 
 	
 	reg[3:0] op;
