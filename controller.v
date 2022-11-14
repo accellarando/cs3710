@@ -1,72 +1,77 @@
-/* For Reference (IGNORE)
-
-MINIMIPS: 
-input            clk, reset, 
-input      [5:0] op,												// instr[31:26]					  
-input            zero, 					  
-output reg       memwrite, alusrca, memtoreg, iord,					  
-output           pcen, 
-output reg       regwrite, regdst, 
-output reg [1:0] pcsource, alusrcb, aluop,
-output reg [3:0] irwrite);					  
---------					  
-DATAPATH:
-input MemW1en, MemW2en, RFen, PSRen,		// enable signal (modules: bram, registerFile)
-input Movm, 										// mux select (MoveMux, RWriteMux)
-input[1:0] PCm, A2m, RWm, //LUIm,			// mux select (PCMux, ALU2Mux, LUIMux)
-input[3:0] AluOp,									//
-input[SIZE-1:0] switches,						// simulate
-
-output[SIZE-1:0] PC, AluOut,
-output[SIZE-1:0] RFwrite, RFread1, RFread2,						// register file data input and outputs				
-output[SIZE-1:0] MemWrite1, MemWrite2, MemRead1, MemRead2,	// bram memory access data input and output
-output[1:0] flags1out,
-output[2:0] flags2out,
-output[9:0] leds,															// simulate				  
-*/
-
-
-
 /*
---------------------------------------------------------------------
+-------------------------------------------------------------------------
 [SUMMARY]
 - The control unit is responsible for setting all the control signals
 so that each instruction is executed properly for the datapath.
 
-- With using a FSM for control, each state also
-specifies a set of outputs that are asserted when the machine is in 
-that state. 
+- With using a Moore FSM (outputs depend only on present state) for
+control, each state also specifies a set of outputs that are asserted when
+the machine is in that state. 
 
-- A FSM can be implemented with a temporary register that holds
-the current state and a block of combinational logic that determines both the
-data-path signals to be asserted and the next state.
---------------------------------------------------------------------
+- Instruction decoder unit within the FSM will look at the opcode
+information and uses that to decide how to set the other control bits of 
+the data path.
+-------------------------------------------------------------------------
 [DOCUMENT REQUIREMENTS]
-- Register-to-Register (including immediate versions) operations
+- Register-to-Register (including immediate versions) operations 
 - Load and Store operations
 - Conditional and Unconditional Branches/Jumps
 - Jump and Link
+- Instruction Decode: mux settings, register file addressing, immediate
+fields (including sign extension or zero extension), and register enables
 
 FETCH = retrieve instruction
 DECODE = looks at op code once instruction from fetch is updated
 JAL		-> store next instr, write to reg, jump, write to pc
 JUMP		-> cond, write to pc = go to target addr
 BRANCH	-> cond, write to pc
---------------------------------------------------------------------
-
+-------------------------------------------------------------------------
+[
+FETCH = retrieve instr from mem
+DECODE = split retrieved instr into 2 parts
+-opcode (operation code)
+-operand (addr in mem where data will be read from or written to
+depending on the operation)
 [R-TYPE INSTRUCTIONS]
-[I-TYPE INSTRUCTIONS]
-[SHIFT]
-labels = {}
-jpoint_instrs = {}
-RType = ['ADD', 'ADDU', 'ADDC', 'ADDCU', 'SUB', 'CMP', 'CMPU', 'AND', 'OR', 'XOR']
-Immediates = ['ADDI', 'ADDUI', 'ADDCI', 'ADDCUI', 'SUBI', 'CMPI', 'CMPUI', 'ANDI', 'ORI', 'XORI']
-Shift = ['LSH', 'RSH', 'ALSH', 'ARSH']
-ImmdShift = ['LSHI', 'RSHI', 'ALSHI', 'ARSHI']
-Branch = ['BEQ', 'BNE', 'BGE', 'BCS', 'BCC', 'BHI', 'BLS', 'BLO', 'BHS', 'BGT', 'BLE', 'BFS', 'BFC', 'BLT', 'BUC']
-Jump = ['JEQ', 'JNE', 'JGE', 'JCS', 'JCC', 'JHI', 'JLS', 'JLO', 'JHS', 'JGT', 'JLE', 'JFS', 'JFC', 'JLT', 'JUC']
-REGISTERS = ['%r0', '%r1', '%r2', '%r3', '%r4', '%r5', '%r6', '%r7', '%r8', '%r9', '%r10', '%r11', '%r12', '%r13', '%r14', '%r15']
+ADD
+SUB
+CMP or SLT (set less than)
+AND
+OR
+XOR
+MOV
 
+[I-TYPE INSTRUCTIONS]
+ADDI
+SUBI
+CMPI
+ANDI
+ORI
+XORI
+MOVI
+
+LUI
+BRANCH -> cond codes
+
+mem access instr:
+LOAD
+STOR
+
+[J-TYPE]
+JAL
+JUMP -> cond codes
+JCOND?
+
+write under "SHIFT" with cond codes?
+LSH
+RSH
+ALSH
+ARSH
+
+LSHI
+RSHI
+ALSHI
+ARSHI
 */
 module controller #(parameter SIZE = 16) (
 	/* Inputs */
@@ -125,27 +130,27 @@ module controller #(parameter SIZE = 16) (
 	// N = negative 
 	
 	/* State Register */
-	reg[3:0] state, nextState;
+	reg[3:0] state, nextState; // state variables register variables
 	
 	always @(posedge clk)
 		if(~reset)	state <= FETCH;
 		else			state <= nextState;
 	
-	/* Next State Generation Combinational Logic */
+	/* Next State Combinational Logic */
 	// maps the current state and the inputs to a new state
 	always @(*) begin
 		case(state)
 			FETCH: nextState <= DECODE;
 			
 			/* Instruction Decoder */
-			// mux settings, register file addressing,
-			// immediate fields (including sign extension or zero extension),
-			// and register enables.
+			//
 			DECODE:	case(op)
 							TEST: nextState <= OPERATION;
-							
+							//MOV: datapath muxes allow src reg to be written back w/o mod to dst reg (func code bits to set alu func to pass a val thru unmodded)
 							default: nextstate <= FETCH; // never reaches
 						endcase
+				
+			s0: if (in-signal) nextState <= s1;
 			
 	end
 
@@ -196,4 +201,32 @@ module controller #(parameter SIZE = 16) (
 			default: nextstate <= FETCH; // (!) CHANGE
 
 	end
+	
 endmodule 
+
+/* For Reference (IGNORE)
+
+MINIMIPS: 
+input            clk, reset, 
+input      [5:0] op,												// instr[31:26]					  
+input            zero, 					  
+output reg       memwrite, alusrca, memtoreg, iord,					  
+output           pcen, 
+output reg       regwrite, regdst, 
+output reg [1:0] pcsource, alusrcb, aluop,
+output reg [3:0] irwrite);					  
+--------					  
+DATAPATH:
+input MemW1en, MemW2en, RFen, PSRen,		// enable signal (modules: bram, registerFile)
+input Movm, 										// mux select (MoveMux, RWriteMux)
+input[1:0] PCm, A2m, RWm, //LUIm,			// mux select (PCMux, ALU2Mux, LUIMux)
+input[3:0] AluOp,									//
+input[SIZE-1:0] switches,						// simulate
+
+output[SIZE-1:0] PC, AluOut,
+output[SIZE-1:0] RFwrite, RFread1, RFread2,						// register file data input and outputs				
+output[SIZE-1:0] MemWrite1, MemWrite2, MemRead1, MemRead2,	// bram memory access data input and output
+output[1:0] flags1out,
+output[2:0] flags2out,
+output[9:0] leds,															// simulate				  
+*/
