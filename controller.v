@@ -89,53 +89,65 @@ module controller #(parameter SIZE = 16) (
 	input clk, reset,
 	input[SIZE-1:0] instr,	// instruction bits
 	//input zero,					// program counter enable -> check minimips
-	input flag1, flag2,
+	input[1:0] flag1, 
+	input[2:0] flag2,
 	
 	/* Outputs !! RENAME */
 	output reg RFen, PSRen,			// Register File controller
 	output reg[3:0] AluOp,			// ALU controller
-	output reg PCm, PCen 			// PC controller
+	output reg PCm, PCen, 			// PC controller
 	output reg MemW1en, MemW2en,	// Memory (BRAM) controller
 	output reg Movm, 					// other muxes
 	output reg[1:0] A2m, RWm 		// other muxes
 	); 
 	
-	// split instruction into opcode and opcode extend  for state encodings
+	// split instruction into opcode and opcode extend for state encodings
 	reg[3:0] op, opExt; 
-	op 	= instr[15:12];
-	opExt	= instr[7:4];
+	assign op		= instr[15:12];
+	assign opExt	= instr[7:4];
 	
 	
 	/* State Name Parameters */
 	// allows for changing of state encodings
-	parameter FETCH	= 5'b00000;
-	parameter DECODE	= 5'b00001;
+	parameter FETCH		= 4'd0;
+	parameter DECODE	= 4'd1;
+	parameter REX		= 4'd2;
+	parameter IEX		= 4'd3;
+	parameter LEX		= 4'd4;
+	parameter JEX		= 4'd5;
+	parameter SEX		= 4'd6;
+	parameter BEX		= 4'd7;
+	parameter RWB		= 4'd8;
+	parameter IWB		= 4'd9;
+	parameter LWB		= 4'd10;
+	parameter JWB		= 4'd12;
+	parameter SWB		= 4'd12;
+	parameter BWB		= 4'd13;
 
-	parameter ADD		= 5'b00010;
-	parameter SUB		= 5'b00011;
-	parameter AND		= 5'b00100;
-	parameter OR		= 5'b00101;
-	parameter XOR     = 5'b00110;
-	parameter MOV     = 5'b00111;
+	/* Instruction opcode parameters */
+	parameter EXT0		= 4'b0000;
+	parameter ADD		= 4'b0101;
+	parameter SUB		= 4'b1001;
+	parameter CMP		= 4'b1011;
+	parameter AND		= 4'b0001;
+	parameter OR 		= 4'b0010;
+	parameter XOR		= 4'b0011;
+	parameter MOV		= 4'b1101;
 	
-	parameter ADDI		= 5'b01000;
-	parameter SUBI    = 5'b01001;
-	parameter ANDI    = 5'b01011;
-	parameter ORI		= 5'b01100;
-	parameter XORI    = 5'b01101;
-	parameter MOVI    = 5'b01110;
-	parameter LUI		= 5'b01111;
-
-	parameter LOAD    = 5'b10000;
-	parameter STOR		= 5'b10001;
-
-	parameter BRANCH  = 5'b10010;
-	parameter JUMP		= 5'b10011;
-	parameter JAL     = 5'b10100;
-
-	parameter SHFT		= 5'b10101;
-	parameter SHFTI   = 5'b10110;
-	parameter CLR     = 5'b10111;
+	parameter LSH		= 4'b1000;
+	parameter E_LSHI	= 4'b000x;
+	
+	parameter LUI		= 4'b1111;
+	
+	parameter L_S		= 4'b0100;
+	parameter E_LOAD	= 4'b0000;
+	parameter E_STORE	= 4'b0100;
+	
+	parameter B			= 4'b1100;
+	
+	parameter J			= 4'b0100;
+	parameter E_J		= 4'b1100;
+	parameter E_JAL		= 4'b1000;
 	
 	/* Condition Codes */
 	parameter EQ		= 4'b0000;
@@ -178,58 +190,37 @@ module controller #(parameter SIZE = 16) (
 			FETCH: nextState <= DECODE;
 			/* Instruction Decoder (Op code) */
 			DECODE:	case(op) // first decode with Op Code
-							4'b0000: nextState <= ; 		// Op code: R-Type Instructions -> decode Op code extend
-																	// ADD, ADDU, ADDC, MUL, SUB, SUBC, CMP, AND, OR, XOR, MO
-							4'b0001: nextState <= ANDI;
-							4'b0010: nextState <= ORI;
-							4'b0011: nextState <= XORI;
-							4'b0100: nextState <= ;			// OP Code: Memory Access, Jump and Link Instructions -> decode Op code extend
-																	// STOR, LOAD, JAL
-							4'b0101: nextState <= ADDI;
-							//4'b0110: nextState <= ADDUI;
-							//4'b0111: nextState <= ADDCI;
-							4'b1000:	begin						// OP Code: Shift Instructions -> decode Op code extend
-								/* PSEDUO CODE
-								if (cond) nextState <= SHFT;  -> LSH, RSH, ALSH, ARSH
-								else		 nextState <= SHFTI; -> LSHI, RSHI, ALSHI, ARSHI
-								*/
-								end
-							4'b1001: nextState <= SUBI;
-							//4'b1010: nextState <= SUBCI;
-							//4'b1011: nextState <= CMPI;
-							//4'b1100: nextState <= Bcond;
-							4'b1101: nextState <= MOVI;
-							//4'b1110: nextState <= MULI;
-							4'b1111: nextState <= LUI;
-							// !!! make CLR instr
-							default: nextstate <= FETCH;	// never reaches
-						endcase
-			ADD:
-			SUB:
-			AND:
-			OR:
-			XOR:
-			MOV:
-			
-			ADDI:
-			SUBI: 
-			ANDI:
-			ORI:	
-			XORI: 
-			MOVI: 
-			LUI:	
-			
-			LOAD: 
-			STOR:	
-			
-			BRANCH:
-			JUMP:	
-			JAL:  
-			
-			SHFT:	
-			SHFTI:
-			CLR:  
-			default: nextState <= FETCH; // never reaches
+					EXT0:	nextState <= REX;
+					ADD:	nextState <= IEX;
+					SUB:	nextState <= IEX;
+					CMP:	nextState <= IEX;
+					AND:	nextState <= IEX;
+					OR:		nextState <= IEX;
+					XOR:	nextState <= IEX;
+					MOV:	nextState <= IEX;
+
+					LSH:	nextState <= opExt[2] ? REX : IEX;
+
+					LUI:	nextState <= IEX;
+					L_S:	nextState <= opExt[2] ? SEX : LEX;
+					B:		nextState <= BEX;
+					J:		nextState <= JEX;
+					default: nextState <= FETCH; //should never reach
+				endcase
+			REX:	nextState <= RWB;
+			IEX:	nextState <= IWB;
+			LEX:	nextState <= LWB;
+			JEX:	nextState <= JWB;
+			SEX:	nextState <= SWB;
+			BEX:	nextState <= BWB;
+
+			RWB:	nextState <= FETCH;
+			IWB:	nextState <= FETCH;
+			LWB:	nextState <= FETCH;
+			JWB:	nextState <= FETCH;
+			SWB:	nextState <= FETCH;
+			BWB:	nextState <= FETCH;
+			default: nextState <= FETCH;
 		endcase
 	end
 
@@ -246,19 +237,11 @@ module controller #(parameter SIZE = 16) (
 		// conditionally assert the outputs
 		// for each state, every output/control signal needs to be explicitly assigned
 		case(state)
-			FETCH: begin
-				//PCm 	<= 2'bxx; // increment pc (?)
-				// (?) get instruction from mem/BRAM
-			end
-			
-			DECODE: begin
-				// (?)
-			end
-			
+			/*
 			LUI: begin
 			// (?) current state = immd val read from instr 
 			// next state = register file write port	.writeData(RFwrite)
-				PCm	<= 2'00;
+				PCm	<= 2'b00;
 				RWm 	<= 2'b11;	// RWritemux: .d(luiImmd)
 				RFen 	<= 1; 		// enable registerFile write
 			end
@@ -271,17 +254,18 @@ module controller #(parameter SIZE = 16) (
 				RWm	<= 2'b01;	// RWritemux: .b(nextPC)
 				RFen 	<= 1;			// enable registerFile write
 			end
+			*/
+		   FETCH: 
 			
-			JUMP: begin
-			end
-			
-			BRANCH: begin
-			end
-			
-			//MOV: datapath muxes allow src reg to be written back w/o mod to dst reg (func code bits to set alu func to pass a val thru unmodded)
+		   JUMP: begin
+		   end
 
-			
-			default: nextstate <= FETCH; // (!) CHANGE
+		   BRANCH: begin
+		   end
+
+			   //MOV: datapath muxes allow src reg to be written back w/o mod to dst reg (func code bits to set alu func to pass a val thru unmodded)
+
+			default: ;
 
 	end
 	
