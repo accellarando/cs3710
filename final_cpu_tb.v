@@ -10,7 +10,6 @@ module final_cpu_tb();
 		leds
 	);
 	
-	/* Initializing inputs */
 	initial begin
 		clk		<= 1'b0;
 		reset		<= 1'b1;		// active-low reset

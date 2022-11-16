@@ -116,3 +116,5 @@ set_global_assignment -name VERILOG_FILE cpuWithDatapathTb.v
 set_global_assignment -name VERILOG_FILE mux4.v
 
 set_global_assignment -name VERILOG_FILE final_cpu_tb.v
+set_global_assignment -name VERILOG_FILE en_register.v
+set_global_assignment -name VERILOG_FILE final_cpu.v
