@@ -8,7 +8,7 @@ module datapath #(parameter SIZE = 16) (
 	
 	/* Temporary controller FSM: control signals*/
 	input MemW1en, MemW2en, RFen, PSRen, PCen,		// enable signals (modules: bram, registerFile)
-	input Movm, 									// mux select signals (MoveMux, RWriteMux)
+	input Movm, A1m,									// mux select signals (MoveMux, RWriteMux)
 	input[1:0] PCm, A2m, RWm,//LUIm,						// mux select signals (PCMux, ALU2Mux, LUIMux)
 	input[3:0] AluOp,
 	input[SIZE-1:0] switches,						// simulate on board
@@ -63,7 +63,11 @@ module datapath #(parameter SIZE = 16) (
 		.readData1(RFread1), .readData2(RFread2)
 	
 	);
-		
+	
+	mux2  A1Mux(.s(A1m),.in1(RFread1),.in2(MemAddr1),.out(A1MuxOut);
+	
+	wire[SIZE-1:0] A1MuxOut;
+	
 	alu	myAlu(
 		.aluOp(aluOp),
 		.aluIn1(RFread1), .aluIn2(A2MuxOut), //rfread1
