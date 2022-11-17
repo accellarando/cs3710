@@ -23,7 +23,7 @@ module bram
 		if (we_a) begin
 			if(addr_a[(ADDR_WIDTH-1):(ADDR_WIDTH-4)] == 4'hF) begin
 				//writing to external
-				ex_outputs <= data_a;
+				//ex_outputs <= data_a; //this was yelling at us, idk dude
 				q_a <= ex_inputs;
 			end
 			else begin

@@ -102,7 +102,7 @@ module controller #(parameter SIZE = 16) (
 	); 
 	
 	// split instruction into opcode and opcode extend for state encodings
-	reg[3:0] op, opExt; 
+	wire[3:0] op, opExt; 
 	assign op		= instr[15:12];
 	assign opExt	= instr[7:4];
 	
@@ -414,7 +414,7 @@ module controller #(parameter SIZE = 16) (
 				RFen 	<= 1;			// enable registerFile write
 			end
 			*/
-
+		endcase
 	end
 	
 	// !! assign PCen = PCwrite | (PCWriteCond & zero);
