@@ -7,7 +7,7 @@ module datapath #(parameter SIZE = 16) (
 	input clk, reset,
 	
 	/* Temporary controller FSM: control signals*/
-	input MemW1en, MemW2en, RFen, PSRen, PCen,		// enable signals (modules: bram, registerFile)
+	input MemW1en, MemW2en, RFen, PSRen, PCen, INSTRen		// enable signals (modules: bram, registerFile)
 	input Movm, A1m,									// mux select signals (MoveMux, RWriteMux)
 	input[1:0] PCm, A2m, RWm,//LUIm,						// mux select signals (PCMux, ALU2Mux, LUIMux)
 	input[3:0] AluOp,
@@ -40,7 +40,7 @@ module datapath #(parameter SIZE = 16) (
 	assign nextPc = MemAddr1 + 1;
 
 	
-	register		Instr_Reg(.clk(clk), .reset(reset), .d(MemRead1), .q(instr)); // input comes from bram  
+	en_register		Instr_Reg(.clk(clk), .reset(reset), .d(MemRead1), .q(instr), .en(INSTRen); // input comes from bram  
 	
 	
 	
@@ -85,7 +85,7 @@ module datapath #(parameter SIZE = 16) (
 	);
 	
 
-	/* Temporary controller FSM: muxes */
+	/* Temporary controller FSM: muxes/ */
 	mux3 	PCmux(
 		.s(PCm),
 		.a(nextPc), .b(RFread1), .c(aluOut),
