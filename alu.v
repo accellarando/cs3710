@@ -119,7 +119,10 @@ module alu #(parameter WIDTH = 16)
 			end
 	SLL: 
 		begin
-			aluOut <= aluIn1 << 1;
+			if(aluIn1[WIDTH-1])
+				aluOut <= aluIn1 >> aluIn2;
+			else
+				aluOut <= aluIn1 << aluIn2;
 		
 		end
 	SRL:

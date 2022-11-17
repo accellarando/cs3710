@@ -317,13 +317,36 @@ module controller #(parameter SIZE = 16) (
 			end
 			LEX: begin
 				RWm <= 2'b1;
+				PCm <= 2'b0;
 			end
 			SEX: begin
-				//?
+				//? not much experience in this field ngl
 			end
 			JEX: begin
-				//this is logic for a branch tbh - you messed up
-				//check flags, decide to do jump
+				//check flags, decide to do jump or not
+				case(instr[11:8])
+					EQ: PCm <= zero ? 2'b1 : 2'b0;
+					NE: PCm <= ~zero ? 2'b1 : 2'b0;
+					GE: PCm <= (neg | zero) ? 2'b1 : 2'b0;
+					CS: PCm <= carry ? 2'b1 : 2'b0;
+					CC: PCm <= ~carry ? 2'b1 : 2'b0;
+					HI: PCm <= low ? 2'b1 : 2'b0;
+					LS: PCm <= ~low ? 2'b1 : 2'b0;
+					LO: PCm <= (~low & ~zero) ? 2'b1 : 2'b0;
+					HS: PCm <= (low & zero) ? 2'b1 : 2'b0;
+					GT: PCm <= neg ? 2'b1 : 2'b0;
+					LE: PCm <= ~neg ? 2'b1 : 2'b0;
+					FS: PCm <= overFlow ? 2'b1 : 2'b0;
+					FC: PCm <= ~overFlow ? 2'b1 : 2'b0;
+					LT: PCm <= (~neg & ~zero) ? 2'b1 : 2'b0;
+					UC: PCm <= 2'b1;
+					default: PCm <= 2'b0; //corresponds to NJ
+				endcase
+				if(opExt == E_JAL) begin
+					RWm <= 2'b1;
+				end
+			end
+			BEX: begin
 				case(instr[11:8])
 					EQ: PCm <= zero ? 2'd2 : 2'b0;
 					NE: PCm <= ~zero ? 2'd2 : 2'b0;
@@ -345,12 +368,9 @@ module controller #(parameter SIZE = 16) (
 				//set a1 to pc
 				A1m <= 1'b1;
 				//set a2 to imm
-				A2m <= 2'b2;
+				A2m <= 2'd2;
 				//set aluop to add
 				AluOp <= ALU_ADD;
-			end
-			BEX: begin
-			
 			end
 			RWB: begin
 				RFen <= 1'b1;
@@ -362,17 +382,20 @@ module controller #(parameter SIZE = 16) (
 			end
 			LWB: begin
 				RFen <= 1'b1;
-			end
-			JWB: begin
 				PCen <= 1'b1;
 			end
 			SWB: begin
 				MemW2en <= 1'b1;
 			end
-			BWB: begin
-			
+			JWB: begin
+				PCen <= 1'b1;
+				if(opExt == E_JAL)
+					RFen <= 1'b1;
 			end
-			
+			BWB: begin
+				PCen <= 1'b1;
+			end
+			default: PCen <= 1'b0;
 			/*
 			LUI: begin
 			// (?) current state = immd val read from instr 
@@ -391,17 +414,6 @@ module controller #(parameter SIZE = 16) (
 				RFen 	<= 1;			// enable registerFile write
 			end
 			*/
-		   FETCH: 
-				
-		   JUMP: begin
-		   end
-
-		   BRANCH: begin
-		   end
-
-			   //MOV: datapath muxes allow src reg to be written back w/o mod to dst reg (func code bits to set alu func to pass a val thru unmodded)
-
-			default: ;
 
 	end
 	

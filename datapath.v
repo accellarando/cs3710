@@ -88,7 +88,7 @@ module datapath #(parameter SIZE = 16) (
 	/* Temporary controller FSM: muxes/ */
 	mux3 	PCmux(
 		.s(PCm),
-		.a(nextPc), .b(RFread1), .c(aluOut),
+		.a(nextPc), .b(RFread2), .c(aluOut),
 		.out(PcMuxOut)
 	);
 	
