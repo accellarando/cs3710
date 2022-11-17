@@ -322,6 +322,7 @@ module controller #(parameter SIZE = 16) (
 				//?
 			end
 			JEX: begin
+				//this is logic for a branch tbh - you messed up
 				//check flags, decide to do jump
 				case(instr[11:8])
 					EQ: PCm <= zero ? 2'd2 : 2'b0;
