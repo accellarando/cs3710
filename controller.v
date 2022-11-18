@@ -95,7 +95,8 @@ module controller #(parameter SIZE = 16) (
 	/* Outputs !! RENAME */
 	output reg RFen, PSRen,	INSTRen,		// Register File controller
 	output reg[3:0] AluOp,			// ALU controller
-	output reg PCm, PCen, 			// PC controller
+	output reg PCen, 					// PC controller
+	output reg[1:0] PCm, 			// PC controller
 	output reg MemW1en, MemW2en,	// Memory (BRAM) controller
 	output reg Movm, A1m,			// other muxes
 	output reg[1:0] A2m, RWm 		// other muxes
@@ -243,7 +244,7 @@ module controller #(parameter SIZE = 16) (
 		// set all outputs to zero
 		RFen <= 1'b0; PSRen <= 1'b0;
 		AluOp <= 4'b0000;
-		PCm <= 1'b0;
+		PCm <= 2'b0; //1'b0;
 		PCen <= 1'b0;
 		MemW1en <= 1'b0; MemW2en <= 1'b0;
 		Movm <= 1'b0;
