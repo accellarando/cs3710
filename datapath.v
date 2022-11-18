@@ -7,18 +7,18 @@ module datapath #(parameter SIZE = 16) (
 	input clk, reset,
 	
 	/* Temporary controller FSM: control signals*/
-	input MemW1en, MemW2en, RFen, PSRen, PCen,		// enable signals (modules: bram, registerFile)
-	input Movm, 									// mux select signals (MoveMux, RWriteMux)
+	input MemW1en, MemW2en, RFen, PSRen, PCen, INSTRen,		// enable signals (modules: bram, registerFile)
+	input Movm, A1m,									// mux select signals (MoveMux, RWriteMux)
 	input[1:0] PCm, A2m, RWm,//LUIm,						// mux select signals (PCMux, ALU2Mux, LUIMux)
 	input[3:0] AluOp,
 	input[SIZE-1:0] switches,						// simulate on board
 	
-	output[SIZE-1:0] PC, AluOut,
-	output[SIZE-1:0] RFwrite, RFread1, RFread2,						// register file data input and outputs
-	output[SIZE-1:0] MemWrite1, MemWrite2, MemRead1, MemRead2,	// bram memory access data input and output  
+	//output[SIZE-1:0] PC, AluOut,
+	//output[SIZE-1:0] RFwrite, RFread1, RFread2,						// register file data input and outputs
+	//output[SIZE-1:0] MemWrite1, MemWrite2, MemRead1, MemRead2,	// bram memory access data input and output  
 	output[1:0] flags1out,
-	output[2:0] flags2out
-	//, output[9:0] leds,													// simulate on board
+	output[2:0] flags2out,
+	output[9:0] leds												// simulate on board
 	);
 	
 	// declare vars (?)
@@ -37,10 +37,10 @@ module datapath #(parameter SIZE = 16) (
 	en_register		PC_Reg(.clk(clk), .reset(reset), .d(PcMuxOut), .q(MemAddr1), .en(PCen));
 	
 	//incrementer		pci(clk,MemAddr1,nextPc);
-	assign nextPc = MemAddr1 + 1;
+	assign nextPc = MemAddr1 + 1'b1;
 
 	
-	register		Instr_Reg(.clk(clk), .reset(reset), .d(MemRead1), .q(instr)); // input comes from bram  
+	en_register		Instr_Reg(.clk(clk), .reset(reset), .d(MemRead1), .q(instr), .en(INSTRen)); // input comes from bram  
 	
 	
 	
@@ -63,7 +63,11 @@ module datapath #(parameter SIZE = 16) (
 		.readData1(RFread1), .readData2(RFread2)
 	
 	);
-		
+	
+	mux2  A1Mux(.s(A1m),.in1(RFread1),.in2(MemAddr1),.out(A1MuxOut));
+	
+	wire[SIZE-1:0] A1MuxOut;
+	
 	alu	myAlu(
 		.aluOp(aluOp),
 		.aluIn1(RFread1), .aluIn2(A2MuxOut), //rfread1
@@ -81,16 +85,16 @@ module datapath #(parameter SIZE = 16) (
 	);
 	
 
-	/* Temporary controller FSM: muxes */
+	/* Temporary controller FSM: muxes/ */
 	mux3 	PCmux(
 		.s(PCm),
-		.a(nextPc), .b(RFread1), .c(aluOut),
+		.a(nextPc), .b(RFread2), .c(aluOut),
 		.out(PcMuxOut)
 	);
 	
 	mux4 RWritemux(
 		.s(RWm),
-		.a(MemRead2), .b(nextPc), .c(MovMuxOut), .d(luiImmd)
+		.a(MemRead2), .b(nextPc), .c(MovMuxOut), .d(luiImmd),
 		.out(RFwrite)
 	);
 

@@ -89,53 +89,77 @@ module controller #(parameter SIZE = 16) (
 	input clk, reset,
 	input[SIZE-1:0] instr,	// instruction bits
 	//input zero,					// program counter enable -> check minimips
-	input flag1, flag2,
+	input[1:0] flag1, 
+	input[2:0] flag2,
 	
 	/* Outputs !! RENAME */
-	output reg RFen, PSRen,			// Register File controller
+	output reg RFen, PSRen,	INSTRen,		// Register File controller
 	output reg[3:0] AluOp,			// ALU controller
-	output reg PCm, PCen 			// PC controller
+	output reg PCen, 					// PC controller
+	output reg[1:0] PCm, 			// PC controller
 	output reg MemW1en, MemW2en,	// Memory (BRAM) controller
-	output reg Movm, 					// other muxes
+	output reg Movm, A1m,			// other muxes
 	output reg[1:0] A2m, RWm 		// other muxes
 	); 
 	
-	// split instruction into opcode and opcode extend  for state encodings
-	reg[3:0] op, opExt; 
-	op 	= instr[15:12];
-	opExt	= instr[7:4];
+	// split instruction into opcode and opcode extend for state encodings
+	wire[3:0] op, opExt; 
+	assign op		= instr[15:12];
+	assign opExt	= instr[7:4];
 	
 	
 	/* State Name Parameters */
 	// allows for changing of state encodings
-	parameter FETCH	= 5'b00000;
-	parameter DECODE	= 5'b00001;
+	parameter FETCH		= 4'd0;
+	parameter DECODE	= 4'd1;
+	parameter REX		= 4'd2;
+	parameter IEX		= 4'd3;
+	parameter LEX		= 4'd4;
+	parameter JEX		= 4'd5;
+	parameter SEX		= 4'd6;
+	parameter BEX		= 4'd7;
+	parameter RWB		= 4'd8;
+	parameter IWB		= 4'd9;
+	parameter LWB		= 4'd10;
+	parameter JWB		= 4'd12;
+	parameter SWB		= 4'd12;
+	parameter BWB		= 4'd13;
 
-	parameter ADD		= 5'b00010;
-	parameter SUB		= 5'b00011;
-	parameter AND		= 5'b00100;
-	parameter OR		= 5'b00101;
-	parameter XOR     = 5'b00110;
-	parameter MOV     = 5'b00111;
+	/* Instruction opcode parameters */
+	parameter EXT0		= 4'b0000;
+	parameter ADD		= 4'b0101;
+	parameter SUB		= 4'b1001;
+	parameter CMP		= 4'b1011;
+	parameter AND		= 4'b0001;
+	parameter OR 		= 4'b0010;
+	parameter XOR		= 4'b0011;
+	parameter MOV		= 4'b1101;
+	parameter NOT		= 4'b0100;
 	
-	parameter ADDI		= 5'b01000;
-	parameter SUBI    = 5'b01001;
-	parameter ANDI    = 5'b01011;
-	parameter ORI		= 5'b01100;
-	parameter XORI    = 5'b01101;
-	parameter MOVI    = 5'b01110;
-	parameter LUI		= 5'b01111;
-
-	parameter LOAD    = 5'b10000;
-	parameter STOR		= 5'b10001;
-
-	parameter BRANCH  = 5'b10010;
-	parameter JUMP		= 5'b10011;
-	parameter JAL     = 5'b10100;
-
-	parameter SHFT		= 5'b10101;
-	parameter SHFTI   = 5'b10110;
-	parameter CLR     = 5'b10111;
+	parameter LSH		= 4'b1000;
+	parameter E_LSHI	= 4'b000x;
+	
+	parameter LUI		= 4'b1111;
+	
+	parameter L_S		= 4'b0100;
+	parameter E_LOAD	= 4'b0000;
+	parameter E_STORE	= 4'b0100;
+	
+	parameter B			= 4'b1100;
+	
+	parameter J			= 4'b0100;
+	parameter E_J		= 4'b1100;
+	parameter E_JAL		= 4'b1000;
+	
+	/* AluOp parameters */
+	parameter ALU_AND			=	4'b0000;
+	parameter ALU_OR			=	4'b0001;
+	parameter ALU_XOR 		= 	4'b0010;
+	parameter ALU_ADD 		= 	4'b0011;
+	parameter ALU_SUB			=	4'b0100;
+	parameter ALU_NOT 		= 	4'b0101;
+	parameter ALU_SLL 		= 	4'b0110; 	// shift Left logical
+	parameter ALU_SRL 		= 	4'b0111; 	// shift right logical
 	
 	/* Condition Codes */
 	parameter EQ		= 4'b0000;
@@ -157,9 +181,9 @@ module controller #(parameter SIZE = 16) (
 	
 	/* Flags */
 	// for checking within the condition codes
-	wire carry, flag, low, zero, neg;
+	wire carry, overFlow, low, zero, neg;
 	assign carry		= flag1[0];
-	assign flag			= flag1[1];
+	assign overFlow		= flag1[1];
 	assign low			= flag2[0];
 	assign zero			= flag2[1];
 	assign neg			= flag2[2];
@@ -178,58 +202,39 @@ module controller #(parameter SIZE = 16) (
 			FETCH: nextState <= DECODE;
 			/* Instruction Decoder (Op code) */
 			DECODE:	case(op) // first decode with Op Code
-							4'b0000: nextState <= ; 		// Op code: R-Type Instructions -> decode Op code extend
-																	// ADD, ADDU, ADDC, MUL, SUB, SUBC, CMP, AND, OR, XOR, MO
-							4'b0001: nextState <= ANDI;
-							4'b0010: nextState <= ORI;
-							4'b0011: nextState <= XORI;
-							4'b0100: nextState <= ;			// OP Code: Memory Access, Jump and Link Instructions -> decode Op code extend
-																	// STOR, LOAD, JAL
-							4'b0101: nextState <= ADDI;
-							//4'b0110: nextState <= ADDUI;
-							//4'b0111: nextState <= ADDCI;
-							4'b1000:	begin						// OP Code: Shift Instructions -> decode Op code extend
-								/* PSEDUO CODE
-								if (cond) nextState <= SHFT;  -> LSH, RSH, ALSH, ARSH
-								else		 nextState <= SHFTI; -> LSHI, RSHI, ALSHI, ARSHI
-								*/
-								end
-							4'b1001: nextState <= SUBI;
-							//4'b1010: nextState <= SUBCI;
-							//4'b1011: nextState <= CMPI;
-							//4'b1100: nextState <= Bcond;
-							4'b1101: nextState <= MOVI;
-							//4'b1110: nextState <= MULI;
-							4'b1111: nextState <= LUI;
-							// !!! make CLR instr
-							default: nextstate <= FETCH;	// never reaches
-						endcase
-			ADD:
-			SUB:
-			AND:
-			OR:
-			XOR:
-			MOV:
-			
-			ADDI:
-			SUBI: 
-			ANDI:
-			ORI:	
-			XORI: 
-			MOVI: 
-			LUI:	
-			
-			LOAD: 
-			STOR:	
-			
-			BRANCH:
-			JUMP:	
-			JAL:  
-			
-			SHFT:	
-			SHFTI:
-			CLR:  
-			default: nextState <= FETCH; // never reaches
+					EXT0:	nextState <= REX;
+					ADD:	nextState <= IEX;
+					SUB:	nextState <= IEX;
+					CMP:	nextState <= IEX;
+					AND:	nextState <= IEX;
+					OR:		nextState <= IEX;
+					XOR:	nextState <= IEX;
+					MOV:	nextState <= IEX;
+
+					LSH:	nextState <= opExt[2] ? REX : IEX;
+
+					LUI:	nextState <= IEX;
+					L_S:	nextState <= opExt[2] ? SEX : LEX;
+					B:		nextState <= BEX;
+					J:		nextState <= JEX;
+					default: nextState <= FETCH; //should never reach
+				endcase
+			REX:	nextState <= RWB;
+			IEX:	nextState <= IWB;
+			LEX:	nextState <= LWB;
+			JEX:	nextState <= JWB;
+			SEX:	nextState <= SWB;
+			BEX:	nextState <= BWB;
+
+			/* not necessary
+			RWB:	nextState <= FETCH;
+			IWB:	nextState <= FETCH;
+			LWB:	nextState <= FETCH;
+			JWB:	nextState <= FETCH;
+			SWB:	nextState <= FETCH;
+			BWB:	nextState <= FETCH;
+			*/
+			default: nextState <= FETCH;
 		endcase
 	end
 
@@ -237,28 +242,166 @@ module controller #(parameter SIZE = 16) (
 	// generates the outputs from each state as datapath control signals
 	always @(*) begin
 		// set all outputs to zero
-		RFen <= 0; PSRen <= 0;
+		RFen <= 1'b0; PSRen <= 1'b0;
 		AluOp <= 4'b0000;
-		PCm <= 0;
-		MemW1en <= 0; MemW2en <= 0;
-		Movm <= 0;
+		PCm <= 2'b0; //1'b0;
+		PCen <= 1'b0;
+		MemW1en <= 1'b0; MemW2en <= 1'b0;
+		Movm <= 1'b0;
+		A1m <= 1'b0;
 		A2m <= 2'b00; RWm <= 2'b00;
 		// conditionally assert the outputs
 		// for each state, every output/control signal needs to be explicitly assigned
 		case(state)
 			FETCH: begin
-				//PCm 	<= 2'bxx; // increment pc (?)
-				// (?) get instruction from mem/BRAM
+				INSTRen <= 1'b1;
 			end
-			
 			DECODE: begin
-				// (?)
+				//? do we need this state?
 			end
-			
+			REX: begin
+				//figure out aluop
+				//it lives in the extended opcode
+				case(opExt)
+					AND:  AluOp <= ALU_AND;
+					OR:   AluOp <= ALU_OR;
+					XOR:  AluOp <= ALU_XOR;
+					ADD:  AluOp <= ALU_ADD;
+					SUB:  AluOp <= ALU_SUB;
+					NOT:  AluOp <= ALU_NOT;
+					//shifting...
+					LSH: AluOp <= ALU_SLL; //?
+					default: AluOp <= ALU_AND;
+				endcase
+
+				//set rwrite mux to movm
+				RWm <= 2'd2;
+
+				//set alu2mux to read2
+				A2m <= 2'b0;
+				
+				//set alu1mux to read1
+				A1m <= 1'b0;
+				
+				//get PC ready
+				PCm <= 2'b0;
+
+				//set mov mux
+				Movm <= (opExt == MOV) ? 1'b0 : 1'b1;
+			end
+			IEX: begin
+				case(op)
+					AND:  AluOp <= ALU_AND;
+					OR:   AluOp <= ALU_OR;
+					XOR:  AluOp <= ALU_XOR;
+					ADD:  AluOp <= ALU_ADD;
+					SUB:  AluOp <= ALU_SUB;
+					NOT:  AluOp <= ALU_NOT;
+					LSH:  AluOp <= ALU_SLL;
+					default: AluOp <= ALU_AND;
+				endcase
+
+				//set rwrite mux to movm out or luiImmd
+				RWm <= (op == LUI) ? 2'd3 : 2'd2;
+
+				//set alu2mux to immediate
+				A2m <= 2'd2;
+
+				//set alu1mux to read1
+				A1m <= 1'b0;
+
+				//prepare the pc
+				PCm <= 2'b0;
+
+				//set mov mux
+				Movm <= (op == MOV) ? 1'b0: 1'b1;
+			end
+			LEX: begin
+				RWm <= 2'b1;
+				PCm <= 2'b0;
+			end
+			SEX: begin
+				//? not much experience in this field ngl
+			end
+			JEX: begin
+				//check flags, decide to do jump or not
+				case(instr[11:8])
+					EQ: PCm <= zero ? 2'b1 : 2'b0;
+					NE: PCm <= ~zero ? 2'b1 : 2'b0;
+					GE: PCm <= (neg | zero) ? 2'b1 : 2'b0;
+					CS: PCm <= carry ? 2'b1 : 2'b0;
+					CC: PCm <= ~carry ? 2'b1 : 2'b0;
+					HI: PCm <= low ? 2'b1 : 2'b0;
+					LS: PCm <= ~low ? 2'b1 : 2'b0;
+					LO: PCm <= (~low & ~zero) ? 2'b1 : 2'b0;
+					HS: PCm <= (low & zero) ? 2'b1 : 2'b0;
+					GT: PCm <= neg ? 2'b1 : 2'b0;
+					LE: PCm <= ~neg ? 2'b1 : 2'b0;
+					FS: PCm <= overFlow ? 2'b1 : 2'b0;
+					FC: PCm <= ~overFlow ? 2'b1 : 2'b0;
+					LT: PCm <= (~neg & ~zero) ? 2'b1 : 2'b0;
+					UC: PCm <= 2'b1;
+					default: PCm <= 2'b0; //corresponds to NJ
+				endcase
+				if(opExt == E_JAL) begin
+					RWm <= 2'b1;
+				end
+			end
+			BEX: begin
+				case(instr[11:8])
+					EQ: PCm <= zero ? 2'd2 : 2'b0;
+					NE: PCm <= ~zero ? 2'd2 : 2'b0;
+					GE: PCm <= (neg | zero) ? 2'd2 : 2'b0;
+					CS: PCm <= carry ? 2'd2 : 2'b0;
+					CC: PCm <= ~carry ? 2'd2 : 2'b0;
+					HI: PCm <= low ? 2'd2 : 2'b0;
+					LS: PCm <= ~low ? 2'd2 : 2'b0;
+					LO: PCm <= (~low & ~zero) ? 2'd2 : 2'b0;
+					HS: PCm <= (low & zero) ? 2'd2 : 2'b0;
+					GT: PCm <= neg ? 2'd2 : 2'b0;
+					LE: PCm <= ~neg ? 2'd2 : 2'b0;
+					FS: PCm <= overFlow ? 2'd2 : 2'b0;
+					FC: PCm <= ~overFlow ? 2'd2 : 2'b0;
+					LT: PCm <= (~neg & ~zero) ? 2'd2 : 2'b0;
+					UC: PCm <= 2'd2;
+					default: PCm <= 2'd0; //corresponds to NJ
+				endcase
+				//set a1 to pc
+				A1m <= 1'b1;
+				//set a2 to imm
+				A2m <= 2'd2;
+				//set aluop to add
+				AluOp <= ALU_ADD;
+			end
+			RWB: begin
+				RFen <= 1'b1;
+				PCen <= 1'b1;
+			end
+			IWB: begin
+				RFen <= 1'b1;
+				PCen <= 1'b1;
+			end
+			LWB: begin
+				RFen <= 1'b1;
+				PCen <= 1'b1;
+			end
+			SWB: begin
+				MemW2en <= 1'b1;
+			end
+			JWB: begin
+				PCen <= 1'b1;
+				if(opExt == E_JAL)
+					RFen <= 1'b1;
+			end
+			BWB: begin
+				PCen <= 1'b1;
+			end
+			default: PCen <= 1'b0;
+			/*
 			LUI: begin
 			// (?) current state = immd val read from instr 
 			// next state = register file write port	.writeData(RFwrite)
-				PCm	<= 2'00;
+				PCm	<= 2'b00;
 				RWm 	<= 2'b11;	// RWritemux: .d(luiImmd)
 				RFen 	<= 1; 		// enable registerFile write
 			end
@@ -271,18 +414,8 @@ module controller #(parameter SIZE = 16) (
 				RWm	<= 2'b01;	// RWritemux: .b(nextPC)
 				RFen 	<= 1;			// enable registerFile write
 			end
-			
-			JUMP: begin
-			end
-			
-			BRANCH: begin
-			end
-			
-			//MOV: datapath muxes allow src reg to be written back w/o mod to dst reg (func code bits to set alu func to pass a val thru unmodded)
-
-			
-			default: nextstate <= FETCH; // (!) CHANGE
-
+			*/
+		endcase
 	end
 	
 	// !! assign PCen = PCwrite | (PCWriteCond & zero);

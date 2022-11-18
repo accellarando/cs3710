@@ -2,7 +2,7 @@
 
 module final_cpu_tb();
 	/* Inputs */
-	
+	/*
 	cpu uut (
 		clk,
 		reset,
@@ -10,7 +10,6 @@ module final_cpu_tb();
 		leds
 	);
 	
-	/* Initializing inputs */
 	initial begin
 		clk		<= 1'b0;
 		reset		<= 1'b1;		// active-low reset
@@ -22,10 +21,11 @@ module final_cpu_tb();
 		
 
 	end
+	*/
 	
 	/* Generate clock */
 	always #20 begin		// clock changes edge every 50 ns
-		clk = !clk;
+		//clk = !clk;
 	end
 
 endmodule

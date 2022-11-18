@@ -28,9 +28,9 @@ parameter SRL 		= 	4'b0111;
 module datapath_tb();
 	reg 			clk, reset;
 	
-	/* Temporary controller FSM: control signals*/
-	reg MemW1en, MemW2en, RFen, PSRen,		// enable signals (modules: bram, registerFile)
-	r Movm, RWm,									// mux select signals (MoveMux, RWriteMux)
+	/* Temporary controller FSM: control signals
+	reg MemW1en, MemW2en, RFen, PSRen;	// enable signals (modules: bram, registerFile)
+	reg Movm, RWm;									// mux select signals (MoveMux, RWriteMux)
 	input[1:0] PCm, A2m, LUIm,						// mux select signals (PCMux, ALU2Mux, LUIMux)
 	input[3:0] AluOp,
 	input[SIZE-1:0] switches,						// simulate on board
@@ -41,7 +41,7 @@ module datapath_tb();
 	output[1:0] flags1out,
 	output[2:0] flags2out,
 	output[9:0] leds,															// simulate on board
-	
+	*/
 
 		
 	
@@ -52,9 +52,10 @@ module datapath_tb();
 //	-program counter
 //	-current flag set
 	
-	/* Instantiate the Unit Under Test (UUT) */
+	/* Instantiate the Unit Under Test (UUT) 
 	cpuWithDatapath uut (
 	);
+	*/
 	
 
 endmodule
