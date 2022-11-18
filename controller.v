@@ -256,9 +256,11 @@ module controller #(parameter SIZE = 16) (
 				INSTRen <= 1'b1;
 			end
 			DECODE: begin
-				//? do we need this state?
+				//? 
 			end
 			REX: begin
+				RFen <= 1'b1;
+				PCen <= 1'b1;
 				//figure out aluop
 				//it lives in the extended opcode
 				case(opExt)
@@ -289,6 +291,8 @@ module controller #(parameter SIZE = 16) (
 				Movm <= (opExt == MOV) ? 1'b0 : 1'b1;
 			end
 			IEX: begin
+				RFen <= 1'b1;
+				PCen <= 1'b1;
 				case(op)
 					AND:  AluOp <= ALU_AND;
 					OR:   AluOp <= ALU_OR;
@@ -320,7 +324,7 @@ module controller #(parameter SIZE = 16) (
 				PCm <= 2'b0;
 			end
 			SEX: begin
-				//? not much experience in this field ngl
+				MemW2en <= 1'b1;
 			end
 			JEX: begin
 				//check flags, decide to do jump or not
@@ -344,9 +348,12 @@ module controller #(parameter SIZE = 16) (
 				endcase
 				if(opExt == E_JAL) begin
 					RWm <= 2'b1;
+					RFen <= 1'b1;
 				end
+				PCen <= 1'b1;
 			end
 			BEX: begin
+				PCen <= 1'b1;
 				case(instr[11:8])
 					EQ: PCm <= zero ? 2'd2 : 2'b0;
 					NE: PCm <= ~zero ? 2'd2 : 2'b0;
@@ -375,82 +382,132 @@ module controller #(parameter SIZE = 16) (
 			RWB: begin
 				RFen <= 1'b1;
 				PCen <= 1'b1;
+				case(opExt)
+					AND:  AluOp <= ALU_AND;
+					OR:   AluOp <= ALU_OR;
+					XOR:  AluOp <= ALU_XOR;
+					ADD:  AluOp <= ALU_ADD;
+					SUB:  AluOp <= ALU_SUB;
+					NOT:  AluOp <= ALU_NOT;
+					//shifting...
+					LSH: AluOp <= ALU_SLL; //?
+					default: AluOp <= ALU_AND;
+				endcase
+
+				//set rwrite mux to movm
+				RWm <= 2'd2;
+
+				//set alu2mux to read2
+				A2m <= 2'b0;
+				
+				//set alu1mux to read1
+				A1m <= 1'b0;
+				
+				//get PC ready
+				PCm <= 2'b0;
+
+				//set mov mux
+				Movm <= (opExt == MOV) ? 1'b0 : 1'b1;
 			end
 			IWB: begin
+
 				RFen <= 1'b1;
 				PCen <= 1'b1;
+
+				case(op)
+					AND:  AluOp <= ALU_AND;
+					OR:   AluOp <= ALU_OR;
+					XOR:  AluOp <= ALU_XOR;
+					ADD:  AluOp <= ALU_ADD;
+					SUB:  AluOp <= ALU_SUB;
+					NOT:  AluOp <= ALU_NOT;
+					LSH:  AluOp <= ALU_SLL;
+					default: AluOp <= ALU_AND;
+				endcase
+
+				//set rwrite mux to movm out or luiImmd
+				RWm <= (op == LUI) ? 2'd3 : 2'd2;
+
+				//set alu2mux to immediate
+				A2m <= 2'd2;
+
+				//set alu1mux to read1
+				A1m <= 1'b0;
+
+				//prepare the pc
+				PCm <= 2'b0;
+
+				//set mov mux
+				Movm <= (op == MOV) ? 1'b0: 1'b1;
 			end
 			LWB: begin
 				RFen <= 1'b1;
 				PCen <= 1'b1;
+				RWm <= 2'b1;
+				PCm <= 2'b0;
 			end
 			SWB: begin
 				MemW2en <= 1'b1;
 			end
+
 			JWB: begin
+				//check flags, decide to do jump or not
+				case(instr[11:8])
+					EQ: PCm <= zero ? 2'b1 : 2'b0;
+					NE: PCm <= ~zero ? 2'b1 : 2'b0;
+					GE: PCm <= (neg | zero) ? 2'b1 : 2'b0;
+					CS: PCm <= carry ? 2'b1 : 2'b0;
+					CC: PCm <= ~carry ? 2'b1 : 2'b0;
+					HI: PCm <= low ? 2'b1 : 2'b0;
+					LS: PCm <= ~low ? 2'b1 : 2'b0;
+					LO: PCm <= (~low & ~zero) ? 2'b1 : 2'b0;
+					HS: PCm <= (low & zero) ? 2'b1 : 2'b0;
+					GT: PCm <= neg ? 2'b1 : 2'b0;
+					LE: PCm <= ~neg ? 2'b1 : 2'b0;
+					FS: PCm <= overFlow ? 2'b1 : 2'b0;
+					FC: PCm <= ~overFlow ? 2'b1 : 2'b0;
+					LT: PCm <= (~neg & ~zero) ? 2'b1 : 2'b0;
+					UC: PCm <= 2'b1;
+					default: PCm <= 2'b0; //corresponds to NJ
+				endcase
+				if(opExt == E_JAL) begin
+					RWm <= 2'b1;
+				end
 				PCen <= 1'b1;
 				if(opExt == E_JAL)
 					RFen <= 1'b1;
 			end
 			BWB: begin
 				PCen <= 1'b1;
+				case(instr[11:8])
+					EQ: PCm <= zero ? 2'd2 : 2'b0;
+					NE: PCm <= ~zero ? 2'd2 : 2'b0;
+					GE: PCm <= (neg | zero) ? 2'd2 : 2'b0;
+					CS: PCm <= carry ? 2'd2 : 2'b0;
+					CC: PCm <= ~carry ? 2'd2 : 2'b0;
+					HI: PCm <= low ? 2'd2 : 2'b0;
+					LS: PCm <= ~low ? 2'd2 : 2'b0;
+					LO: PCm <= (~low & ~zero) ? 2'd2 : 2'b0;
+					HS: PCm <= (low & zero) ? 2'd2 : 2'b0;
+					GT: PCm <= neg ? 2'd2 : 2'b0;
+					LE: PCm <= ~neg ? 2'd2 : 2'b0;
+					FS: PCm <= overFlow ? 2'd2 : 2'b0;
+					FC: PCm <= ~overFlow ? 2'd2 : 2'b0;
+					LT: PCm <= (~neg & ~zero) ? 2'd2 : 2'b0;
+					UC: PCm <= 2'd2;
+					default: PCm <= 2'd0; //corresponds to NJ
+				endcase
+				//set a1 to pc
+				A1m <= 1'b1;
+				//set a2 to imm
+				A2m <= 2'd2;
+				//set aluop to add
+				AluOp <= ALU_ADD;
+
 			end
-			default: PCen <= 1'b0;
-			/*
-			LUI: begin
-			// (?) current state = immd val read from instr 
-			// next state = register file write port	.writeData(RFwrite)
-				PCm	<= 2'b00;
-				RWm 	<= 2'b11;	// RWritemux: .d(luiImmd)
-				RFen 	<= 1; 		// enable registerFile write
-			end
-			
-			JAL: begin
-			// next pc -> reg file
-			// immd -> next pc
-			// (?) set write register to r15
-				PCm	<= 2'b01;	// PCmux: memAddr+1 = .a(nextPC) 
-				RWm	<= 2'b01;	// RWritemux: .b(nextPC)
-				RFen 	<= 1;			// enable registerFile write
-			end
-			*/
+			default: PCen <= 1'b0; //idk lol
 		endcase
 	end
 	
-	// !! assign PCen = PCwrite | (PCWriteCond & zero);
 endmodule 
 
-/* For Reference (IGNORE)
---------
-PYTHON ASSEMBLER:
-RType = ['ADD', 'ADDU', 'ADDC', 'ADDCU', 'SUB', 'CMP', 'CMPU', 'AND', 'OR', 'XOR']
-Immediates = ['ADDI', 'ADDUI', 'ADDCI', 'ADDCUI', 'SUBI', 'CMPI', 'CMPUI', 'ANDI', 'ORI', 'XORI']
-Shift = ['LSH', 'RSH', 'ALSH', 'ARSH']
-ImmdShift = ['LSHI', 'RSHI', 'ALSHI', 'ARSHI']
-Branch = ['BEQ', 'BNE', 'BGE', 'BCS', 'BCC', 'BHI', 'BLS', 'BLO', 'BHS', 'BGT', 'BLE', 'BFS', 'BFC', 'BLT', 'BUC']
-Jump = ['JEQ', 'JNE', 'JGE', 'JCS', 'JCC', 'JHI', 'JLS', 'JLO', 'JHS', 'JGT', 'JLE', 'JFS', 'JFC', 'JLT', 'JUC']
---------
-MINIMIPS: 
-input            clk, reset, 
-input      [5:0] op,												// instr[31:26]					  
-input            zero, 					  
-output reg       memwrite, alusrca, memtoreg, iord,					  
-output           pcen, 
-output reg       regwrite, regdst, 
-output reg [1:0] pcsource, alusrcb, aluop,
-output reg [3:0] irwrite);					  
---------					  
-DATAPATH:
-input MemW1en, MemW2en, RFen, PSRen,		// enable signal (modules: bram, registerFile)
-input Movm, 										// mux select (MoveMux, RWriteMux)
-input[1:0] PCm, A2m, RWm, //LUIm,			// mux select (PCMux, ALU2Mux, LUIMux)
-input[3:0] AluOp,									//
-input[SIZE-1:0] switches,						// simulate
-
-output[SIZE-1:0] PC, AluOut,
-output[SIZE-1:0] RFwrite, RFread1, RFread2,						// register file data input and outputs				
-output[SIZE-1:0] MemWrite1, MemWrite2, MemRead1, MemRead2,	// bram memory access data input and output
-output[1:0] flags1out,
-output[2:0] flags2out,
-output[9:0] leds,															// simulate				  
-*/

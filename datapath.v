@@ -24,6 +24,7 @@ module datapath #(parameter SIZE = 16) (
 	// declare vars (?)
 	reg [SIZE-1 : 0] nextPC;	// register that overwrites PC 
 	
+
 	
 	/* Instantiate internal nets */
 	wire[(SIZE-1):0] MemAddr1, MemAddr2;
@@ -32,6 +33,11 @@ module datapath #(parameter SIZE = 16) (
 	wire[(SIZE-1):0] instr, nextPc;
 	wire[1:0] flags1;
 	wire[2:0] flags2;
+	
+	wire [SIZE-1:0] immd; 		// immediate from instruction (will be instr[7:0])
+	assign immd = instr[7:0];
+	wire[SIZE-1:0] luiImmd;
+	assign luiImmd = immd << 8;
 	
 	/* Instantiate modules */
 	en_register		PC_Reg(.clk(clk), .reset(reset), .d(PcMuxOut), .q(MemAddr1), .en(PCen));
@@ -64,9 +70,10 @@ module datapath #(parameter SIZE = 16) (
 	
 	);
 	
-	mux2  A1Mux(.s(A1m),.in1(RFread1),.in2(MemAddr1),.out(A1MuxOut));
-	
 	wire[SIZE-1:0] A1MuxOut;
+		
+	mux2  A1Mux(.s(A1m),.in1(RFread1),.in2(MemAddr1),.out(A1MuxOut));
+
 	
 	alu	myAlu(
 		.aluOp(aluOp),
@@ -114,10 +121,7 @@ module datapath #(parameter SIZE = 16) (
 	);
 	
 	
-	wire [SIZE-1:0] immd; 		// immediate from instruction (will be instr[7:0])
-	assign immd = instr[7:0];
-	wire[SIZE-1:0] luiImmd;
-	assign luiImmd = immd << 8;
+
 
 	/*
 	mux2 	LuiMux(

@@ -1,18 +1,27 @@
+.text
 #Load data from memory into regfile
-LOAD %1, 0x100
-#Set flags - load something into memory address 0x100 s.t. this will overflow!
-ADDI %1, 0x1 
+#0x100
+MOVI $30 %r2
+LOAD %r1 %r2
+#Set flags - load something into memory address $30 s.t. this will overflow!
+ADDI $1 %r1
 #Store result into memory
-STORE %1, 0x101
+MOVI $31 %r2
+STOR %r1 %r2
 #Reload result into regfile
-MOVI %1, 0xFFFF
+LUI $127 %r1
+ORI $127 %r1
 .loop:
-	LOAD %2, 0x101
+	#Calculate mem addr
+	MOVI $31 %r3
+	LOAD %r2 %r3
 	#Set flags and do arithmetic
-	ADDI %1, 0x1
-	CMP %1, %2
-	BNE loop
+	ADDI $1 %r1
+	CMP %r1 %r2
+	BNE $-4
 #Write result into memory
-STORE %1, 0x102
+MOVI $32 %r2
+STOR %r2 %r1
 #Display result at output
-STORE %1, 0xF00
+MOVI $62 %r2
+STOR %r1 %r2

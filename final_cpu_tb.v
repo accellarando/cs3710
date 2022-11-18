@@ -1,8 +1,10 @@
 `timescale 1ns / 1ps
 
 module final_cpu_tb();
-	/* Inputs */
-	/*
+	reg clk, reset;
+	reg[9:0] switches;
+	wire[9:0] leds;
+	
 	cpu uut (
 		clk,
 		reset,
@@ -17,15 +19,13 @@ module final_cpu_tb();
 		reset		<= 1'b0;
 		#100;
 		reset		<= 1'b1;
-		#100;		
-		
-
+		#100;
 	end
-	*/
+	
 	
 	/* Generate clock */
 	always #20 begin		// clock changes edge every 50 ns
-		//clk = !clk;
+		clk = !clk;
 	end
 
 endmodule
