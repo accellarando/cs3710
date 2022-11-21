@@ -10,8 +10,8 @@ module datapath #(parameter SIZE = 16) (
 	input MemW1en, MemW2en, RFen, PSRen, PCen, INSTRen,		// enable signals (modules: bram, registerFile)
 	input Movm, A1m,									// mux select signals (MoveMux, RWriteMux)
 	input[1:0] PCm, A2m, RWm,//LUIm,						// mux select signals (PCMux, ALU2Mux, LUIMux)
-	input[3:0] AluOp,
-	input[SIZE-1:0] switches,						// simulate on board
+	input[3:0] aluOp,
+	input[9:0] switches,						// simulate on board
 	
 	//output[SIZE-1:0] PC, AluOut,
 	//output[SIZE-1:0] RFwrite, RFread1, RFread2,						// register file data input and outputs
@@ -23,13 +23,14 @@ module datapath #(parameter SIZE = 16) (
 	
 	// declare vars (?)
 	reg [SIZE-1 : 0] nextPC;	// register that overwrites PC 
-	
+	wire[SIZE-1:0] PC, RFwrite, RFread1, RFread2,
+		MemWrite1, MemWrite2, MemRead1, MemRead2;
 
 	
 	/* Instantiate internal nets */
 	wire[(SIZE-1):0] MemAddr1, MemAddr2;
 	wire[(SIZE-1):0] seImm;
-	wire[(SIZE-1):0] PcMuxOut, LuiMuxOut, A2MuxOut, movMuxOut;	// temporary controller FSM: mux output
+	wire[(SIZE-1):0] PcMuxOut, LuiMuxOut, A2MuxOut, MovMuxOut, aluOut;	// temporary controller FSM: mux output
 	wire[(SIZE-1):0] instr, nextPc;
 	wire[1:0] flags1;
 	wire[2:0] flags2;
@@ -77,7 +78,7 @@ module datapath #(parameter SIZE = 16) (
 	
 	alu	myAlu(
 		.aluOp(aluOp),
-		.aluIn1(RFread1), .aluIn2(A2MuxOut), //rfread1
+		.aluIn1(A1MuxOut), .aluIn2(A2MuxOut), //rfread1
 		
 		.aluOut(aluOut),
 		.cond_group1(flags1), .cond_group2(flags2)
@@ -117,7 +118,7 @@ module datapath #(parameter SIZE = 16) (
 		.s(A2m),
 		.a(RFread2), .b( {instr[3:0]} ), .c( seImm ),	// c-input sign-extend the immediate back to 16-bits (!) change to immd concate
 		//.a(RFread2), .b( {instr[3:0]}} ), .c( {{(SIZE-4){1'b0}} ), //zero extend that? or sign extend...
-		.out(seImm)
+		.out(A2MuxOut)
 	);
 	
 	
