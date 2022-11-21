@@ -4,10 +4,10 @@ module final_cpu(
 	output [9:0] leds);
 	
 	wire[15:0] instr;
-	wire RFen, PSRen, PCen, PCm, MemW1en, MemW2en, Movm, INSTRen, A1m;
+	wire RFen, PSRen, PCen, MemW1en, MemW2en, Movm, INSTRen, A1m;
 	wire[3:0] AluOp;
-	wire[1:0] A2m, RWm;
-	
+	wire[1:0] A2m, RWm, PCm;
+
 	wire[1:0] flags1out;
 	wire[2:0] flags2out;
 	

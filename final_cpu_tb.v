@@ -5,7 +5,7 @@ module final_cpu_tb();
 	reg[9:0] switches;
 	wire[9:0] leds;
 	
-	cpu uut (
+	final_cpu uut (
 		clk,
 		reset,
 		switches,
@@ -19,13 +19,12 @@ module final_cpu_tb();
 		reset		<= 1'b0;
 		#100;
 		reset		<= 1'b1;
-		#100;
 	end
 	
 	
 	/* Generate clock */
 	always #20 begin		// clock changes edge every 50 ns
-		clk = !clk;
+		clk = ~clk;
 	end
 
 endmodule
