@@ -13,7 +13,7 @@ module bram
 	reg [DATA_WIDTH-1:0] ram[2**ADDR_WIDTH-1:0]; // possibly switch to 0:2**ADDR_WIDTH - 1
 	initial begin
 		$display("Loading memory...");
-		$readmemb("/home/ella/Documents/School/CS3710/cpu/ram.dat", ram); //change to correct path to .dat file
+		$readmemb("E:/3710/Project/cs3710/ram.dat", ram); //change to correct path to .dat file
 		$display("Done.");
 	end
 
