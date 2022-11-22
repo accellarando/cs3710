@@ -21,7 +21,8 @@ module datapath #(parameter SIZE = 16) (
 	input[1:0] PCm, A2m, RWm,										// mux select signals (PCMux, ALU2Mux, LUIMux)
 	input[3:0] aluOp,
 	input[9:0] switches,												// simulate on board
-	output[SIZE-1:0] instr,
+	
+	output[(SIZE-1):0] instr,										// instruction bits at an address
 	output[1:0] flags1out,
 	output[2:0] flags2out,
 	output[9:0] leds													// simulate on board
@@ -33,25 +34,25 @@ module datapath #(parameter SIZE = 16) (
 	);
 
 	/* Instantiate internal nets */
-	//wire[(SIZE-1):0]	instr;												// instruction bits at an address
-	wire[(SIZE-1):0] 	PC, nextPC;											// Program Counter elements
-	wire[(SIZE-1):0]	RFwrite, RFread1, RFread2;						// Register File
+	wire[(SIZE-1):0] PC, nextPC;											// Program Counter elements
+	wire[(SIZE-1):0] RFwrite, RFread1, RFread2;						// Register File
+	wire[(SIZE-1):0] MemWrite1, MemWrite2, MemRead1, MemRead2,
+						  MemAddr1, MemAddr2;								// BRAM
+	wire[(SIZE-1):0] A1MuxOut, A2MuxOut, aluOut, 					
+						  LuiMuxOut, MovMuxOut, PcMuxOut;				// control-signal mux
+	wire[1:0] flags1;	
+	wire[2:0] flags2;
 	
-	wire[(SIZE-1):0]	MemWrite1, MemWrite2, MemRead1, MemRead2,
-							MemAddr1, MemAddr2;								// BRAM
-	wire[(SIZE-1):0]	A1MuxOut, A2MuxOut, aluOut, 					
-							LuiMuxOut, MovMuxOut, PcMuxOut;				// control-signal mux
-	wire[1:0]	flags1;	
-	wire[2:0]	flags2;
+	// sign-extension wire manipulation
+	wire[(SIZE-1):0] immd;
+	assign immd = instr[7:0];// immediate bits (8-bits) isolated from the instruction 
 	
-	// sign-extension 
-	wire[(SIZE-1):0]	seImmd;// sign-extension
-
-	wire [SIZE-1:0] immd; 		// immediate from instruction (will be instr[7:0])
-	assign immd = instr[7:0];
 	wire[SIZE-1:0] luiImmd;
-	assign luiImmd = immd << 8;
+	assign luiImmd = immd << 8; // LUI instruction takes immediate bits and left-shifts by 8-bits     
 	
+	wire[(SIZE-1):0] seImmd;	// sign-extension immediate 
+	assign seImmd = instr[7] ? {{8{1'b1}},instr[7:0]} : {{8{1'b0}},instr[7:0]};
+
 	/* Instantiate modules */
 	//reg[(SIZE-1):0] nextPC;	// register that overwrite PC for incrementation
 
@@ -125,7 +126,6 @@ module datapath #(parameter SIZE = 16) (
 	);
 	
 	//wire[SIZE-1:0] seImm;
-	assign seImmd = instr[7] ? {{8{1'b1}},instr[7:0]} : {{8{1'b0}},instr[7:0]};
 	mux3 	Alu2Mux(
 		.s(A2m),
 		.a(RFread2), .b( {instr[3:0]} ), .c( seImmd ),	// c-input sign-extend the immediate back to 16-bits (!) change to immd concate
