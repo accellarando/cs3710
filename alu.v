@@ -34,12 +34,44 @@ module alu #(parameter WIDTH = 16)
 	assign tmp =({1'b0,aluIn1} + {1'b0, aluIn2});
 	reg cOut;
 		
-					
+	//separate always block for figuring out flags
+	always@(posedge aluOut) begin//, posedge cOut, posedge aluIn1, posedge aluIn2) begin
+		cond_group2[2:0] <= 3'b0;
+		cond_group1[1:0] <= 2'b0;
+		
+		if(aluOut == {WIDTH{1'b0}})
+			cond_group2[1] <= 1'b1;
+		casex(aluOp) 
+			ADD: begin
+				if ((~aluOut[WIDTH-1] & aluIn1[WIDTH-1] & aluIn2[WIDTH-1]) | (aluOut[WIDTH-1] & ~aluIn1[WIDTH-1] & ~aluIn2[WIDTH-1]))
+					cond_group1[1] <= 1'b1;
+				if(cOut == 1'b1)
+					cond_group1[0] <= 1'b1;
+			end
+			SUB: begin
+				if ((~aluOut[WIDTH-1] & aluIn1[WIDTH-1] & aluIn2[WIDTH-1]) | (aluOut[WIDTH-1] & ~aluIn1[WIDTH-1] & ~aluIn2[WIDTH-1]))
+					cond_group1[1] <= 1'b1; // F bit set to 1 in signed arithmetic
+				if(aluIn1 < aluIn2)
+				begin
+					cond_group1[0] <= 1'b1; 		// C flag is to 1
+					cond_group2[0] <= 1'b1;
+				end	// L flag is set to 1
+				if($signed(aluIn1) < $signed(aluIn2))
+				begin
+					cond_group1[1] <= 1'b1;
+					cond_group2[2] <= 1'b1; // N bit set to 1
+				end
+				if(aluIn1 == aluIn2)
+					cond_group2[1] <= 1'b1; // Z bit set to 1
+			end
+		endcase
+	end
+	
 	always@(*) begin // maybe always at ALUIn1, ALUIn2, carryIn, and maybe aluOp? dependent on opcodes though
       //cond_group1[0] <= tmp[WIDTH];
 		//set conds to 0, set them to something else if warranted below
-		cond_group2[2:0] = 3'b0;
-		cond_group1[1:0] = 2'b0;
+		//cond_group2[2:0] = 3'b0;
+		//cond_group1[1:0] = 2'b0;
 		aluOut <= {WIDTH{1'b0}};
 		//cond_group1 <= 1'b0;
 		//cond_group2 <= 3'b000;
@@ -49,26 +81,33 @@ module alu #(parameter WIDTH = 16)
 	
 	AND:begin 
 			aluOut <= aluIn1 & aluIn2;
+			/*
 				if (aluOut == {WIDTH{1'b0}})
 					begin
 						cond_group2[1] <= 1'b1; // Z bit set to 1
 					end
+			*/
 		 end
 	OR: begin
 			aluOut <= aluIn1 | aluIn2;
+			/*
 				if (aluOut == {WIDTH{1'b0}})
 					begin
 						cond_group2[1] <= 1'b1; // Z bit set to 1
 					end
+			*/
 		 end
 	XOR: begin
 			aluOut <= aluIn1 ^ aluIn2;
+			/*
 			if (aluOut == {WIDTH{1'b0}})
 					cond_group2[1] <= 1'b1; // Z bit set to 1
 	     end
-		
+		  */
+			end
 	ADD: begin
 			 {cOut, aluOut} <= $signed(aluIn1) + $signed(aluIn2);
+			 /*
 				if ((~aluOut[WIDTH-1] & aluIn1[WIDTH-1] & aluIn2[WIDTH-1]) | (aluOut[WIDTH-1] & ~aluIn1[WIDTH-1] & ~aluIn2[WIDTH-1]))
 					cond_group1[1] <= 1'b1; // F bit set to 1 in signed arithmetic
 				else
@@ -77,33 +116,22 @@ module alu #(parameter WIDTH = 16)
 					 if(cOut == 1'b1)
 						cond_group1[0] <= 1'b1;  // C bit set to 1 in unsigned arrithmetic
 				end
+				*/
 			end
 	SUB:
 			begin
-					aluOut <= aluIn1 - aluIn2;
-					
-				if(aluIn1 < aluIn2)
-				begin
-					cond_group1[0] <= 1'b1; 		// C flag is to 1
-					cond_group2[0] <= 1'b1;
-				end	// L flag is set to 1
-					
-				if($signed(aluIn1) < $signed(aluIn2))
-				begin
-					cond_group1[1] <= 1'b1;
-					cond_group2[2] <= 1'b1; // N bit set to 1
-				end
-				if(aluIn1 == aluIn2)
-					cond_group2[1] <= 1'b1; // Z bit set to 1
-				begin
+				aluOut <= aluIn1 - aluIn2;					
+				
 				{cOut, aluOut} <= $signed(aluIn1) - $signed(aluIn2);
+				/*
 					if ((~aluOut[WIDTH-1] & aluIn1[WIDTH-1] & aluIn2[WIDTH-1]) | (aluOut[WIDTH-1] & ~aluIn1[WIDTH-1] & ~aluIn2[WIDTH-1]))
 						cond_group1[1] <= 1'b1; // F bit set to 1 in signed arithmetic
-				end
+						*/
 			end
 	NOT:
 			begin
 				aluOut <= ~aluIn1;
+				/*
 				if (aluOut == {WIDTH{1'b0}})
 					begin
 						cond_group2[1] <= 1'b1; // Z bit set to 1 Not veriry sure about this 
@@ -112,10 +140,11 @@ module alu #(parameter WIDTH = 16)
 					begin
 						cond_group2[1] <= 1'b0; // Else, Z bit set to 0
 					end
+				
 				//cond_group1[1:0] = 2'b0; // C and F bit to 0
 				cond_group2[0] <= 1'b0; // L bit to 0
 				cond_group2[2] <= 1'b0; // N bit to 0
-				
+				*/
 			end
 	SLL: 
 		begin

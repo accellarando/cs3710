@@ -16,6 +16,7 @@ module datapath #(parameter SIZE = 16) (
 	//output[SIZE-1:0] PC, AluOut,
 	//output[SIZE-1:0] RFwrite, RFread1, RFread2,						// register file data input and outputs
 	//output[SIZE-1:0] MemWrite1, MemWrite2, MemRead1, MemRead2,	// bram memory access data input and output  
+	output[SIZE-1:0] instr,
 	output[1:0] flags1out,
 	output[2:0] flags2out,
 	output[9:0] leds												// simulate on board
@@ -31,7 +32,7 @@ module datapath #(parameter SIZE = 16) (
 	wire[(SIZE-1):0] MemAddr1, MemAddr2;
 	wire[(SIZE-1):0] seImm;
 	wire[(SIZE-1):0] PcMuxOut, LuiMuxOut, A2MuxOut, MovMuxOut, aluOut;	// temporary controller FSM: mux output
-	wire[(SIZE-1):0] instr, nextPc;
+	wire[(SIZE-1):0] nextPc;
 	wire[1:0] flags1;
 	wire[2:0] flags2;
 	

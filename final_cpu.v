@@ -43,6 +43,7 @@ module final_cpu(
 		PCm, A2m, RWm,
 		AluOp,
 		switches,
+		instr,
 		flags1out, flags2out,
 		leds
 	);
