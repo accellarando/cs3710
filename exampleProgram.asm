@@ -15,12 +15,13 @@ LUI $127 %r1
 ORI $127 %r1
 .loop:
 	#Calculate mem addr
-	MOVI $31 %r3
+	LUI $8 %r3
+	ORI $1 %r3
 	LOAD %r2 %r3
 	#Set flags and do arithmetic
 	ADDI $1 %r1
 	CMP %r1 %r2
-	BNE $-4
+	BNE $-5
 #Write result into memory
 LUI $8 %r2
 ORI $3 %r3
