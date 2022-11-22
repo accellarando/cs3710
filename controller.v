@@ -1,5 +1,5 @@
 /*
--------------------------------------------------------------------------
+----------------------------------------------------------------------------
 [SUMMARY]
 - The control unit is responsible for setting all the control signals
 so that each instruction is executed properly for the datapath.
@@ -11,7 +11,7 @@ the machine is in that state.
 - Instruction decoder unit within the FSM will look at the opcode
 information and uses that to decide how to set the other control bits of 
 the data path.
--------------------------------------------------------------------------
+----------------------------------------------------------------------------
 [DOCUMENT REQUIREMENTS]
 - Register-to-Register (including immediate versions) operations 
 - Load and Store operations
@@ -19,7 +19,7 @@ the data path.
 - Jump and Link
 - Instruction Decode: mux settings, register file addressing, immediate
 fields (including sign extension or zero extension), and register enables
--------------------------------------------------------------------------
+---------------------------------------------------------------------------
 FETCH = retrieve instr from mem
 DECODE = split retrieved instr into 2 parts: OP Code and Operand
 [R-TYPE INSTRUCTIONS]

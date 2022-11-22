@@ -1,50 +1,64 @@
-// Documentation:
-// CURRENT ASSIGNMENT -> 
-// NEXT ASSIGNMENT -> instruction decoding, control state machine (FSM), I/O support configurations for our project
-
-// datapath module same as cpu module
+/*
+----------------------------------------------------------------------------
+[SUMMARY]
+- Datapath consists of the functional units of the processor/CPU:
+	+ Elements that hold data (Program Counter, Register File, Instruction
+	Register, Data Memory/BAM).
+	+ Elements that operate on data (ALU, adder, wire manipulation).
+	+ Control-signal muxes that determine the correct data transfer between
+	these elements.
+	
+- In conjunction with the datapath, the controller FSM will command when/how
+to route and operate on data.
+----------------------------------------------------------------------------
+*/
 module datapath #(parameter SIZE = 16) (
 	input clk, reset,
 	
 	/* Temporary controller FSM: control signals*/
-	input MemW1en, MemW2en, RFen, PSRen, PCen, INSTRen,		// enable signals (modules: bram, registerFile)
-	input Movm, A1m,									// mux select signals (MoveMux, RWriteMux)
-	input[1:0] PCm, A2m, RWm,//LUIm,						// mux select signals (PCMux, ALU2Mux, LUIMux)
+	input MemW1en, MemW2en, RFen, PSRen, PCen, INSTRen,	// enable signals (BRAM, reg)
+	input Movm, A1m,													// mux select signals (MoveMux, RWriteMux)
+	input[1:0] PCm, A2m, RWm,										// mux select signals (PCMux, ALU2Mux, LUIMux)
 	input[3:0] aluOp,
-	input[9:0] switches,						// simulate on board
+	input[9:0] switches,												// simulate on board
+
+	output[1:0] flags1out,
+	output[2:0] flags2out,
+	output[9:0] leds													// simulate on board
 	
+	// (Assignment #2) outputs to test with temporary test FSM  
 	//output[SIZE-1:0] PC, AluOut,
 	//output[SIZE-1:0] RFwrite, RFread1, RFread2,						// register file data input and outputs
 	//output[SIZE-1:0] MemWrite1, MemWrite2, MemRead1, MemRead2,	// bram memory access data input and output  
-	output[1:0] flags1out,
-	output[2:0] flags2out,
-	output[9:0] leds												// simulate on board
 	);
-	
-	// declare vars (?)
-	reg [SIZE-1 : 0] nextPC;	// register that overwrites PC 
-	wire[SIZE-1:0] PC, RFwrite, RFread1, RFread2,
-		MemWrite1, MemWrite2, MemRead1, MemRead2;
 
-	
 	/* Instantiate internal nets */
-	wire[(SIZE-1):0] MemAddr1, MemAddr2;
-	wire[(SIZE-1):0] seImm;
-	wire[(SIZE-1):0] PcMuxOut, LuiMuxOut, A2MuxOut, MovMuxOut, aluOut;	// temporary controller FSM: mux output
-	wire[(SIZE-1):0] instr, nextPc;
-	wire[1:0] flags1;
-	wire[2:0] flags2;
+	wire[(SIZE-1):0]	instr;												// instruction bits at an address
+	wire[(SIZE-1):0] 	PC, nextPC;											// Program Counter elements
+	wire[(SIZE-1):0]	RFwrite, RFread1, RFread2;						// Register File
 	
+	wire[(SIZE-1):0]	MemWrite1, MemWrite2, MemRead1, MemRead2,
+							MemAddr1, MemAddr2;								// BRAM
+	wire[(SIZE-1):0]	A1MuxOut, A2MuxOut, aluOut, 					
+							LuiMuxOut, MovMuxOut, PcMuxOut;				// control-signal mux
+	wire[1:0]	flags1;	
+	wire[2:0]	flags2;
+	
+	// sign-extension 
+	wire[(SIZE-1):0]	seImmd;// sign-extension
+
 	wire [SIZE-1:0] immd; 		// immediate from instruction (will be instr[7:0])
 	assign immd = instr[7:0];
 	wire[SIZE-1:0] luiImmd;
 	assign luiImmd = immd << 8;
 	
 	/* Instantiate modules */
+	//reg[(SIZE-1):0] nextPC;	// register that overwrite PC for incrementation
+
 	en_register		PC_Reg(.clk(clk), .reset(reset), .d(PcMuxOut), .q(MemAddr1), .en(PCen));
 	
 	//incrementer		pci(clk,MemAddr1,nextPc);
-	assign nextPc = MemAddr1 + 1'b1;
+	assign nextPC = MemAddr1 + 1'b1;
 
 	
 	en_register		Instr_Reg(.clk(clk), .reset(reset), .d(MemRead1), .q(instr), .en(INSTRen)); // input comes from bram  
@@ -70,9 +84,7 @@ module datapath #(parameter SIZE = 16) (
 		.readData1(RFread1), .readData2(RFread2)
 	
 	);
-	
-	wire[SIZE-1:0] A1MuxOut;
-		
+			
 	mux2  A1Mux(.s(A1m),.in1(RFread1),.in2(MemAddr1),.out(A1MuxOut));
 
 	
@@ -96,13 +108,13 @@ module datapath #(parameter SIZE = 16) (
 	/* Temporary controller FSM: muxes/ */
 	mux3 	PCmux(
 		.s(PCm),
-		.a(nextPc), .b(RFread2), .c(aluOut),
+		.a(nextPC), .b(RFread2), .c(aluOut),
 		.out(PcMuxOut)
 	);
 	
 	mux4 RWritemux(
 		.s(RWm),
-		.a(MemRead2), .b(nextPc), .c(MovMuxOut), .d(luiImmd),
+		.a(MemRead2), .b(nextPC), .c(MovMuxOut), .d(luiImmd),
 		.out(RFwrite)
 	);
 
@@ -113,10 +125,10 @@ module datapath #(parameter SIZE = 16) (
 	);
 	
 	//wire[SIZE-1:0] seImm;
-	assign seImm = instr[7] ? {{8{1'b1}},instr[7:0]} : {{8{1'b0}},instr[7:0]};
+	assign seImmd = instr[7] ? {{8{1'b1}},instr[7:0]} : {{8{1'b0}},instr[7:0]};
 	mux3 	Alu2Mux(
 		.s(A2m),
-		.a(RFread2), .b( {instr[3:0]} ), .c( seImm ),	// c-input sign-extend the immediate back to 16-bits (!) change to immd concate
+		.a(RFread2), .b( {instr[3:0]} ), .c( seImmd ),	// c-input sign-extend the immediate back to 16-bits (!) change to immd concate
 		//.a(RFread2), .b( {instr[3:0]}} ), .c( {{(SIZE-4){1'b0}} ), //zero extend that? or sign extend...
 		.out(A2MuxOut)
 	);
