@@ -17,8 +17,8 @@ module datapath #(parameter SIZE = 16) (
 	
 	/* Temporary controller FSM: control signals*/
 	input MemW1en, MemW2en, RFen, PSRen, PCen, INSTRen,	// enable signals (BRAM, reg)
-	input Movm, A1m,													// mux select signals (MoveMux, RWriteMux)
-	input[1:0] PCm, A2m, RWm,										// mux select signals (PCMux, ALU2Mux, LUIMux)
+	input Movm, A1m,													// mux select signals (MoveMux, Alu1mux)
+	input[1:0] PCm, A2m, RWm,										// mux select signals (PCMux, Alu2mux, RWritemux)
 	input[3:0] aluOp,
 	input[9:0] switches,												// simulate on board
 	
@@ -45,27 +45,28 @@ module datapath #(parameter SIZE = 16) (
 	
 	// sign-extension wire manipulation
 	wire[(SIZE-1):0] immd;
-	assign immd = instr[7:0];// immediate bits (8-bits) isolated from the instruction 
-	
+	assign immd = instr[7:0]; // immediate bits (8-bits) isolated from the instruction 
+		
 	wire[SIZE-1:0] luiImmd;
-	assign luiImmd = immd << 8; // LUI instruction takes immediate bits and left-shifts by 8-bits     
+	assign luiImmd = immd << 8; // (for LUI) immediate bits and left-shifts by 8-bits     
 	
-	wire[(SIZE-1):0] seImmd;	// sign-extension immediate 
-	assign seImmd = instr[7] ? {{8{1'b1}},instr[7:0]} : {{8{1'b0}},instr[7:0]};
+	wire[(SIZE-1):0] seImmd; 
+	// check if the MSB of the immediate bits from the instruction is 0/1
+	// concatenate 8-bits with 0's/1's and appends immediate bits back to 16-bits
+	assign seImmd = instr[7] ? {{8{1'b1}},instr[7:0]} : {{8{1'b0}},instr[7:0]}; // sign-extend immediate
 
-	/* Instantiate modules */
-	//reg[(SIZE-1):0] nextPC;	// register that overwrite PC for incrementation
-
+	
+	/* Instantiate modules and elements */
+	assign nextPC = MemAddr1 + 1'b1; // (for JAL) adder 1-bit/increment address from PC 
+	
+	// Program Counter register
 	en_register		PC_Reg(.clk(clk), .reset(reset), .d(PcMuxOut), .q(MemAddr1), .en(PCen));
-	
-	//incrementer		pci(clk,MemAddr1,nextPc);
-	assign nextPC = MemAddr1 + 1'b1;
 
+	// Instruction register
+	en_register		Instr_Reg(.clk(clk), .reset(reset), .d(MemRead1), .q(instr), .en(INSTRen)); 
 	
-	en_register		Instr_Reg(.clk(clk), .reset(reset), .d(MemRead1), .q(instr), .en(INSTRen)); // input comes from bram  
 	
-	
-	
+	// Data Memory
 	bram	RAM(
 		.clk(clk),
 		.we_a(MemW1en), .we_b(MemW2en),
@@ -77,6 +78,7 @@ module datapath #(parameter SIZE = 16) (
 		.ex_outputs(leds)
 	);
 	
+	// Register File
 	registerFile	regFile(
 		.clk(clk), .reset(reset),
 		.writeEn(RFen), .writeData(RFwrite),
@@ -86,9 +88,7 @@ module datapath #(parameter SIZE = 16) (
 	
 	);
 			
-	mux2  A1Mux(.s(A1m),.in1(RFread1),.in2(MemAddr1),.out(A1MuxOut));
-
-	
+	// ALU
 	alu	myAlu(
 		.aluOp(aluOp),
 		.aluIn1(A1MuxOut), .aluIn2(A2MuxOut), //rfread1
@@ -97,6 +97,7 @@ module datapath #(parameter SIZE = 16) (
 		.cond_group1(flags1), .cond_group2(flags2)
 	);
 	
+	// PSR
 	PSR_reg	psr(
 		.clk(clk), .reset(reset), 
 		.en(PSRen),
@@ -106,48 +107,41 @@ module datapath #(parameter SIZE = 16) (
 	);
 	
 
-	/* Temporary controller FSM: muxes/ */
+	/* Control-signal muxes */
+	// Program Counter mux
 	mux3 	PCmux(
 		.s(PCm),
 		.a(nextPC), .b(RFread2), .c(aluOut),
 		.out(PcMuxOut)
 	);
 	
+	// Read-Write Data mux
 	mux4 RWritemux(
 		.s(RWm),
 		.a(MemRead2), .b(nextPC), .c(MovMuxOut), .d(luiImmd),
 		.out(RFwrite)
 	);
 
+	// Move Data mux
 	mux2 	MovMux(
 		.s(Movm),
 		.in1(A2MuxOut), .in2(aluOut),
 		.out(MovMuxOut)
 	);
 	
-	//wire[SIZE-1:0] seImm;
+	// ALU 1 mux
+	mux2  Alu1Mux(
+		.s(A1m),
+		.in1(RFread1),
+		.in2(MemAddr1),
+		.out(A1MuxOut)	// input to ALU
+	);
+	
+	// ALU 2 mux (
 	mux3 	Alu2Mux(
 		.s(A2m),
-		.a(RFread2), .b( {instr[3:0]} ), .c( seImmd ),	// c-input sign-extend the immediate back to 16-bits (!) change to immd concate
-		//.a(RFread2), .b( {instr[3:0]}} ), .c( {{(SIZE-4){1'b0}} ), //zero extend that? or sign extend...
-		.out(A2MuxOut)
+		.a(RFread2), .b( {instr[3:0]} ), .c( seImmd ),
+		.out(A2MuxOut)	// input to either ALU or Move Data mux
 	);
-	
-	
 
-
-	/*
-	mux2 	LuiMux(
-		.s(LUIm),
-		.in1(instr), .in2(luiImmd),
-		.out(RFWrite)
-	);
-	*/
-	
-//	mux3 	LuiMux(
-//		.s(LUIm),
-//		.a(RFread1), .b(MemAddr1), .c(16'd8),
-//		.out(LuiMuxOut)
-	//);
-	
 endmodule 
