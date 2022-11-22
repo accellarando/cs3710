@@ -21,7 +21,7 @@ module datapath #(parameter SIZE = 16) (
 	input[1:0] PCm, A2m, RWm,										// mux select signals (PCMux, ALU2Mux, LUIMux)
 	input[3:0] aluOp,
 	input[9:0] switches,												// simulate on board
-
+	output[SIZE-1:0] instr,
 	output[1:0] flags1out,
 	output[2:0] flags2out,
 	output[9:0] leds													// simulate on board
@@ -33,7 +33,7 @@ module datapath #(parameter SIZE = 16) (
 	);
 
 	/* Instantiate internal nets */
-	wire[(SIZE-1):0]	instr;												// instruction bits at an address
+	//wire[(SIZE-1):0]	instr;												// instruction bits at an address
 	wire[(SIZE-1):0] 	PC, nextPC;											// Program Counter elements
 	wire[(SIZE-1):0]	RFwrite, RFread1, RFread2;						// Register File
 	
