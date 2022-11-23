@@ -61,7 +61,6 @@ set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH final_cpu_tb -s
 set_global_assignment -name EDA_TEST_BENCH_NAME registerFile_tb -section_id eda_simulation
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id registerFile_tb
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME registerFile_tb -section_id registerFile_tb
-set_location_assignment PIN_AA14 -to andButton
 set_location_assignment PIN_AF14 -to clk
 set_location_assignment PIN_V16 -to leds[0]
 set_location_assignment PIN_W16 -to leds[1]
@@ -73,44 +72,12 @@ set_location_assignment PIN_Y19 -to leds[6]
 set_location_assignment PIN_W20 -to leds[7]
 set_location_assignment PIN_W21 -to leds[8]
 set_location_assignment PIN_Y21 -to leds[9]
-set_location_assignment PIN_AA15 -to minusButton
 set_location_assignment PIN_Y16 -to reset
-set_location_assignment PIN_AD12 -to switchesLeft[0]
-set_location_assignment PIN_AE11 -to switchesLeft[1]
-set_location_assignment PIN_AC9 -to switchesLeft[2]
-set_location_assignment PIN_AD10 -to switchesLeft[3]
-set_location_assignment PIN_AE12 -to switchesLeft[4]
-set_location_assignment PIN_AB12 -to switchesRight[0]
-set_location_assignment PIN_AC12 -to switchesRight[1]
-set_location_assignment PIN_AF9 -to switchesRight[2]
-set_location_assignment PIN_AF10 -to switchesRight[3]
-set_location_assignment PIN_AD11 -to switchesRight[4]
-set_location_assignment PIN_AH13 -to shlButton
 set_global_assignment -name EDA_TEST_BENCH_NAME aluTb -section_id eda_simulation
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id aluTb
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME aluTb -section_id aluTb
 
-set_global_assignment -name VERILOG_FILE controller.v
-set_global_assignment -name VERILOG_FILE cpuWithAlu.v
-set_global_assignment -name VERILOG_FILE stateMachine.v
-set_global_assignment -name VERILOG_FILE PSR_reg.v
-set_global_assignment -name VERILOG_FILE registerFile.v
-set_global_assignment -name VERILOG_FILE register.v
-set_global_assignment -name VERILOG_FILE mux2.v
-set_global_assignment -name VERILOG_FILE alu.v
-set_global_assignment -name VERILOG_FILE aluTb.v
-set_global_assignment -name VERILOG_FILE registerFile_tb.v
-set_global_assignment -name VERILOG_FILE cpuWithDatapath.v
-set_global_assignment -name VERILOG_FILE datapath_tb.v
-set_global_assignment -name VERILOG_FILE bram.v
-set_global_assignment -name VERILOG_FILE datapath.v
-set_global_assignment -name VERILOG_FILE cpu.v
-set_global_assignment -name VERILOG_FILE mux3.v
-set_global_assignment -name VERILOG_FILE mux4.v
 
-set_global_assignment -name VERILOG_FILE final_cpu_tb.v
-set_global_assignment -name VERILOG_FILE en_register.v
-set_global_assignment -name VERILOG_FILE final_cpu.v
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -entity cpuWithAlu -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -entity cpuWithAlu -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -entity cpuWithAlu -section_id Top
@@ -129,4 +96,35 @@ set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -entity c
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name SDC_FILE clocks.sdc
+set_global_assignment -name VERILOG_FILE controller.v
+set_global_assignment -name VERILOG_FILE cpuWithAlu.v
+set_global_assignment -name VERILOG_FILE stateMachine.v
+set_global_assignment -name VERILOG_FILE PSR_reg.v
+set_global_assignment -name VERILOG_FILE registerFile.v
+set_global_assignment -name VERILOG_FILE register.v
+set_global_assignment -name VERILOG_FILE mux2.v
+set_global_assignment -name VERILOG_FILE alu.v
+set_global_assignment -name VERILOG_FILE aluTb.v
+set_global_assignment -name VERILOG_FILE registerFile_tb.v
+set_global_assignment -name VERILOG_FILE cpuWithDatapath.v
+set_global_assignment -name VERILOG_FILE datapath_tb.v
+set_global_assignment -name VERILOG_FILE bram.v
+set_global_assignment -name VERILOG_FILE datapath.v
+set_global_assignment -name VERILOG_FILE cpu.v
+set_global_assignment -name VERILOG_FILE mux3.v
+set_global_assignment -name VERILOG_FILE mux4.v
+set_global_assignment -name VERILOG_FILE final_cpu_tb.v
+set_global_assignment -name VERILOG_FILE en_register.v
+set_global_assignment -name VERILOG_FILE final_cpu.v
+set_location_assignment PIN_AE12 -to switches[9]
+set_location_assignment PIN_AD10 -to switches[8]
+set_location_assignment PIN_AC9 -to switches[7]
+set_location_assignment PIN_AE11 -to switches[6]
+set_location_assignment PIN_AD12 -to switches[5]
+set_location_assignment PIN_AD11 -to switches[4]
+set_location_assignment PIN_AF10 -to switches[3]
+set_location_assignment PIN_AF9 -to switches[2]
+set_location_assignment PIN_AC12 -to switches[1]
+set_location_assignment PIN_AB12 -to switches[0]
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
