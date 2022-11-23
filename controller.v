@@ -94,12 +94,12 @@ module controller #(parameter SIZE = 16) (
 	
 	/* Outputs !! RENAME */
 	output reg RFen, PSRen,	INSTRen,		// Register File controller
-	output reg[3:0] AluOp,			// ALU controller
-	output reg PCen, 					// PC controller
-	output reg[1:0] PCm, 			// PC controller
-	output reg MemW1en, MemW2en,	// Memory (BRAM) controller
-	output reg Movm, A1m,			// other muxes
-	output reg[1:0] A2m, RWm 		// other muxes
+	output reg[3:0] AluOp,					// ALU controller
+	output reg PCen, setZNL,				// PC controller
+	output reg[1:0] PCm, 					// PC controller
+	output reg MemW1en, MemW2en,			// Memory (BRAM) controller
+	output reg Movm, A1m,					// other muxes
+	output reg[1:0] A2m, RWm 				// other muxes
 	); 
 	
 	// split instruction into opcode and opcode extend for state encodings
@@ -243,7 +243,8 @@ module controller #(parameter SIZE = 16) (
 	always @(*) begin
 		// set all outputs to zero
 		RFen <= 1'b0; PSRen <= 1'b0;
-		AluOp <= 4'b0000;
+		AluOp <= 4'b0000; 
+		setZNL <= 1'b0;
 		PCm <= 2'b0; //1'b0;
 		PCen <= 1'b0;
 		MemW1en <= 1'b0; MemW2en <= 1'b0;
@@ -273,6 +274,10 @@ module controller #(parameter SIZE = 16) (
 					NOT:  AluOp <= ALU_NOT;
 					//shifting...
 					LSH: AluOp <= ALU_SLL; //?
+					CMP: begin
+						AluOp <= ALU_SUB;
+						setZNL <= 1'b1;
+					end
 					default: AluOp <= ALU_AND;
 				endcase
 
@@ -302,6 +307,10 @@ module controller #(parameter SIZE = 16) (
 					SUB:  AluOp <= ALU_SUB;
 					NOT:  AluOp <= ALU_NOT;
 					LSH:  AluOp <= ALU_SLL;
+					CMP: begin
+						AluOp <= ALU_SUB;
+						setZNL <= 1'b1;
+					end
 					default: AluOp <= ALU_AND;
 				endcase
 
@@ -390,6 +399,10 @@ module controller #(parameter SIZE = 16) (
 					ADD:  AluOp <= ALU_ADD;
 					SUB:  AluOp <= ALU_SUB;
 					NOT:  AluOp <= ALU_NOT;
+					CMP: begin
+						AluOp <= ALU_SUB;
+						setZNL <= 1'b1;
+					end
 					//shifting...
 					LSH: AluOp <= ALU_SLL; //?
 					default: AluOp <= ALU_AND;
@@ -423,6 +436,10 @@ module controller #(parameter SIZE = 16) (
 					SUB:  AluOp <= ALU_SUB;
 					NOT:  AluOp <= ALU_NOT;
 					LSH:  AluOp <= ALU_SLL;
+					CMP: begin
+						AluOp <= ALU_SUB;
+						setZNL <= 1'b1;
+					end
 					default: AluOp <= ALU_AND;
 				endcase
 
