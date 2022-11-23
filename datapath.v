@@ -17,7 +17,7 @@ module datapath #(parameter SIZE = 16) (
 	
 	/* Temporary controller FSM: control signals*/
 	input MemW1en, MemW2en, RFen, PSRen, PCen, INSTRen,	// enable signals (BRAM, reg)
-	input Movm, A1m,													// mux select signals (MoveMux, Alu1mux)
+	input Movm, A1m, setZNL,										// mux select signals (MoveMux, Alu1mux)
 	input[1:0] PCm, A2m, RWm,										// mux select signals (PCMux, Alu2mux, RWritemux)
 	input[3:0] aluOp,
 	input[9:0] switches,												// simulate on board
@@ -90,6 +90,8 @@ module datapath #(parameter SIZE = 16) (
 			
 	// ALU
 	alu	myAlu(
+		.clk(clk),
+		.setZNL(setZNL),
 		.aluOp(aluOp),
 		.aluIn1(A1MuxOut), .aluIn2(A2MuxOut), //rfread1
 		

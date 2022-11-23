@@ -6,3 +6,5 @@
 !*.txt
 !*.asm
 !*.dat
+!*.bin
+!*.sdc
