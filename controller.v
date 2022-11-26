@@ -242,6 +242,7 @@ module controller #(parameter SIZE = 16) (
 	// generates the outputs from each state as datapath control signals
 	always @(*) begin
 		// set all outputs to zero
+		INSTRen <= 1'b0;
 		RFen <= 1'b0; PSRen <= 1'b0;
 		AluOp <= 4'b0000; 
 		setZNL <= 1'b0;
