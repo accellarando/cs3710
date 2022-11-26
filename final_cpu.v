@@ -1,9 +1,10 @@
 module final_cpu(
 	input clk, reset,
 	input [9:0] switches,
+	output[15:0] instr,
 	output [9:0] leds);
 	
-	wire[15:0] instr;
+	//wire[15:0] instr;
 	wire RFen, PSRen, PCen, MemW1en, MemW2en, Movm, INSTRen, A1m;
 	wire[3:0] AluOp;
 	wire[1:0] A2m, RWm, PCm;
@@ -25,17 +26,6 @@ module final_cpu(
 	output reg[1:0] A2m, RWm 		// other muxes
 	); 
 	*/
-	controller cont(.clk(clk), .reset(reset),
-		.instr(instr),
-		.flag1(flags1out), .flag2(flags2out),
-		.RFen(RFen), .PSRen(PSRen), .INSTRen(INSTRen), 
-		.PCen(PCen),
-		.AluOp(AluOp),
-		.PCm(PCm),
-		.MemW1en(MemW1en), .MemW2en(MemW2en),
-		.Movm(Movm), .A1m(A1m), .A2m(A2m), .RWm(RWm)
-	);
-	
 	datapath dp(clk, reset,
 		MemW1en, MemW2en, RFen, 
 		PSRen, PCen, INSTRen,
@@ -47,5 +37,18 @@ module final_cpu(
 		flags1out, flags2out,
 		leds
 	);
+	
+	controller cont(.clk(clk), .reset(reset),
+		.instr(instr),
+		.flag1(flags1out), .flag2(flags2out),
+		.RFen(RFen), .PSRen(PSRen), .INSTRen(INSTRen), 
+		.PCen(PCen),
+		.AluOp(AluOp),
+		.PCm(PCm),
+		.MemW1en(MemW1en), .MemW2en(MemW2en),
+		.Movm(Movm), .A1m(A1m), .A2m(A2m), .RWm(RWm)
+	);
+	
+
 	
 endmodule 

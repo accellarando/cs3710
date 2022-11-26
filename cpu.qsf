@@ -111,7 +111,6 @@ set_global_assignment -name VERILOG_FILE cpuWithDatapath.v
 set_global_assignment -name VERILOG_FILE datapath_tb.v
 set_global_assignment -name VERILOG_FILE bram.v
 set_global_assignment -name VERILOG_FILE datapath.v
-set_global_assignment -name VERILOG_FILE cpu.v
 set_global_assignment -name VERILOG_FILE mux3.v
 set_global_assignment -name VERILOG_FILE mux4.v
 set_global_assignment -name VERILOG_FILE final_cpu_tb.v
