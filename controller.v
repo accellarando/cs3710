@@ -84,7 +84,7 @@ cond codes
 'LT' : LT,
 'UC' : UC
 */
-module controller #(parameter SIZE = 16) (
+module controller (
 	/* Inputs */
 	input clk, reset,
 	input[SIZE-1:0] instr,	// instruction bits
@@ -110,6 +110,7 @@ module controller #(parameter SIZE = 16) (
 	
 	/* State Name Parameters */
 	// allows for changing of state encodings
+	parameter SIZE = 16;
 	parameter FETCH		= 4'd0;
 	parameter DECODE	= 4'd1;
 	parameter REX		= 4'd2;
@@ -242,6 +243,7 @@ module controller #(parameter SIZE = 16) (
 	// generates the outputs from each state as datapath control signals
 	always @(*) begin
 		// set all outputs to zero
+		INSTRen <= 1'b0;
 		RFen <= 1'b0; PSRen <= 1'b0;
 		AluOp <= 4'b0000; 
 		setZNL <= 1'b0;

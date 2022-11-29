@@ -70,7 +70,7 @@ module datapath #(parameter SIZE = 16) (
 	bram	RAM(
 		.clk(clk),
 		.we_a(MemW1en), .we_b(MemW2en),
-		.data_a(MemWrite1), .data_b(MemWrite2), 
+		.data_a(RFread1), .data_b(RFread1), 
 		.addr_a(MemAddr1), .addr_b(MemAddr2), 
 		.ex_inputs(switches),
 		
