@@ -2,7 +2,8 @@ module final_cpu(
 	input clk, reset,
 	input [9:0] switches,
 	output [9:0] leds,
-	output[23:0] rgb);
+	output[23:0] rgb,
+	output hSync, vSync, vgaBlank, vgaClk);
 	
 	//wire[15:0] instr;
 	wire RFen, PSRen, PCen, MemW1en, MemW2en, Movm, INSTRen, A1m, setZNL;
@@ -55,9 +56,10 @@ input clk, reset,
 	output reg [9:0] vCount,
 	output vgaClk
 	*/
-	wire hSync, vSync, bright;
+	wire bright;
 	wire[9:0] hCount, vCount;
-	wire vgaClk;
+	assign vgaBlank = 1'b1;
+	//wire vgaClk;
 	wire peopleCount;
 	assign peopleCount = 0;
 	vgaControl vc(.clk(clk), .clr(reset),
@@ -72,10 +74,11 @@ input clk, reset,
 	input [7:0] count,
 	output reg[23:0] rgb
 	*/
-	bitGen bg(.clk(vgaClk), .bright(bright),
+	bitGen bg(.clk(vgaClk), .bright(bright), .reset(reset),
 		.hCount(hCount), .vCount(vCount),
-		.count(peopleCount),
-		.rgb(rgb));
+		.count_addr(peopleCount),
+		.rgb(rgb), .memData(memData), .memAddr(memAddr)
+		);
 	
 
 	
