@@ -12,7 +12,7 @@
 *
 */	
 
-module alu #(parameter WIDTH = 16)
+module alu
 (	input clk, setZNL,
 	input 		[3:0] aluOp,
 	input     	[WIDTH-1:0] aluIn1, aluIn2,	// regarding pcOut as 16-bit	
@@ -22,6 +22,7 @@ module alu #(parameter WIDTH = 16)
 
 );
 
+parameter WIDTH = 16;
 parameter AND		=	4'b0000;
 parameter OR		=	4'b0001;
 parameter XOR 		= 	4'b0010;
@@ -31,8 +32,8 @@ parameter NOT 		= 	4'b0101;
 parameter SLL 		= 	4'b0110; 	// shift Left logical
 parameter SRL 		= 	4'b0111; 	// shift right logical
 
-wire [WIDTH:0] tmp;
-assign tmp =({1'b0,aluIn1} + {1'b0, aluIn2});
+
+
 reg cOut;
 
 //separate always block for figuring out flags

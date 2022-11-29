@@ -84,7 +84,7 @@ cond codes
 'LT' : LT,
 'UC' : UC
 */
-module controller #(parameter SIZE = 16) (
+module controller (
 	/* Inputs */
 	input clk, reset,
 	input[SIZE-1:0] instr,	// instruction bits
@@ -110,6 +110,7 @@ module controller #(parameter SIZE = 16) (
 	
 	/* State Name Parameters */
 	// allows for changing of state encodings
+	parameter SIZE = 16;
 	parameter FETCH		= 4'd0;
 	parameter DECODE	= 4'd1;
 	parameter REX		= 4'd2;

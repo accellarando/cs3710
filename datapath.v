@@ -72,8 +72,13 @@ module datapath #(parameter SIZE = 16) (
 	bram	RAM(
 		.clk(clk),
 		.we_a(MemW1en), .we_b(MemW2en),
+<<<<<<< HEAD
 		.data_a(RFread1), .data_b(MemWrite2), //.data_a(MemWrite1)
 		.addr_a(AddrOut), .addr_b(bitGen), //.addr_b(MemAddr2)
+=======
+		.data_a(RFread1), .data_b(RFread1), 
+		.addr_a(MemAddr1), .addr_b(MemAddr2), 
+>>>>>>> b13c2ff7121d23ee326ced38df6cc5df7082fd22
 		.ex_inputs(switches),
 		
 		.q_a(MemRead1), .q_b(VGAout), //.q_a(MemRead1), .q_b(MemRead2) ->VGAout q_b 

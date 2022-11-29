@@ -13,8 +13,8 @@ module bram
 	reg [DATA_WIDTH-1:0] ram[2**ADDR_WIDTH-1:0]; // possibly switch to 0:2**ADDR_WIDTH - 1
 	initial begin
 		$display("Loading memory...");
-		$readmemb("D:/3710/Project/ram_old.dat", ram); //change to correct path to .dat file
-		//$readmemb("/home/ella/Documents/School/CS3710/cpu/ram.dat",ram);
+		//$readmemb("D:/3710/Project/ram_old.dat", ram); //change to correct path to .dat file
+		$readmemb("/home/ella/Documents/School/CS3710/cpu/ram.dat",ram);
 		$display("Done.");
 	end
 
@@ -24,7 +24,7 @@ module bram
 		if (we_a) begin
 			if(addr_a[(ADDR_WIDTH-1):(ADDR_WIDTH-4)] == 4'hF) begin
 				//writing to external
-				//ex_outputs <= data_a; //this was yelling at us, idk dude
+				ex_outputs <= data_a; //this was yelling at us, idk dude
 				q_a <= ex_inputs;
 			end
 			else begin
@@ -46,7 +46,7 @@ module bram
 		if (we_b) begin
 			if(addr_b[(ADDR_WIDTH-1):(ADDR_WIDTH-4)] == 4'hF) begin
 				//writing to external
-				ex_outputs <= data_b;
+				//ex_outputs <= data_b;
 				q_b <= ex_inputs;
 			end
 			else begin
