@@ -18,10 +18,12 @@ module datapath #(parameter SIZE = 16) (
 	/* Temporary controller FSM: control signals*/
 	input MemW1en, MemW2en, RFen, PSRen, PCen, INSTRen,	// enable signals (BRAM, reg)
 	input Movm, A1m, setZNL,										// mux select signals (MoveMux, Alu1mux)
-	input[1:0] PCm, A2m, RWm,										// mux select signals (PCMux, Alu2mux, RWritemux)
+	input[1:0] PCm, MAm, A2m, RWm,								// mux select signals (PCMux, MemAddrMux, Alu2mux, RWritemux)
 	input[3:0] aluOp,
 	input[9:0] switches,												// simulate on board
+	input[(SIZE-1):0] bitGen,										// BRAM MemAddr2 input
 	
+	output[(SIZE-1):0] VGAout,										// BRAM MemRead2 output
 	output[(SIZE-1):0] instr,										// instruction bits at an address
 	output[1:0] flags1out,
 	output[2:0] flags2out,
@@ -39,7 +41,7 @@ module datapath #(parameter SIZE = 16) (
 	wire[(SIZE-1):0] MemWrite1, MemWrite2, MemRead1, MemRead2,
 						  MemAddr1, MemAddr2;								// BRAM
 	wire[(SIZE-1):0] A1MuxOut, A2MuxOut, aluOut, 					
-						  LuiMuxOut, MovMuxOut, PcMuxOut;				// control-signal mux
+						  LuiMuxOut, MovMuxOut, PcMuxOut, AddrOut;	// control-signal mux
 	wire[1:0] flags1;	
 	wire[2:0] flags2;
 	
@@ -70,11 +72,11 @@ module datapath #(parameter SIZE = 16) (
 	bram	RAM(
 		.clk(clk),
 		.we_a(MemW1en), .we_b(MemW2en),
-		.data_a(MemWrite1), .data_b(MemWrite2), 
-		.addr_a(MemAddr1), .addr_b(MemAddr2), 
+		.data_a(RFread1), .data_b(MemWrite2), //.data_a(MemWrite1)
+		.addr_a(AddrOut), .addr_b(bitGen), //.addr_b(MemAddr2)
 		.ex_inputs(switches),
 		
-		.q_a(MemRead1), .q_b(MemRead2), 
+		.q_a(MemRead1), .q_b(VGAout), //.q_a(MemRead1), .q_b(MemRead2) ->VGAout q_b 
 		.ex_outputs(leds)
 	);
 	
@@ -111,35 +113,43 @@ module datapath #(parameter SIZE = 16) (
 
 	/* Control-signal muxes */
 	// Program Counter mux
-	mux3 	PCmux(
+	mux3	PCmux(
 		.s(PCm),
 		.a(nextPC), .b(RFread2), .c(aluOut),
 		.out(PcMuxOut)
 	);
 	
+	// Memory Address mux
+	mux2	MemAddrMux(
+		.s(MAm),
+		.in1(MemAddr1),
+		.in2(RFread2),
+		.out(AddrOut)
+	);
+	
 	// Read-Write Data mux
-	mux4 RWritemux(
+	mux4	RWritemux(
 		.s(RWm),
-		.a(MemRead2), .b(nextPC), .c(MovMuxOut), .d(luiImmd),
+		.a(MemRead1), .b(nextPC), .c(MovMuxOut), .d(luiImmd),
 		.out(RFwrite)
 	);
 
 	// Move Data mux
-	mux2 	MovMux(
+	mux2	MovMux(
 		.s(Movm),
 		.in1(A2MuxOut), .in2(aluOut),
 		.out(MovMuxOut)
 	);
 	
 	// ALU 1 mux
-	mux2  Alu1Mux(
+	mux2	Alu1Mux(
 		.s(A1m),
 		.in1(RFread1),
 		.in2(MemAddr1),
 		.out(A1MuxOut)	// input to ALU
 	);
 	
-	// ALU 2 mux (
+	// ALU 2 mux
 	mux3 	Alu2Mux(
 		.s(A2m),
 		.a(RFread2), .b( {instr[3:0]} ), .c( seImmd ),
