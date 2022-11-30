@@ -26,8 +26,8 @@ module datapath #(parameter SIZE = 16) (
 	output[(SIZE-1):0] VGAout,										// BRAM MemRead2 output
 	output[(SIZE-1):0] instr,										// instruction bits at an address
 	output[1:0] flags1out,
-	output[2:0] flags2out,
-	output[9:0] leds													// simulate on board
+	output[2:0] flags2out
+	//output[9:0] leds													// simulate on board
 	
 	// (Assignment #2) outputs to test with temporary test FSM  
 	//output[SIZE-1:0] PC, AluOut,
@@ -74,10 +74,10 @@ module datapath #(parameter SIZE = 16) (
 		.we_a(MemW1en), .we_b(MemW2en),
 		.data_a(RFread1), .data_b(MemWrite2), //.data_a(MemWrite1)
 		.addr_a(AddrOut), .addr_b(bitGen), //.addr_b(MemAddr2)
-		.ex_inputs(switches),
+		//.ex_inputs(switches),
 		
-		.q_a(MemRead1), .q_b(VGAout), //.q_a(MemRead1), .q_b(MemRead2) ->VGAout q_b 
-		.ex_outputs(leds)
+		.q_a(MemRead1), .q_b(VGAout) //.q_a(MemRead1), .q_b(MemRead2) ->VGAout q_b 
+		//.ex_outputs(leds)
 	);
 	
 	// Register File

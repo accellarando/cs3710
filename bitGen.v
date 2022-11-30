@@ -55,10 +55,11 @@ module bitGen(
 					nextState <= FETCH_TEN;
 				else
 					nextState <= READ_PIX;
+			default: nextState <= FETCH_ONE;
 		endcase
 	end
 	
-	always@(*) begin
+	always@(*) begin //maybe posedge clk here
 		case(thisState)
 			FETCH_ONE: memAddr <= count_addr;
 			WRITE_ONE: digitOne <= memData;
@@ -83,38 +84,38 @@ module bitGen(
 				if(hCount >= HUN_START && hCount <= HUN_END) begin
 					//each time, we get 16 bytes back - that's 5 pixels worth, 
 						//if each pixel is 3 bits
-					pix_addr <= (GLYPHS_ADDR + digitHun<<10) //each sprite is 1024 words
-						+ (vCount-TOP)<<5 //get row
+					pix_addr <= (GLYPHS_ADDR + digitHun<<4'd10) //each sprite is 1024 words
+						+ (vCount-TOP)<<4'd5 //get row
 						+ (hCount-HUN_START); //get col
 						//this is probably broken. will need to test.
 					//figure out which pixel we're fetching, extend it to 8 bits, assign.
-					rgb <= {{3'd8{pixels[pixelCounter+2'd2]}},
-						 {{3'd8{pixels[pixelCounter+2'd1]}},
-							{3'd8{pixels[pixelCounter]}}}};
+					rgb <= {{4'd8{pixels[pixelCounter+2'd2]}},
+						 {{4'd8{pixels[pixelCounter+2'd1]}},
+							{4'd8{pixels[pixelCounter]}}}};
 				end
 				if(hCount >= TEN_START && hCount <= TEN_END) begin
 					//each time, we get 16 bytes back - that's 5 pixels worth, 
 						//if each pixel is 3 bits
-					pix_addr <= (GLYPHS_ADDR + digitTen<<10) //each sprite is 1024 words
-						+ (vCount-TOP)<<5 //get row
+					pix_addr <= (GLYPHS_ADDR + digitTen<<4'd10) //each sprite is 1024 words
+						+ (vCount-TOP)<<4'd5 //get row
 						+ (hCount-TEN_START); //get col
 						//this is probably broken. will need to test.
 					//figure out which pixel we're fetching, extend it to 8 bits, assign.
-					rgb <= {{3'd8{pixels[pixelCounter+2'd2]}},
-						{{{{3'd8{pixels[pixelCounter+2'd1]}},
-							{3'd8{pixels[pixelCounter]}}}}}};
+					rgb <= {{4'd8{pixels[pixelCounter+2'd2]}},
+						{{{{4'd8{pixels[pixelCounter+2'd1]}},
+							{4'd8{pixels[pixelCounter]}}}}}};
 				end
 				if(hCount >= ONE_START && hCount <= ONE_END) begin
 					//each time, we get 16 bytes back - that's 5 pixels worth, 
 						//if each pixel is 3 bits
-					pix_addr <= (GLYPHS_ADDR + digitOne<<10) //each sprite is 1024 words
-						+ (vCount-TOP)<<5 //get row
+					pix_addr <= (GLYPHS_ADDR + digitOne<<4'd10) //each sprite is 1024 words
+						+ (vCount-TOP)<<4'd5 //get row
 						+ (hCount-ONE_START); //get col
 						//this is probably broken. will need to test.
 					//figure out which pixel we're fetching, extend it to 8 bits, assign.
-					rgb <= {{3'd8{pixels[pixelCounter+2'd2]}},
-						{{{3'd8{pixels[pixelCounter+2'd1]}},
-							{3'd8{pixels[pixelCounter]}}}}};
+					rgb <= {{4'd8{pixels[pixelCounter+2'd2]}},
+						{{{4'd8{pixels[pixelCounter+2'd1]}},
+							{4'd8{pixels[pixelCounter]}}}}};
 				end
 			end
 			else

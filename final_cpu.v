@@ -5,7 +5,7 @@ module final_cpu(
 	output[23:0] rgb,
 	output hSync, vSync, vgaBlank, vgaClk);
 	
-	//wire[15:0] instr;
+	wire[15:0] instr;
 	wire RFen, PSRen, PCen, MemW1en, MemW2en, Movm, INSTRen, A1m, setZNL;
 	wire[3:0] AluOp;
 	wire[1:0] A2m, RWm, PCm;
@@ -13,6 +13,7 @@ module final_cpu(
 	wire[1:0] flags1out;
 	wire[2:0] flags2out;
 	
+	//assign leds = 10'b0;
 	/*
 input clk, reset,
 	input MemW1en, MemW2en, RFen, PSRen, PCen, INSTRen,	// enable signals (BRAM, reg)
@@ -34,8 +35,8 @@ input clk, reset,
 		.aluOp(AluOp),
 		.switches(switches),
 		.instr(instr),
-		.flags1out(flags1out), .flags2out(flags2out),
-		.leds(leds)
+		.flags1out(flags1out), .flags2out(flags2out)
+		//.leds(leds)
 	);
 	
 	controller cont(.clk(clk), .reset(reset),
@@ -62,11 +63,12 @@ input clk, reset,
 	//wire vgaClk;
 	wire peopleCount;
 	assign peopleCount = 0;
+	/*
 	vgaControl vc(.clk(clk), .clr(reset),
 		.hSync(hSync), .vSync(vSync), .bright(bright),
 		.hCount(hCount), .vCount(vCount),
 		.vgaClk(vgaClk));
-	
+	*/
 	/*
 	input clk, bright,
 	input [9:0] hCount,
@@ -74,11 +76,13 @@ input clk, reset,
 	input [7:0] count,
 	output reg[23:0] rgb
 	*/
+	/*
 	bitGen bg(.clk(vgaClk), .bright(bright), .reset(reset),
 		.hCount(hCount), .vCount(vCount),
 		.count_addr(peopleCount),
 		.rgb(rgb), .memData(memData), .memAddr(memAddr)
 		);
+		*/
 	
 
 	

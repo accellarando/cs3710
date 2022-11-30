@@ -396,7 +396,7 @@ module controller (
 			RWB: begin
 				RFen <= 1'b1;
 				PCen <= 1'b1;
-				PSen <= 1'b1;
+				PSRen <= 1'b1;
 				case(opExt)
 					AND:  AluOp <= ALU_AND;
 					OR:   AluOp <= ALU_OR;

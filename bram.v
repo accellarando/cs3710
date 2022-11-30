@@ -6,7 +6,9 @@ module bram
 (
 	input [(DATA_WIDTH-1):0] data_a, data_b, addr_a, addr_b,
 	input clk, we_a, we_b,
+	
 	output reg [(DATA_WIDTH-1):0] q_a, q_b
+	//output reg[15:0] ex_outputs
 	// removed ex_outputs and ex_inputs
 );
 
