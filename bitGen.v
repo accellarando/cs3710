@@ -1,23 +1,24 @@
 module bitGen(
-	input clk, bright,
+	input clk, bright, reset,
 	input [9:0] hCount,
 	input [9:0] vCount,
 	input [15:0] count_addr,
 	input [15:0] memData,
-	output[15:0] memAddr,
+	output reg[15:0] memAddr,
 	output reg[23:0] rgb);
 	
 	parameter BG_COLOR = 24'h111111;
 	parameter GLYPHS_ADDR = 16'hFFFF; //change this based on memory map!
 	
-	parameter FETCH_ONE = 3'b000;
-	parameter FETCH_TEN = 3'b001;
-	parameter FETCH_HUN = 3'b010;
-	parameter WRITE_ONE = 3'b011;
-	parameter WRITE_TEN = 3'b100;
-	parameter WRITE_HUN = 3'b101;
-	parameter FETCH_PIX = 3'b110;
-	parameter WRITE_PIX = 3'b111;
+	parameter FETCH_ONE = 4'b000;
+	parameter FETCH_TEN = 4'b001;
+	parameter FETCH_HUN = 4'b010;
+	parameter WRITE_ONE = 4'b011;
+	parameter WRITE_TEN = 4'b100;
+	parameter WRITE_HUN = 4'b101;
+	parameter FETCH_PIX = 4'b110;
+	parameter WRITE_PIX = 4'b111;
+	parameter READ_PIX = 4'b1000;
 	
 	parameter TOP = 160;
 	parameter BOTTOM = 320;
@@ -28,13 +29,21 @@ module bitGen(
 	parameter ONE_START = 380;
 	parameter ONE_END = 540;
 	
+	reg[3:0] thisState, nextState;
+	reg[2:0] pixelCounter;
+	reg[3:0] digitOne, digitTen, digitHun;
+	reg[15:0] pix_addr;
+	reg[15:0] pixels;
+	
 	always@(posedge clk) begin
-		if(!reset) 
-			nextState = FETCH_ONE;
+//		if(!reset) 
+//			nextState = FETCH_ONE;
 		thisState <= nextState;
 	end
 	
-	always@(*)
+	always@(*) begin
+	   if(!reset) nextState <= FETCH_ONE;
+		else 
 		case(thisState)
 			FETCH_ONE: nextState <= FETCH_TEN;
 			FETCH_TEN: nextState <= FETCH_HUN;
@@ -79,9 +88,9 @@ module bitGen(
 						+ (hCount-HUN_START); //get col
 						//this is probably broken. will need to test.
 					//figure out which pixel we're fetching, extend it to 8 bits, assign.
-					rgb <= {3'd8{pixels[pixelCounter+2'd2]},
-						{{3'd8{pixels[pixelCounter+2'd1]},
-							{3'd8{pixels[pixelCounter]}}}}};
+					rgb <= {{3'd8{pixels[pixelCounter+2'd2]}},
+						 {{3'd8{pixels[pixelCounter+2'd1]}},
+							{3'd8{pixels[pixelCounter]}}}};
 				end
 				if(hCount >= TEN_START && hCount <= TEN_END) begin
 					//each time, we get 16 bytes back - that's 5 pixels worth, 
@@ -91,9 +100,9 @@ module bitGen(
 						+ (hCount-TEN_START); //get col
 						//this is probably broken. will need to test.
 					//figure out which pixel we're fetching, extend it to 8 bits, assign.
-					rgb <= {3'd8{pixels[pixelCounter+2'd2]},
-						{{3'd8{pixels[pixelCounter+2'd1]},
-							{3'd8{pixels[pixelCounter]}}}}};
+					rgb <= {{3'd8{pixels[pixelCounter+2'd2]}},
+						{{{{3'd8{pixels[pixelCounter+2'd1]}},
+							{3'd8{pixels[pixelCounter]}}}}}};
 				end
 				if(hCount >= ONE_START && hCount <= ONE_END) begin
 					//each time, we get 16 bytes back - that's 5 pixels worth, 
@@ -103,13 +112,13 @@ module bitGen(
 						+ (hCount-ONE_START); //get col
 						//this is probably broken. will need to test.
 					//figure out which pixel we're fetching, extend it to 8 bits, assign.
-					rgb <= {3'd8{pixels[pixelCounter+2'd2]},
-						{{3'd8{pixels[pixelCounter+2'd1]},
+					rgb <= {{3'd8{pixels[pixelCounter+2'd2]}},
+						{{{3'd8{pixels[pixelCounter+2'd1]}},
 							{3'd8{pixels[pixelCounter]}}}}};
 				end
 			end
 			else
-				rgb <= BG;
+				rgb <= BG_COLOR;
 		end
 	end
 endmodule 
