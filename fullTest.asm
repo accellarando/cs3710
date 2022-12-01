@@ -54,10 +54,32 @@ XORI $6 %r3
 MOV %r5 %r4
 MOVI $6 %r4
 # Expected register contents:
-# %r5 = 6
+# %r4 = 6
 # %r5 = 12
 
 # LSH and LSHI - tbd
-LSH 
+LSH %r3 %r5
+LSHI $1 %r4
 # Expected register contents:
-# $r4 = 24
+# $r5 = 24
+# $r4 = 12 
+
+# LUI - tbd
+LUI $4 %r6
+# Expected register contents:
+# %r6 = 1024
+
+# LOAD - tbd
+# Memory cell 1024 is init'd with value -1 - address is in %r6
+LOAD %r7 %r6
+# Expected register contents:
+# %r7 = -1
+
+# STORE - tbd
+ADDI $1 %r6
+STOR %r7 %r6
+# Expected MEMORY contents:
+# M[1025] = -1
+
+
+# Bcond, Jcond, JAL in separate test file.
