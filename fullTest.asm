@@ -6,19 +6,21 @@ ADD %r1 %r2
 # %r1 = 1
 # %r2 = 3
 
-# SUB and SUBI - tbd
-SUBI $1 %r2
+# SUB and SUBI - PASS
+SUBI $1 %r2 
 SUB %r2 %r1
 # Expected register contents:
 # %r1 = -1
 # %r2 = 2
 
-# CMP - tbd
+# Issues with compare: still setting AluOut
+# but not setting flags...
+# CMP - FAIL
 CMP %r1 %r2
 # Expected PSR flags to be set:
 # L
 
-# CMPI - tbd
+# CMPI - FAIL
 CMPI $0 %r3
 # Expected PSR flags to be set:
 # Z

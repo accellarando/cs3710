@@ -27,7 +27,7 @@ module bram
 
 	// Port A - for the cpu itself.
 	// All memory mapped IO happens here.
-	always @ (posedge clk) begin
+	always @ (negedge clk) begin
 		if(addr_a >= 16'hFFFC) begin
 			//IO space.
 			case(addr_a)
@@ -56,7 +56,7 @@ module bram
 	end 
 
 	// Port B 
-	always @ (posedge clk) begin
+	always @ (negedge clk) begin
 		if (we_b) begin
 			ram[addr_b] <= data_b;
 			q_b <= data_b;

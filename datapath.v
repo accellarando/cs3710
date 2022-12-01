@@ -87,7 +87,7 @@ module datapath #(parameter SIZE = 16) (
 	registerFile	regFile(
 		.clk(clk), .reset(reset),
 		.writeEn(RFen), .writeData(RFwrite),
-		.srcAddr(instr[11:8]), .dstAddr(instr[3:0]),
+		.srcAddr(instr[3:0]), .dstAddr(instr[11:8]),
 		
 		.readData1(RFread1), .readData2(RFread2)
 	

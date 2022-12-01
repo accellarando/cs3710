@@ -41,7 +41,7 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 	/* Assigning */ 
 	integer i;
 	
-	always @(posedge clk) begin
+	always @(negedge clk) begin
 		if(!reset) begin
 			// ?? all 16 registers are set to 16'b0
 			for(i = 0; i < SIZE; i = i + 1) begin 
