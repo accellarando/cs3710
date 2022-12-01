@@ -404,9 +404,11 @@ module controller (
 				AluOp <= ALU_ADD;
 			end
 			RWB: begin
-				RFen <= 1'b1;
+				if(opExt != CMP)
+					RFen <= 1'b1;
 				PCen <= 1'b1;
 				PSRen <= 1'b1;
+				
 				MAm <= 1'b0;
 				case(opExt)
 					AND:  AluOp <= ALU_AND;
@@ -442,8 +444,8 @@ module controller (
 			end
 			IWB: begin
 				MAm <= 1'b0;
-				RFen <= 1'b1;
-				//PCen <= 1'b1;
+				if(op != CMP)
+					RFen <= 1'b1;
 
 				case(op)
 					AND:  AluOp <= ALU_AND;
