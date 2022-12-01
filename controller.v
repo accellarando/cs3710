@@ -269,10 +269,11 @@ module controller (
 			end
 			DECODE: begin
 				MAm <= 1'b0;
+				INSTRen <= 1'b1;
 				//? 
 			end
 			REX: begin
-				RFen <= 1'b1;
+				//RFen <= 1'b1;
 				//PCen <= 1'b1;
 				PSRen <= 1'b1;
 				//figure out aluop
@@ -310,7 +311,7 @@ module controller (
 				Movm <= (opExt == MOV) ? 1'b0 : 1'b1;
 			end
 			IEX: begin
-				RFen <= 1'b1;
+				//RFen <= 1'b1;
 				//PCen <= 1'b1;
 				case(op)
 					AND:  AluOp <= ALU_AND;
@@ -330,7 +331,7 @@ module controller (
 				//set rwrite mux to movm out or luiImmd
 				RWm <= (op == LUI) ? 2'd3 : 2'd2;
 
-				//set alu2mux to immediate
+				//set alu2mux to se-immediate
 				A2m <= 2'd2;
 
 				//set alu1mux to read1
@@ -347,7 +348,7 @@ module controller (
 				PCm <= 2'b0;
 			end
 			SEX: begin
-				MemW2en <= 1'b1;
+				//MemW2en <= 1'b1;
 			end
 			JEX: begin
 				//check flags, decide to do jump or not
@@ -371,7 +372,7 @@ module controller (
 				endcase
 				if(opExt == E_JAL) begin
 					RWm <= 2'b1;
-					RFen <= 1'b1;
+					//RFen <= 1'b1;
 				end
 				//PCen <= 1'b1;
 			end
@@ -440,9 +441,9 @@ module controller (
 				Movm <= (opExt == MOV) ? 1'b0 : 1'b1;
 			end
 			IWB: begin
-MAm <= 1'b0;
+				MAm <= 1'b0;
 				RFen <= 1'b1;
-				PCen <= 1'b1;
+				//PCen <= 1'b1;
 
 				case(op)
 					AND:  AluOp <= ALU_AND;
