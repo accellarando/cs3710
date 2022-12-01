@@ -2,14 +2,21 @@
 
 module final_cpu_tb();
 	reg clk, reset;
+	wire[23:0] rgb;
+	wire hSync, vSync, vgaBlank, vgaClk;
+	reg[17:0] gpi;
+	wire[17:0] gpo;
+	reg[3:0] buttons;
 	reg[9:0] switches;
 	wire[9:0] leds;
 	
 	final_cpu uut (
 		clk,
 		reset,
-		switches,
-		leds
+		rgb,
+		hSync, vSync, vgaBlank, vgaClk,
+		gpi, gpo,
+		buttons, switches, leds
 	);
 	
 	initial begin
@@ -19,6 +26,12 @@ module final_cpu_tb();
 		reset		<= 1'b0;
 		#100;
 		reset		<= 1'b1;
+		#100;
+		switches <= 10'b1;
+		#200;
+		switches <= 10'b0;
+		#200;
+		switches <= 10'b1;
 	end
 	
 	

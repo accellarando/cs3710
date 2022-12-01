@@ -87,7 +87,7 @@ cond codes
 module controller (
 	/* Inputs */
 	input clk, reset,
-	input[SIZE-1:0] instr,	// instruction bits
+	input[15:0] instr,	// instruction bits
 	//input zero,					// program counter enable -> check minimips
 	input[1:0] flag1, 
 	input[2:0] flag2,
@@ -98,7 +98,7 @@ module controller (
 	output reg PCen, setZNL,				// PC controller
 	output reg[1:0] PCm, 					// PC controller
 	output reg MemW1en, MemW2en,			// Memory (BRAM) controller
-	output reg Movm, A1m,					// other muxes
+	output reg Movm, A1m, MAm,					// other muxes
 	output reg[1:0] A2m, RWm 				// other muxes
 	); 
 	
@@ -122,7 +122,7 @@ module controller (
 	parameter RWB		= 4'd8;
 	parameter IWB		= 4'd9;
 	parameter LWB		= 4'd10;
-	parameter JWB		= 4'd12;
+	parameter JWB		= 4'd11;
 	parameter SWB		= 4'd12;
 	parameter BWB		= 4'd13;
 
@@ -216,7 +216,12 @@ module controller (
 
 					LUI:	nextState <= IEX;
 					//L_S:	nextState <= opExt[2] ? SEX : LEX;
-					
+					LJS: case(opExt)
+						E_LOAD: nextState <= LEX;
+						E_STORE: nextState <= SEX;
+						default: nextState <= JEX;
+					endcase
+						
 					B:		nextState <= BEX;
 					//J:		nextState <= JEX;
 					default: nextState <= FETCH; //should never reach
@@ -245,6 +250,7 @@ module controller (
 	always @(*) begin
 		// set all outputs to zero
 		INSTRen <= 1'b0;
+		MAm <= 1'b1;
 		RFen <= 1'b0; PSRen <= 1'b0;
 		AluOp <= 4'b0000; 
 		setZNL <= 1'b0;
@@ -259,13 +265,15 @@ module controller (
 		case(state)
 			FETCH: begin
 				INSTRen <= 1'b1;
+				MAm <= 1'b0;
 			end
 			DECODE: begin
+				MAm <= 1'b0;
 				//? 
 			end
 			REX: begin
 				RFen <= 1'b1;
-				PCen <= 1'b1;
+				//PCen <= 1'b1;
 				PSRen <= 1'b1;
 				//figure out aluop
 				//it lives in the extended opcode
@@ -303,7 +311,7 @@ module controller (
 			end
 			IEX: begin
 				RFen <= 1'b1;
-				PCen <= 1'b1;
+				//PCen <= 1'b1;
 				case(op)
 					AND:  AluOp <= ALU_AND;
 					OR:   AluOp <= ALU_OR;
@@ -335,7 +343,7 @@ module controller (
 				Movm <= (op == MOV) ? 1'b0: 1'b1;
 			end
 			LEX: begin
-				RWm <= 2'b1;
+				RWm <= 2'b0;
 				PCm <= 2'b0;
 			end
 			SEX: begin
@@ -365,10 +373,10 @@ module controller (
 					RWm <= 2'b1;
 					RFen <= 1'b1;
 				end
-				PCen <= 1'b1;
+				//PCen <= 1'b1;
 			end
 			BEX: begin
-				PCen <= 1'b1;
+				//PCen <= 1'b1;
 				case(instr[11:8])
 					EQ: PCm <= zero ? 2'd2 : 2'b0;
 					NE: PCm <= ~zero ? 2'd2 : 2'b0;
@@ -398,6 +406,7 @@ module controller (
 				RFen <= 1'b1;
 				PCen <= 1'b1;
 				PSRen <= 1'b1;
+				MAm <= 1'b0;
 				case(opExt)
 					AND:  AluOp <= ALU_AND;
 					OR:   AluOp <= ALU_OR;
@@ -425,12 +434,13 @@ module controller (
 				
 				//get PC ready
 				PCm <= 2'b0;
+				//PCen <= 1'b1;
 
 				//set mov mux
 				Movm <= (opExt == MOV) ? 1'b0 : 1'b1;
 			end
 			IWB: begin
-
+MAm <= 1'b0;
 				RFen <= 1'b1;
 				PCen <= 1'b1;
 
@@ -460,6 +470,7 @@ module controller (
 
 				//prepare the pc
 				PCm <= 2'b0;
+				PCen <= 1'b1;
 
 				//set mov mux
 				Movm <= (op == MOV) ? 1'b0: 1'b1;
@@ -469,9 +480,12 @@ module controller (
 				PCen <= 1'b1;
 				RWm <= 2'b1;
 				PCm <= 2'b0;
+				MAm <= 1'b0;
 			end
 			SWB: begin
 				MemW2en <= 1'b1;
+				PCen <= 1'b1;
+				MAm <= 1'b0;
 			end
 
 			JWB: begin
@@ -498,11 +512,13 @@ module controller (
 					RWm <= 2'b1;
 				end
 				PCen <= 1'b1;
+				MAm <= 1'b0;
 				if(opExt == E_JAL)
 					RFen <= 1'b1;
 			end
 			BWB: begin
 				PCen <= 1'b1;
+				MAm <= 1'b0;
 				case(instr[11:8])
 					EQ: PCm <= zero ? 2'd2 : 2'b0;
 					NE: PCm <= ~zero ? 2'd2 : 2'b0;

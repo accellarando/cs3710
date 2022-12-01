@@ -39,11 +39,12 @@ input clk, reset,
 	output[9:0] leds				
 	*/
     wire[15:0] memAddr, memData;
+	 wire MAm;
 	datapath dp(.clk(clk), .reset(reset),
 		.MemW1en(MemW1en), .MemW2en(MemW2en), .RFen(RFen), 
 		.PSRen(PSRen), .PCen(PCen), .INSTRen(INSTRen),
 		.Movm(Movm), .A1m(A1m), .setZNL(setZNL),
-		.PCm(PCm), .A2m(A2m), .RWm(RWm),
+		.PCm(PCm), .A2m(A2m), .RWm(RWm), .MAm(MAm),
 		.aluOp(AluOp),
 		.instr(instr),
 		.flags1out(flags1out), .flags2out(flags2out),
@@ -63,7 +64,7 @@ input clk, reset,
 		.AluOp(AluOp),
 		.PCm(PCm), .setZNL(setZNL),
 		.MemW1en(MemW1en), .MemW2en(MemW2en),
-		.Movm(Movm), .A1m(A1m), .A2m(A2m), .RWm(RWm)
+		.Movm(Movm), .A1m(A1m), .A2m(A2m), .RWm(RWm), .MAm(MAm)
 	);
 	
 
@@ -83,12 +84,14 @@ input clk, reset,
 	input [7:0] count,
 	output reg[23:0] rgb
 	*/
+	/*
 	bitGen bg(.clk(clk), .bright(bright), .reset(reset),
 		.hCount(hCount), .vCount(vCount),
 		.rgb(rgb), .memData(memData), .memAddr(memAddr),
 		.glyphs(GLYPHS_START_ADDR),
 		.count_addr(PEOPLE_COUNT_ADDR)
 	);
+	*/
 	
 
 	

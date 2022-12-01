@@ -37,6 +37,7 @@
 # -------------------------------------------------------------------------- #
 
 
+set_global_assignment -name NUM_PARALLEL_PROCESSORS 4
 set_global_assignment -name FAMILY "Cyclone V"
 set_global_assignment -name DEVICE 5CSEMA5F31C6
 set_global_assignment -name TOP_LEVEL_ENTITY final_cpu
@@ -93,7 +94,7 @@ set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -entity controller -se
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -entity controller -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -entity controller -section_id Top
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -entity controller -section_id Top
-set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_NETLIST_TYPE POST_FIT -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 set_global_assignment -name SDC_FILE clocks.sdc
@@ -151,4 +152,51 @@ set_location_assignment PIN_C13 -to rgb[2]
 set_location_assignment PIN_A13 -to rgb[1]
 set_location_assignment PIN_J14 -to rgb[0]
 
+set_location_assignment PIN_A11 -to vgaClk
+set_location_assignment PIN_F10 -to vgaBlank
+set_location_assignment PIN_D11 -to vSync
+set_location_assignment PIN_B11 -to hSync
+set_location_assignment PIN_AA14 -to buttons[0]
+set_location_assignment PIN_AA15 -to buttons[1]
+set_location_assignment PIN_W15 -to buttons[2]
+set_location_assignment PIN_Y17 -to GPO[0]
+set_location_assignment PIN_Y18 -to GPO[1]
+set_location_assignment PIN_AK18 -to GPO[2]
+set_location_assignment PIN_AJ19 -to GPO[3]
+set_location_assignment PIN_AJ16 -to GPO[4]
+set_location_assignment PIN_AH17 -to GPO[5]
+set_location_assignment PIN_AE16 -to GPO[6]
+set_location_assignment PIN_AG17 -to GPO[7]
+set_location_assignment PIN_AA19 -to GPO[8]
+set_location_assignment PIN_AC20 -to GPO[9]
+set_location_assignment PIN_AJ20 -to GPO[10]
+set_location_assignment PIN_AK21 -to GPO[11]
+set_location_assignment PIN_AD20 -to GPO[12]
+set_location_assignment PIN_AE19 -to GPO[13]
+set_location_assignment PIN_AF21 -to GPO[14]
+set_location_assignment PIN_AG21 -to GPO[15]
+set_location_assignment PIN_AG20 -to GPO[16]
+set_location_assignment PIN_AJ21 -to GPO[17]
+set_location_assignment PIN_AC18 -to GPI[0]
+set_location_assignment PIN_AD17 -to GPI[1]
+set_location_assignment PIN_AK16 -to GPI[2]
+set_location_assignment PIN_AK19 -to GPI[3]
+set_location_assignment PIN_AJ17 -to GPI[4]
+set_location_assignment PIN_AH18 -to GPI[5]
+set_location_assignment PIN_AG16 -to GPI[6]
+set_location_assignment PIN_AF16 -to GPI[7]
+set_location_assignment PIN_AA18 -to GPI[8]
+set_location_assignment PIN_AE17 -to GPI[9]
+set_location_assignment PIN_AH19 -to GPI[10]
+set_location_assignment PIN_AH20 -to GPI[11]
+set_location_assignment PIN_AD19 -to GPI[12]
+set_location_assignment PIN_AE18 -to GPI[13]
+set_location_assignment PIN_AF20 -to GPI[14]
+set_location_assignment PIN_AF19 -to GPI[15]
+set_location_assignment PIN_AF18 -to GPI[16]
+set_location_assignment PIN_AG18 -to GPI[17]
+
+set_global_assignment -name ENABLE_SIGNALTAP ON
+set_global_assignment -name USE_SIGNALTAP_FILE output_files/stp1.stp
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+set_global_assignment -name SLD_FILE db/stp1_auto_stripped.stp

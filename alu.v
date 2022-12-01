@@ -15,8 +15,8 @@
 module alu
 (	input clk, setZNL,
 	input 		[3:0] aluOp,
-	input     	[WIDTH-1:0] aluIn1, aluIn2,	// regarding pcOut as 16-bit	
-	output reg 	[WIDTH-1:0] aluOut, 
+	input     	[15:0] aluIn1, aluIn2,	// regarding pcOut as 16-bit	
+	output reg 	[15:0] aluOut, 
 	output reg	[1:0]cond_group1,	// FC bits
 	output reg	[2:0] cond_group2
 
