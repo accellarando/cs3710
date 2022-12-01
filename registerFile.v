@@ -30,9 +30,9 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 	$display("Loading Register File...");
 	
 	/* ! CHANGE TO YOUR LOCAL PATH ! */
-	//$readmemb("D:/3710/Project/cs3710/reg.dat", regFile);
+	$readmemb("D:/3710/Project/cs3710/reg.dat", regFile);
 	//$readmemb("C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/reg.dat", regFile);
-	$readmemb("/home/ella/Documents/School/CS3710/cpu/reg.dat", regFile);
+	//$readmemb("/home/ella/Documents/School/CS3710/cpu/reg.dat", regFile);
 	
 	$display("Done with loading Register File\n"); 
 	end
