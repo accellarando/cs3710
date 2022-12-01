@@ -20,19 +20,20 @@ module datapath #(parameter SIZE = 16) (
 	input Movm, A1m, setZNL,										// mux select signals (MoveMux, Alu1mux)
 	input[1:0] PCm, MAm, A2m, RWm,								// mux select signals (PCMux, MemAddrMux, Alu2mux, RWritemux)
 	input[3:0] aluOp,
-	input[9:0] switches,												// simulate on board
-	input[(SIZE-1):0] bitGen,										// BRAM MemAddr2 input
+	input[(SIZE-1):0] memAddrB,										// BRAM MemAddr2 input
 	
-	output[(SIZE-1):0] VGAout,										// BRAM MemRead2 output
+	output[(SIZE-1):0] memDataB,										// BRAM MemRead2 output
 	output[(SIZE-1):0] instr,										// instruction bits at an address
 	output[1:0] flags1out,
-	output[2:0] flags2out
-	//output[9:0] leds													// simulate on board
-	
-	// (Assignment #2) outputs to test with temporary test FSM  
-	//output[SIZE-1:0] PC, AluOut,
-	//output[SIZE-1:0] RFwrite, RFread1, RFread2,						// register file data input and outputs
-	//output[SIZE-1:0] MemWrite1, MemWrite2, MemRead1, MemRead2,	// bram memory access data input and output  
+	output[2:0] flags2out,
+
+	input[17:0] gpi,
+	output[17:0] gpo,
+
+	input[3:0] buttons,
+	input[9:0] switches,
+
+	output[9:0] leds
 	);
 
 	/* Instantiate internal nets */
@@ -73,11 +74,13 @@ module datapath #(parameter SIZE = 16) (
 		.clk(clk),
 		.we_a(MemW1en), .we_b(MemW2en),
 		.data_a(RFread1), .data_b(MemWrite2), //.data_a(MemWrite1)
-		.addr_a(AddrOut), .addr_b(bitGen), //.addr_b(MemAddr2)
-		//.ex_inputs(switches),
-		
-		.q_a(MemRead1), .q_b(VGAout) //.q_a(MemRead1), .q_b(MemRead2) ->VGAout q_b 
-		//.ex_outputs(leds)
+		.addr_a(AddrOut), .addr_b(memAddrB), //.addr_b(MemAddr2)
+		.q_a(MemRead1), .q_b(memDataB), //.q_a(MemRead1), .q_b(MemRead2) ->VGAout q_b 
+
+		//Memory mapped IO:
+		.gpi(gpi), .gpo(gpo),
+		.buttons(buttons), .switches(switches),
+		.leds(leds)
 	);
 	
 	// Register File

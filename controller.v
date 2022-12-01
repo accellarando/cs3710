@@ -142,13 +142,13 @@ module controller (
 	
 	parameter LUI		= 4'b1111;
 	
-	parameter L_S		= 4'b0100;
+	parameter LJS		= 4'b0100;
 	parameter E_LOAD	= 4'b0000;
 	parameter E_STORE	= 4'b0100;
 	
 	parameter B			= 4'b1100;
 	
-	parameter J			= 4'b0100;
+	//parameter J			= 4'b0100;
 	parameter E_J		= 4'b1100;
 	parameter E_JAL		= 4'b1000;
 	
@@ -215,9 +215,10 @@ module controller (
 					LSH:	nextState <= opExt[2] ? REX : IEX;
 
 					LUI:	nextState <= IEX;
-					L_S:	nextState <= opExt[2] ? SEX : LEX;
+					//L_S:	nextState <= opExt[2] ? SEX : LEX;
+					
 					B:		nextState <= BEX;
-					J:		nextState <= JEX;
+					//J:		nextState <= JEX;
 					default: nextState <= FETCH; //should never reach
 				endcase
 			REX:	nextState <= RWB;

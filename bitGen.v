@@ -2,13 +2,13 @@ module bitGen(
 	input clk, bright, reset,
 	input [9:0] hCount,
 	input [9:0] vCount,
-	input [15:0] count_addr,
 	input [15:0] memData,
+	input [15:0] glyphs,
+	input [15:0] count_addr,
 	output reg[15:0] memAddr,
 	output reg[23:0] rgb);
 	
 	parameter BG_COLOR = 24'h111111;
-	parameter GLYPHS_ADDR = 16'hFFFF; //change this based on memory map!
 	
 	parameter FETCH_ONE = 4'b000;
 	parameter FETCH_TEN = 4'b001;
@@ -84,7 +84,7 @@ module bitGen(
 				if(hCount >= HUN_START && hCount <= HUN_END) begin
 					//each time, we get 16 bytes back - that's 5 pixels worth, 
 						//if each pixel is 3 bits
-					pix_addr <= (GLYPHS_ADDR + digitHun<<4'd10) //each sprite is 1024 words
+					pix_addr <= (glyphs + digitHun<<4'd10) //each sprite is 1024 words
 						+ (vCount-TOP)<<4'd5 //get row
 						+ (hCount-HUN_START); //get col
 						//this is probably broken. will need to test.
@@ -96,7 +96,7 @@ module bitGen(
 				if(hCount >= TEN_START && hCount <= TEN_END) begin
 					//each time, we get 16 bytes back - that's 5 pixels worth, 
 						//if each pixel is 3 bits
-					pix_addr <= (GLYPHS_ADDR + digitTen<<4'd10) //each sprite is 1024 words
+					pix_addr <= (glyphs + digitTen<<4'd10) //each sprite is 1024 words
 						+ (vCount-TOP)<<4'd5 //get row
 						+ (hCount-TEN_START); //get col
 						//this is probably broken. will need to test.
@@ -108,7 +108,7 @@ module bitGen(
 				if(hCount >= ONE_START && hCount <= ONE_END) begin
 					//each time, we get 16 bytes back - that's 5 pixels worth, 
 						//if each pixel is 3 bits
-					pix_addr <= (GLYPHS_ADDR + digitOne<<4'd10) //each sprite is 1024 words
+					pix_addr <= (glyphs + digitOne<<4'd10) //each sprite is 1024 words
 						+ (vCount-TOP)<<4'd5 //get row
 						+ (hCount-ONE_START); //get col
 						//this is probably broken. will need to test.

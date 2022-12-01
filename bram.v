@@ -7,9 +7,13 @@ module bram
 	input [(DATA_WIDTH-1):0] data_a, data_b, addr_a, addr_b,
 	input clk, we_a, we_b,
 	
-	output reg [(DATA_WIDTH-1):0] q_a, q_b
-	//output reg[15:0] ex_outputs
-	// removed ex_outputs and ex_inputs
+	output reg [(DATA_WIDTH-1):0] q_a, q_b,
+
+	input [17:0] gpi, 
+	output reg[17:0] gpo,
+	input[3:0] buttons,
+	input[9:0] switches,
+	output reg[9:0] leds
 );
 
 	// Declare the RAM variable
@@ -21,77 +25,44 @@ module bram
 		$display("Done.");
 	end
 
-	
-	
-	
-	// ** UPDATE: If not working, only thing would be an initial begin block to initialize
-	//		BRAM to all zeros or with initial values. ***
-	
-	
-	
-	
-	
-	
-	// *** BRAM problem: in always block below: a if, else, else statement. Logic never seen.
-	
-	
-	// Port A 
-	always @ (posedge clk)
-	begin
-		if (we_a) begin
-		// removed if statement:  if(addr_a[(ADDR_WIDTH-1):(ADDR_WIDTH-4)] == 4'hF) begin
-
-			//writing to external
-			ram[addr_a] <= data_a; //this was yelling at us, idk dude
-			q_a <= data_a;
+	// Port A - for the cpu itself.
+	// All memory mapped IO happens here.
+	always @ (posedge clk) begin
+		if(addr_a >= 16'hFFFC) begin
+			//IO space.
+			case(addr_a)
+				16'hFFFF: begin
+					if(we_a) 
+						gpo[17:2] <= data_a;
+					q_a <= gpi[17:2];
+				end
+				16'hFFFE: begin
+					if(we_a)
+						gpo[1:0] <= data_a[15:14];
+					q_a[15:14] <= gpi[1:0];
+				end
+				16'hFFFD: q_a[15:12] <= buttons;
+				16'hFFFC: begin
+					if(we_a)
+						leds <= data_a[15:6];
+					q_a[15:6] <= switches;
+				end
+				default: ; //is that allowed lolll?
+			endcase
 		end
-		else begin
-				q_a <= ram[addr_a];
-		end
-//		else begin
-//			//// removed if statement:  if(addr_a[(ADDR_WIDTH-1):(ADDR_WIDTH-4)] == 4'hF) begin
-//			if(addr_a[(ADDR_WIDTH-1):(ADDR_WIDTH-4)] == 4'hF)
-//				q_a <= ex_inputs;
-//			else
-//				q_a <= ram[addr_a];
-//		end 
+		if (we_a)
+			ram[addr_a] <= data_a; 
+		q_a <= ram[addr_a];
 	end 
 
 	// Port B 
-	always @ (posedge clk)
-	begin
-		if (we_b) begin
-//			if(addr_b[(ADDR_WIDTH-1):(ADDR_WIDTH-4)] == 4'hF) begin
-				//writing to external
-				//ex_outputs <= data_b;
-//				q_b <= ex_inputs;
-//			end
-//			else begin
-				ram[addr_b] <= data_b;
-				q_b <= data_b;
-//			end
-		end
-		else begin
-//			if(addr_b[(ADDR_WIDTH-1):(ADDR_WIDTH-4)] == 4'hF)
-//				q_b <= ex_inputs;
-//			else
-				q_b <= ram[addr_b];
-		end 
-	end 
-	
-	
-	
-	/*
-	always @ (posedge clk)
-	begin
+	always @ (posedge clk) begin
 		if (we_b) begin
 			ram[addr_b] <= data_b;
 			q_b <= data_b;
 		end
-		else begin
+		else 
 			q_b <= ram[addr_b];
-		end 
-	end
-	*/
+	end 
 
 endmodule
