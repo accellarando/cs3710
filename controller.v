@@ -346,9 +346,11 @@ module controller (
 			LEX: begin
 				RWm <= 2'b0;
 				PCm <= 2'b0;
+				MAm <= 1'b1;
 			end
 			SEX: begin
 				//MemW2en <= 1'b1;
+				MAm <= 1'b1;
 			end
 			JEX: begin
 				//check flags, decide to do jump or not
@@ -481,14 +483,14 @@ module controller (
 			LWB: begin
 				RFen <= 1'b1;
 				PCen <= 1'b1;
-				RWm <= 2'b1;
+				RWm <= 2'b0;
 				PCm <= 2'b0;
-				MAm <= 1'b0;
+				MAm <= 1'b1;
 			end
 			SWB: begin
-				MemW2en <= 1'b1;
+				MemW1en <= 1'b1;
 				PCen <= 1'b1;
-				MAm <= 1'b0;
+				MAm <= 1'b1;
 			end
 
 			JWB: begin

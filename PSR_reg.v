@@ -8,7 +8,7 @@ module PSR_reg
 	);
 
 	always @(posedge clk) begin
-		if(reset) begin
+		if(!reset) begin
 			final_group1 <= 2'b00;
 			final_group2 <= 3'b000;
 		end

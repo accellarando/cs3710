@@ -13,12 +13,12 @@ SUB %r2 %r1
 # %r1 = -1
 # %r2 = 2
 
-# CMP - FAIL
+# CMP - pass?
 CMP %r1 %r2
 # Expected PSR flags to be set:
 # L
 
-# CMPI - FAIL
+# CMPI - pass?
 CMPI $0 %r3
 # Expected PSR flags to be set:
 # Z
@@ -47,39 +47,39 @@ ORI $11 %r4
 XOR %r3 %r4
 XORI $6 %r3
 # Expected register contents:
-# %r3 = 1
+# %r3 = 7
 # %r4 = 10
 
 # MOV and MOVI - PASS
 MOV %r4 %r5
-MOVI $6 %r4
+MOVI $1 %r4
 # Expected register contents:
-# %r4 = 6
+# %r4 = 1
 # %r5 = 10
 
 # LSH and LSHI - FAIL
-LSH %r3 %r5 #FAIL
+LSH %r4 %r5 #FAIL!
 LSHI $1 %r4
 # Expected register contents:
 # $r5 = 20
-# $r4 = 12 
+# $r4 = 2 
 
 # LUI - PASS
 LUI $4 %r6
 # Expected register contents:
 # %r6 = 1024
 
-# LOAD - FAIL
+# LOAD - PASS
 # Memory cell 1024 is init'd with value -1 - address is in %r6
 LOAD %r7 %r6
 # Expected register contents:
 # %r7 = -1
 
 # STORE - FAIL
-ADDI $1 %r6
-STOR %r7 %r6
+ADDI $10 %r6
+STOR %r5 %r6
 # Expected MEMORY contents:
-# M[1025] = -1
+# M[1034] = 20
 
 
-# Bcond, Jcond, JAL in separate test file.
+# todo: Bcond, Jcond, JAL in separate test file.
