@@ -10,7 +10,7 @@ ORI $-4 %r1
 LOAD %r2 %r1
 
 #store register into LEDs
-STOR %r1 %r2
+STOR %r2 %r1
 
 #loop
-BUC $-2
+BUC $-5

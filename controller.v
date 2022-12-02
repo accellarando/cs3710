@@ -404,6 +404,7 @@ module controller (
 				A2m <= 2'd2;
 				//set aluop to add
 				AluOp <= ALU_ADD;
+				PCm <= 2'b10;
 			end
 			RWB: begin
 				if(opExt != CMP)
@@ -548,6 +549,7 @@ module controller (
 				A2m <= 2'd2;
 				//set aluop to add
 				AluOp <= ALU_ADD;
+				PCm <= 2'b10;
 
 			end
 			default: PCen <= 1'b0; //idk lol
