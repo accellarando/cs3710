@@ -13,4 +13,4 @@ LOAD %r2 %r1
 STOR %r2 %r1
 
 #loop
-BUC $-5
+BUC $-2
