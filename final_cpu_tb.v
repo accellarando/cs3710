@@ -27,11 +27,9 @@ module final_cpu_tb();
 		#100;
 		reset		<= 1'b1;
 		#100;
-		switches <= 10'b1;
+		switches <= 10'b101010101;
 		#200;
-		switches <= 10'b0;
-		#200;
-		switches <= 10'b1;
+		switches <= 10'b101010101;
 	end
 	
 	

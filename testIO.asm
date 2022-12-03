@@ -8,9 +8,11 @@ ORI $-4 %r1
 
 #load switch data into register
 LOAD %r2 %r1
+LOAD %r2 %r1
+LOAD %r2 %r1
 
-#store register into LEDs
+#store address into LEDs
 STOR %r2 %r1
 
 #loop
-BUC $-2
+BUC $-3

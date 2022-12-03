@@ -28,20 +28,19 @@ module datapath #(parameter SIZE = 16) (
 	output[2:0] flags2out,
 
 	input[17:0] gpi,
-	output reg[17:0] gpo,
+	output[17:0] gpo,
 
 	input[3:0] buttons,
 	input[9:0] switches,
 
-	output reg[9:0] leds
+	output[9:0] leds
 	);
 
 	/* Instantiate internal nets */
 	wire[(SIZE-1):0] PC, nextPC;											// Program Counter elements
 	wire[(SIZE-1):0] RFwrite, RFread1, RFread2;						// Register File
-	wire[(SIZE-1):0] MemWrite1, MemWrite2, MemRead2,
+	wire[(SIZE-1):0] MemWrite1, MemWrite2, MemRead1, MemRead2,
 						  MemAddr1, MemAddr2;								// BRAM
-	reg[(SIZE-1):0] MemRead1;
 	wire[(SIZE-1):0] A1MuxOut, A2MuxOut, aluOut, 					
 						  LuiMuxOut, MovMuxOut, PcMuxOut, AddrOut;	// control-signal mux
 	wire[1:0] flags1;	
@@ -69,7 +68,6 @@ module datapath #(parameter SIZE = 16) (
 	// Instruction register
 	en_register		Instr_Reg(.clk(clk), .reset(reset), .d(MemRead1), .q(instr), .en(INSTRen)); 
 	
-	wire[15:0] memDataA;
 	
 	// Data Memory
 	bram	RAM(
@@ -77,34 +75,13 @@ module datapath #(parameter SIZE = 16) (
 		.we_a(MemW1en), .we_b(MemW2en),
 		.data_a(RFread1), .data_b(MemWrite2), //.data_a(MemWrite1)
 		.addr_a(AddrOut), .addr_b(memAddrB), //.addr_b(MemAddr2)
-		.q_a(memDataA), .q_b(memDataB) //.q_a(MemRead1), .q_b(MemRead2) ->VGAout q_b 
-	);
-	
-	// Memory mapped IO
-	always@(*) begin
-		case(AddrOut)
-			16'hFFFF:
-				if(MemW1en)
-					gpo[17:2] <= RFread1;
-				else
-					MemRead1 <= gpi[17:2];
-			16'hFFFE:
-				if(MemW1en)
-					gpo[1:0] <= RFread1[15:14];
-				else
-					MemRead1[15:14] <= gpi[1:0];
-			16'hFFFD: 
-				MemRead1[15:12] <= buttons;
-			16'hFFFC: 
-				if(MemW1en)
-					leds <= RFread1[15:6];
-				else
-					MemRead1[15:6] <= switches;
-			default: MemRead1 <= memDataA;
-		endcase
-	end
-	
+		.q_a(MemRead1), .q_b(memDataB), //.q_a(MemRead1), .q_b(MemRead2) ->VGAout q_b 
 
+		//Memory mapped IO:
+		.gpi(gpi), .gpo(gpo),
+		.buttons(buttons), .switches(switches),
+		.leds(leds)
+	);
 	
 	// Register File
 	registerFile	regFile(
