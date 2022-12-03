@@ -81,7 +81,7 @@ module datapath #(parameter SIZE = 16) (
 	);
 	
 	// Memory mapped IO
-	always@(posedge clk) begin
+	always@(*) begin
 		case(AddrOut)
 			16'hFFFF:
 				if(MemW1en)

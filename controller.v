@@ -346,11 +346,9 @@ module controller (
 			LEX: begin
 				RWm <= 2'b0;
 				PCm <= 2'b0;
-				MAm <= 1'b1;
 			end
 			SEX: begin
 				//MemW2en <= 1'b1;
-				MAm <= 1'b1;
 			end
 			JEX: begin
 				//check flags, decide to do jump or not
@@ -404,14 +402,11 @@ module controller (
 				A2m <= 2'd2;
 				//set aluop to add
 				AluOp <= ALU_ADD;
-				PCm <= 2'b10;
 			end
 			RWB: begin
-				if(opExt != CMP)
-					RFen <= 1'b1;
+				RFen <= 1'b1;
 				PCen <= 1'b1;
 				PSRen <= 1'b1;
-				
 				MAm <= 1'b0;
 				case(opExt)
 					AND:  AluOp <= ALU_AND;
@@ -447,8 +442,8 @@ module controller (
 			end
 			IWB: begin
 				MAm <= 1'b0;
-				if(op != CMP)
-					RFen <= 1'b1;
+				RFen <= 1'b1;
+				//PCen <= 1'b1;
 
 				case(op)
 					AND:  AluOp <= ALU_AND;
@@ -484,14 +479,14 @@ module controller (
 			LWB: begin
 				RFen <= 1'b1;
 				PCen <= 1'b1;
-				RWm <= 2'b0;
+				RWm <= 2'b1;
 				PCm <= 2'b0;
-				MAm <= 1'b1;
+				MAm <= 1'b0;
 			end
 			SWB: begin
-				MemW1en <= 1'b1;
+				MemW2en <= 1'b1;
 				PCen <= 1'b1;
-				MAm <= 1'b1;
+				MAm <= 1'b0;
 			end
 
 			JWB: begin
@@ -549,7 +544,6 @@ module controller (
 				A2m <= 2'd2;
 				//set aluop to add
 				AluOp <= ALU_ADD;
-				PCm <= 2'b10;
 
 			end
 			default: PCen <= 1'b0; //idk lol
