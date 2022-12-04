@@ -5,121 +5,247 @@ module bitGen(
 	input [15:0] memData,
 	input [15:0] glyphs,
 	input [15:0] count_addr,
+	input hSync, vSync,
 	output reg[15:0] memAddr,
 	output reg[23:0] rgb);
-	
-	parameter BG_COLOR = 24'h111111;
-	
-	parameter FETCH_ONE = 4'b000;
-	parameter FETCH_TEN = 4'b001;
-	parameter FETCH_HUN = 4'b010;
-	parameter WRITE_ONE = 4'b011;
-	parameter WRITE_TEN = 4'b100;
-	parameter WRITE_HUN = 4'b101;
-	parameter FETCH_PIX = 4'b110;
-	parameter WRITE_PIX = 4'b111;
-	parameter READ_PIX = 4'b1000;
-	
-	parameter TOP = 160;
-	parameter BOTTOM = 320;
-	parameter HUN_START = 20;
-	parameter HUN_END = 180;
-	parameter TEN_START = 200;
-	parameter TEN_END = 360;
-	parameter ONE_START = 380;
-	parameter ONE_END = 540;
-	
-	reg[3:0] thisState, nextState;
-	reg[2:0] pixelCounter;
-	reg[3:0] digitOne, digitTen, digitHun;
-	reg[15:0] pix_addr;
-	reg[15:0] pixels;
-	
-	always@(posedge clk) begin
-//		if(!reset) 
-//			nextState = FETCH_ONE;
-		thisState <= nextState;
+
+parameter BG_COLOR = ~24'hFFFFFF;
+
+parameter TOP = 160;
+parameter BOTTOM = 320;
+parameter HUN_START = 20;
+parameter HUN_END = 180;
+parameter TEN_START = 200;
+parameter TEN_END = 360;
+parameter ONE_START = 380;
+parameter ONE_END = 540;
+
+reg[3:0] thisState, nextState;
+reg[2:0] pixelCounter;
+reg[3:0] digitOne, digitTen, digitHun;
+reg[3:0] digit;
+reg[9:0] start;
+reg[15:0] pixelAddr;
+reg[15:0] pixels;
+reg[14:0] nextPixels;
+reg[3:0] i; //keeps track of what pixel in the 5-set we're on (write)
+reg[9:0] j;
+reg[3:0] k; //keeps track of how many pixels in we are (read)
+reg[9:0] oldHc;
+reg[9:0] oldVc;
+
+parameter FETCH_PIX = 4'd0;
+parameter WRITE_PIX = 4'd1;
+parameter FETCH_HUN = 4'd2;
+parameter FETCH_HUN_WB = 4'd3;
+parameter FETCH_TEN = 4'd4;
+parameter FETCH_TEN_WB = 4'd5;
+parameter FETCH_ONE = 4'd6;
+parameter FETCH_ONE_WB = 4'd7;
+
+always@(posedge clk) begin
+	thisState <= nextState;
+end
+
+always@(*) begin
+	if(!reset) begin
+		nextState <= FETCH_HUN;
+		//i <= 4'b0;
 	end
-	
-	always@(*) begin
-	   if(!reset) nextState <= FETCH_ONE;
-		else 
-		case(thisState)
-			FETCH_ONE: nextState <= FETCH_TEN;
-			FETCH_TEN: nextState <= FETCH_HUN;
-			FETCH_HUN: nextState <= FETCH_PIX;
-			FETCH_PIX: nextState <= WRITE_PIX;
-			WRITE_PIX: nextState <= READ_PIX;
-			READ_PIX:
-				if(pixelCounter == 3'd4)
-					nextState <= FETCH_TEN;
-				else
-					nextState <= READ_PIX;
-			default: nextState <= FETCH_ONE;
-		endcase
+	case(thisState)
+		FETCH_HUN: nextState <= FETCH_HUN_WB;
+		FETCH_HUN_WB: nextState <= FETCH_TEN;
+		FETCH_TEN: nextState <= FETCH_TEN_WB;
+		FETCH_TEN_WB: nextState <= FETCH_ONE;
+		FETCH_ONE: nextState <= FETCH_ONE_WB;
+		FETCH_ONE_WB: nextState <= FETCH_PIX;
+		FETCH_PIX: nextState <= WRITE_PIX;
+		WRITE_PIX:
+			if(i >= 3'd4)
+				nextState <= FETCH_PIX;
+			else if(!vSync)
+				nextState <= FETCH_HUN;
+			else
+				nextState <= WRITE_PIX;
+	endcase
+end
+
+always@(posedge clk) begin
+	if(!reset) begin
+		i <= 4'b0;
+		j <= 10'b0;
 	end
-	
-	always@(*) begin //maybe posedge clk here
-		case(thisState)
-			FETCH_ONE: memAddr <= count_addr;
-			WRITE_ONE: digitOne <= memData;
-			FETCH_TEN: memAddr <= count_addr + 1'b1;
-			WRITE_TEN: digitTen <= memData;
-			FETCH_HUN: memAddr <= count_addr + 2'b10;
-			WRITE_HUN: digitHun <= memData;
-			FETCH_PIX: memAddr <= pix_addr;
-			WRITE_PIX: begin 
-				pixelCounter <= 3'b111; //-1
-				pixels <= memData;
-			end
-			READ_PIX: begin
-				pixelCounter <= pixelCounter + 1'b1;
-			end
-		endcase
-	end
-	
-	always@(posedge clk) begin
-		if(bright) begin
+	case(thisState)
+		FETCH_HUN: memAddr <= count_addr + 2'd2;
+		FETCH_HUN_WB: begin
+			memAddr <= count_addr + 2'd2;
+			digitHun <= memData;
+		end
+		
+		FETCH_TEN: memAddr <= count_addr + 2'd2;
+		FETCH_TEN_WB: begin
+			memAddr <= count_addr + 2'd2;
+			digitTen <= memData;
+		end
+
+		FETCH_ONE: memAddr <= count_addr + 2'd2;
+		FETCH_ONE_WB: begin
+			memAddr <= count_addr + 2'd2;
+			digitOne <= memData;
+		end
+
+		FETCH_PIX: begin
+			i <= 4'b0;
 			if(vCount >= TOP && vCount <= BOTTOM) begin
 				if(hCount >= HUN_START && hCount <= HUN_END) begin
-					//each time, we get 16 bytes back - that's 5 pixels worth, 
-						//if each pixel is 3 bits
-					pix_addr <= (glyphs + digitHun<<4'd10) //each sprite is 1024 words
-						+ (vCount-TOP)<<4'd5 //get row
-						+ (hCount-HUN_START); //get col
-						//this is probably broken. will need to test.
-					//figure out which pixel we're fetching, extend it to 8 bits, assign.
-					rgb <= {{4'd8{pixels[pixelCounter+2'd2]}},
-						 {{4'd8{pixels[pixelCounter+2'd1]}},
-							{4'd8{pixels[pixelCounter]}}}};
+					if(hCount == HUN_START) begin
+						j <= 10'b0;
+						k <= 4'b0;
+					end
+					else begin
+						if(k==4'b4)
+							j <= j+1'b1;
+						else
+							k <= k + 1'b1;
+					end
+					//in the hundreds region
+					memAddr <= glyphs + (digitHun << 4'd12) + (digitHun << 4'd10) //base glyph addr
+						+ (vCount - TOP) * (2'd2 << 5) //row
+						+ j;
+					pixels <= memData;
 				end
-				if(hCount >= TEN_START && hCount <= TEN_END) begin
-					//each time, we get 16 bytes back - that's 5 pixels worth, 
-						//if each pixel is 3 bits
-					pix_addr <= (glyphs + digitTen<<4'd10) //each sprite is 1024 words
-						+ (vCount-TOP)<<4'd5 //get row
-						+ (hCount-TEN_START); //get col
-						//this is probably broken. will need to test.
-					//figure out which pixel we're fetching, extend it to 8 bits, assign.
-					rgb <= {{4'd8{pixels[pixelCounter+2'd2]}},
-						{{{{4'd8{pixels[pixelCounter+2'd1]}},
-							{4'd8{pixels[pixelCounter]}}}}}};
+				else if(hCount >= TEN_START && hCount <= TEN_END) begin
+					if(hCount == TEN_START) begin
+						j <= 10'b0;
+						k <= 4'b0;
+					end
+					else begin
+						if(k==4'b4)
+							j <= j+1'b1;
+						else
+							k <= k + 1'b1;
+					end
+					memAddr <= glyphs + (digitTen << 4'd12) + (digitTen << 4'd10) //base glyph addr
+						+ (vCount - TOP) * (2'd2 << 5) //row
+						+ j;
+					pixels <= memData;
 				end
-				if(hCount >= ONE_START && hCount <= ONE_END) begin
-					//each time, we get 16 bytes back - that's 5 pixels worth, 
-						//if each pixel is 3 bits
-					pix_addr <= (glyphs + digitOne<<4'd10) //each sprite is 1024 words
-						+ (vCount-TOP)<<4'd5 //get row
-						+ (hCount-ONE_START); //get col
-						//this is probably broken. will need to test.
-					//figure out which pixel we're fetching, extend it to 8 bits, assign.
-					rgb <= {{4'd8{pixels[pixelCounter+2'd2]}},
-						{{{4'd8{pixels[pixelCounter+2'd1]}},
-							{4'd8{pixels[pixelCounter]}}}}};
+				else if(hCount >= ONE_START && hCount <= ONE_END) begin
+					if(hCount == ONE_START) begin
+						j <= 10'b0;
+						k <= 4'b0;
+					end
+					else begin
+						if(k==4'b4)
+							j <= j+1'b1;
+						else
+							k <= k + 1'b1;
+					end
+					memAddr <= glyphs + (digitOne << 4'd12) + (digitOne << 4'd10) //base glyph addr
+						+ (vCount - TOP) * (2'd2 << 5) //row
+						+ j;
+					pixels <= memData;
 				end
+				else
+					pixels <= BG_COLOR;
 			end
 			else
-				rgb <= BG_COLOR;
+				pixels <= BG_COLOR;
 		end
+
+		WRITE_PIX: begin
+			if(oldHc != hCount) begin
+				//update...
+				i <= i+1'b1;
+				oldHc <= hCount;
+			end
+			rgb <= ~{ {4'd8{pixels[3'd3 * i + 3'd3]}},
+				{4'd8{pixels[3'd3 * i + 3'd2]}},
+				{4'd8{pixels[3'd3 * i + 3'd1]}}};
+			// j <= j+1'b1;
+		end
+		default: memAddr <= glyphs;
+	endcase
+end
+
+/* doesn't work
+always@(posedge clk)
+	case(thisState)
+		PIXELS_WRITE: begin 
+			i <= i+1'b1;
+			pixelCounter <= pixelCounter + 2'd3;
+		end
+		default: begin
+			i <= i;
+			pixelCounter <= 3'd5;
+		end
+	endcase
+
+			
+always@(posedge clk) begin
+	if(!hSync) begin //calculate next row
+		if(vCount+1'b1 >= TOP && vCount+1'b1 <= BOTTOM) begin
+			if(i >= HUN_START && i <= HUN_END) begin
+				digit <= digitHun;
+				start <= HUN_START;
+			end
+			else if(hCount >= TEN_START && hCount <= TEN_END) begin
+				digit <= digitTen;
+				start <= TEN_START;
+			end
+			else if(hCount >= ONE_START && hCount <= ONE_END) begin
+				digit <= digitOne;
+				start <= ONE_START;
+			end
+			else begin
+				digit <= 1'b0;
+				start <= HUN_START;
+			end
+			case(thisState)
+				FETCH_HUN: begin
+					memAddr <= count_addr + 2'd2;
+				end
+				FETCH_HUN_WB: begin
+					memAddr <= count_addr + 2'd2;
+					digitHun <= memData;
+				end
+				FETCH_TEN: begin
+					memAddr <= count_addr + 2'd1;
+				end
+				FETCH_TEN_WB: begin
+					memAddr <= count_addr + 2'd1;
+					digitTen <= memData;
+				end
+				FETCH_ONE: begin
+					memAddr <= count_addr;
+				end
+				FETCH_ONE_WB: begin
+					memAddr <= count_addr;
+					digitOne <= memData;
+				end
+				MEM_FETCH: begin
+					memAddr <= glyphs + digit << 4'd12 + digit << 4'd10 //base glyph addr
+						+ (vCount - TOP) * 2'd2 << 5 //get row - 160px/5 per word = 32 words = 2<<5
+						+ (i-start); //get col
+				end
+				PIXELS_WRITE: begin
+					memAddr <= glyphs + digit << 4'd12 + digit << 4'd10 //base glyph addr
+						+ (vCount - TOP) * 2'd2 << 5 //get row - 160px/5 per word = 32 words = 2<<5
+						+ (i-start); //get col
+					nextLine[hCount+14 -: 4] <= memData[15:1]; //lsb is irrelevant. idk what's going on here ngl
+				end
+				default: ;
+			endcase
+		end
+		else
+			nextLine[i] <= 1'b1;
 	end
+	if(bright) begin
+		pixelAddr <= hCount << 4'd2 + hCount;
+		rgb <= ~{ {4'd8{nextLine[pixelAddr]}}, 
+			{4'd8{nextLine[pixelAddr + 2'b01]}},
+			{4'd8{nextLine[pixelAddr+2'b10]}}};
+	end
+end
+*/
 endmodule 

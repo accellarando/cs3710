@@ -84,14 +84,14 @@ input clk, reset,
 	input [7:0] count,
 	output reg[23:0] rgb
 	*/
-	/*
 	bitGen bg(.clk(clk), .bright(bright), .reset(reset),
-		.hCount(hCount), .vCount(vCount),
-		.rgb(rgb), .memData(memData), .memAddr(memAddr),
+		.hCount(hCount), .vCount(vCount), .memData(memData),
 		.glyphs(GLYPHS_START_ADDR),
-		.count_addr(PEOPLE_COUNT_ADDR)
-	);
-	*/
+		.count_addr(PEOPLE_COUNT_ADDR),
+		.hSync(hSync), .vSync(vSync),
+		.memAddr(memAddr),
+		.rgb(rgb));
+	
 	
 
 	
