@@ -103,7 +103,7 @@ always@(posedge clk) begin
 						k <= 4'b0;
 					end
 					else begin
-						if(k==4'b4)
+						if(k==4'd4)
 							j <= j+1'b1;
 						else
 							k <= k + 1'b1;
@@ -120,7 +120,7 @@ always@(posedge clk) begin
 						k <= 4'b0;
 					end
 					else begin
-						if(k==4'b4)
+						if(k==4'd4)
 							j <= j+1'b1;
 						else
 							k <= k + 1'b1;
@@ -136,7 +136,7 @@ always@(posedge clk) begin
 						k <= 4'b0;
 					end
 					else begin
-						if(k==4'b4)
+						if(k==4'd4)
 							j <= j+1'b1;
 						else
 							k <= k + 1'b1;
@@ -167,85 +167,4 @@ always@(posedge clk) begin
 		default: memAddr <= glyphs;
 	endcase
 end
-
-/* doesn't work
-always@(posedge clk)
-	case(thisState)
-		PIXELS_WRITE: begin 
-			i <= i+1'b1;
-			pixelCounter <= pixelCounter + 2'd3;
-		end
-		default: begin
-			i <= i;
-			pixelCounter <= 3'd5;
-		end
-	endcase
-
-			
-always@(posedge clk) begin
-	if(!hSync) begin //calculate next row
-		if(vCount+1'b1 >= TOP && vCount+1'b1 <= BOTTOM) begin
-			if(i >= HUN_START && i <= HUN_END) begin
-				digit <= digitHun;
-				start <= HUN_START;
-			end
-			else if(hCount >= TEN_START && hCount <= TEN_END) begin
-				digit <= digitTen;
-				start <= TEN_START;
-			end
-			else if(hCount >= ONE_START && hCount <= ONE_END) begin
-				digit <= digitOne;
-				start <= ONE_START;
-			end
-			else begin
-				digit <= 1'b0;
-				start <= HUN_START;
-			end
-			case(thisState)
-				FETCH_HUN: begin
-					memAddr <= count_addr + 2'd2;
-				end
-				FETCH_HUN_WB: begin
-					memAddr <= count_addr + 2'd2;
-					digitHun <= memData;
-				end
-				FETCH_TEN: begin
-					memAddr <= count_addr + 2'd1;
-				end
-				FETCH_TEN_WB: begin
-					memAddr <= count_addr + 2'd1;
-					digitTen <= memData;
-				end
-				FETCH_ONE: begin
-					memAddr <= count_addr;
-				end
-				FETCH_ONE_WB: begin
-					memAddr <= count_addr;
-					digitOne <= memData;
-				end
-				MEM_FETCH: begin
-					memAddr <= glyphs + digit << 4'd12 + digit << 4'd10 //base glyph addr
-						+ (vCount - TOP) * 2'd2 << 5 //get row - 160px/5 per word = 32 words = 2<<5
-						+ (i-start); //get col
-				end
-				PIXELS_WRITE: begin
-					memAddr <= glyphs + digit << 4'd12 + digit << 4'd10 //base glyph addr
-						+ (vCount - TOP) * 2'd2 << 5 //get row - 160px/5 per word = 32 words = 2<<5
-						+ (i-start); //get col
-					nextLine[hCount+14 -: 4] <= memData[15:1]; //lsb is irrelevant. idk what's going on here ngl
-				end
-				default: ;
-			endcase
-		end
-		else
-			nextLine[i] <= 1'b1;
-	end
-	if(bright) begin
-		pixelAddr <= hCount << 4'd2 + hCount;
-		rgb <= ~{ {4'd8{nextLine[pixelAddr]}}, 
-			{4'd8{nextLine[pixelAddr + 2'b01]}},
-			{4'd8{nextLine[pixelAddr+2'b10]}}};
-	end
-end
-*/
 endmodule 
