@@ -9,7 +9,7 @@ module bitGen(
 	output reg[15:0] memAddr,
 	output reg[23:0] rgb);
 
-parameter BG_COLOR = 16'b1111111111111111;
+parameter BG_COLOR = ~16'b1111111111111111;
 
 parameter TOP = 160;
 parameter BOTTOM = 320;
