@@ -135,9 +135,9 @@ module controller (
 	parameter OR 		= 4'b0010;
 	parameter XOR		= 4'b0011;
 	parameter MOV		= 4'b1101;
-	parameter NOT		= 4'b0100;
-	
 	parameter LSH		= 4'b1000;
+	
+	parameter E_LSH	= 4'b0100;
 	parameter E_LSHI	= 4'b000x;
 	
 	parameter LUI		= 4'b1111;
@@ -208,7 +208,7 @@ module controller (
 					SUB:	nextState <= IEX;
 					CMP:	nextState <= IEX;
 					AND:	nextState <= IEX;
-					OR:		nextState <= IEX;
+					OR:	nextState <= IEX;
 					XOR:	nextState <= IEX;
 					MOV:	nextState <= IEX;
 
@@ -284,9 +284,9 @@ module controller (
 					XOR:  AluOp <= ALU_XOR;
 					ADD:  AluOp <= ALU_ADD;
 					SUB:  AluOp <= ALU_SUB;
-					NOT:  AluOp <= ALU_NOT;
+					//NOT:  AluOp <= ALU_NOT;
 					//shifting...
-					LSH: AluOp <= ALU_SLL; //?
+					E_LSH: AluOp <= ALU_SLL; //?
 					CMP: begin
 						AluOp <= ALU_SUB;
 						setZNL <= 1'b1;
@@ -319,7 +319,7 @@ module controller (
 					XOR:  AluOp <= ALU_XOR;
 					ADD:  AluOp <= ALU_ADD;
 					SUB:  AluOp <= ALU_SUB;
-					NOT:  AluOp <= ALU_NOT;
+					//NOT:  AluOp <= ALU_NOT;
 					LSH:  AluOp <= ALU_SLL;
 					CMP: begin
 						AluOp <= ALU_SUB;
@@ -419,7 +419,7 @@ module controller (
 					XOR:  AluOp <= ALU_XOR;
 					ADD:  AluOp <= ALU_ADD;
 					SUB:  AluOp <= ALU_SUB;
-					NOT:  AluOp <= ALU_NOT;
+					//NOT:  AluOp <= ALU_NOT;
 					CMP: begin
 						AluOp <= ALU_SUB;
 						setZNL <= 1'b1;
@@ -456,7 +456,7 @@ module controller (
 					XOR:  AluOp <= ALU_XOR;
 					ADD:  AluOp <= ALU_ADD;
 					SUB:  AluOp <= ALU_SUB;
-					NOT:  AluOp <= ALU_NOT;
+					//NOT:  AluOp <= ALU_NOT;
 					LSH:  AluOp <= ALU_SLL;
 					CMP: begin
 						AluOp <= ALU_SUB;

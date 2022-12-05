@@ -112,8 +112,8 @@ always@(posedge clk) begin//, posedge cOut, posedge aluIn1, posedge aluIn2) begi
 			end
 			SLL: 
 			begin
-				if(aluIn1[WIDTH-1])
-					aluOut <= aluIn1 >> aluIn2;
+				if(aluIn2[WIDTH-1])
+					aluOut <= aluIn1 >> (~aluIn2+1'b1);
 				else
 					aluOut <= aluIn1 << aluIn2;
 			end
