@@ -25,7 +25,6 @@ module bram
 		$readmemb("/home/ella/Documents/School/CS3710/cpu/ram.dat",ram);
 		$display("Done.");
 	end
-	
 	reg[15:0] io, mem;
 	
 	always @ (negedge clk) begin

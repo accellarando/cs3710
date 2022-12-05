@@ -62,10 +62,10 @@ always@(*) begin
 		FETCH_ONE_WB: nextState <= FETCH_PIX;
 		FETCH_PIX: nextState <= WRITE_PIX;
 		WRITE_PIX:
-			if(i >= 3'd4)
-				nextState <= FETCH_PIX;
-			else if(!vSync)
+			if(!vSync)
 				nextState <= FETCH_HUN;
+			else if(i >= 3'd4)
+				nextState <= FETCH_PIX;
 			else
 				nextState <= WRITE_PIX;
 	endcase
@@ -83,15 +83,15 @@ always@(posedge clk) begin
 			digitHun <= memData[3:0];
 		end
 		
-		FETCH_TEN: memAddr <= count_addr + 2'd2;
+		FETCH_TEN: memAddr <= count_addr + 2'd1;
 		FETCH_TEN_WB: begin
-			memAddr <= count_addr + 2'd2;
+			memAddr <= count_addr + 2'd1;
 			digitTen <= memData[3:0];
 		end
 
-		FETCH_ONE: memAddr <= count_addr + 2'd2;
+		FETCH_ONE: memAddr <= count_addr + 2'd0;
 		FETCH_ONE_WB: begin
-			memAddr <= count_addr + 2'd2;
+			memAddr <= count_addr + 2'd0;
 			digitOne <= memData[3:0];
 		end
 
