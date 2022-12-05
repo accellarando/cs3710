@@ -184,7 +184,7 @@ module controller (
 	// for checking within the condition codes
 	wire carry, overFlow, low, zero, neg;
 	assign carry		= flag1[0];
-	assign overFlow		= flag1[1];
+	assign overFlow	= flag1[1];
 	assign low			= flag2[0];
 	assign zero			= flag2[1];
 	assign neg			= flag2[2];
