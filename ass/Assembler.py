@@ -256,6 +256,7 @@ class Assembler():
                 instr = parts.pop(0)
                 if (instr in self.RType):
                     if (len(parts) == 2):
+                        print(parts)
                         firstReg = parts.pop(0)
                         secondReg = parts.pop(0)
                         if ((firstReg in self.REGISTERS) and (secondReg in self.REGISTERS)):

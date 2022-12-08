@@ -60,7 +60,7 @@ LSHI $8 %r7
 LSHI $12 %r8
 
 #Clearing out r13, or-ing in r7 and r8 (already bitshifted to the right places)
-MOV $0 %r13
+MOVI $0 %r13
 OR %r7 %r13
 OR %r8 %r13
 
@@ -113,11 +113,11 @@ ANDI $1 %r11
 CMPI $1 %r1
 #check this branch value...
 BNE $4
-    #move to the next state
-	MOVI $1 %r5
-    #loops back to main
-	MOVI .main %r10
-	JUC %r10
+#move to the next state
+MOVI $1 %r5
+#loops back to main
+MOVI .main %r10
+JUC %r10
 
 #get B - could move this to a function call but idk if it's worth it tbh
 #if B triggered, change state to 4
