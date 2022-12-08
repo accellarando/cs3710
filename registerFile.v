@@ -33,8 +33,8 @@ module registerFile #(parameter SIZE = 16, REGBITS = 4) (
 	//$readmemb("D:/3710/Project/cs3710/reg.dat", regFile);
 	//$readmemb("C:/Users/bledy/OneDrive/Documents/GitHub/cs3710/reg.dat", regFile);
 	//$readmemb("/home/ella/Documents/cpu/reg.dat", regFile);
-	$readmemb("/home/ella/Documents/School/CS3710/cpu/reg.dat", regFile);
-	//$readmemb("/home/emoss/Documents/cs3710/reg.dat", regFile);
+	//$readmemb("/home/ella/Documents/School/CS3710/cpu/reg.dat", regFile);
+	$readmemb("/home/emoss/Documents/cs3710/reg.dat", regFile);
 	
 	$display("Done with loading Register File"); 
 	end
