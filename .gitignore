@@ -10,3 +10,6 @@
 !*.sdc
 !*.py
 !ass
+!numbers
+!.hex
+!.png
