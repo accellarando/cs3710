@@ -3,6 +3,7 @@
 !*.md
 !.gitignore
 !*.qsf
+!*.qpf
 !*.txt
 !*.asm
 !*.dat
