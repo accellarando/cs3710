@@ -114,7 +114,7 @@ JUC %r10
 #if B triggered, change state to 2
 ANDI $2 %r1
 CMPI $2 %r1
-BNE $2
+BNE $3
 MOVI $2 %r5
 
 #loop
@@ -170,56 +170,18 @@ JUC %r10
 
 .four
 #if A triggered, change state to 5
-ANDI $1 %r1
-CMPI $1 %r1
-BNE $2
-MOVI $5 %r5
 
 #loop
-MOVI .main %r10
-JUC %r10
+BUC .main
 
 .five
 #if a and b reset, change state to 6
-ANDI $3 %r1
-CMPI $0 %r1
-MOVI .main %r10
-JNE %r10
-MOVI $6 %r5
 
 #loop
-JUC %r10
+BUC .main
 
 .six
 #decrement counter
-LOAD %r7 %r2
-LOAD %r8 %r3
-LOAD %r9 %r4
-MOVI .threeUpdate %r10
 
-MOVI .sixDecrementOne %r11
-CMPI $0 %r7
-JNE %r11
-MOVI $9 %r7
-
-MOVI .sixDecrementTen %r12
-CMPI $0 %r8
-JNE %r12
-MOVI $9 %r8
-
-MOVI .sixDecrementHun %r13
-CMPI $0 %r9
-JNE %r13
-MOVI $9 %r9
-
-.sixDecrementOne
-SUBI $1 %r7
-JUC %r10
-
-.sixDecrementTen
-SUBI $1 %r8
-JUC %r10
-
-.sixDecrementHun
-SUBI $1 %r9
-JUC %r10
+#loop
+BUC .main
