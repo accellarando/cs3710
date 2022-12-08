@@ -11,14 +11,14 @@ module bitGen(
 
 parameter BG_COLOR = 16'b1111111111111111;
 
-parameter TOP = 160;
-parameter BOTTOM = 320;
-parameter HUN_START = 20;
-parameter HUN_END = 180;
-parameter TEN_START = 200;
-parameter TEN_END = 360;
-parameter ONE_START = 380;
-parameter ONE_END = 540;
+parameter TOP = 176;
+parameter BOTTOM = 304;
+parameter HUN_START = 112;
+parameter HUN_END = 240;
+parameter TEN_START = 256;
+parameter TEN_END = 384;
+parameter ONE_START = 400;
+parameter ONE_END = 528;
 
 reg[3:0] thisState, nextState;
 reg[2:0] pixelCounter;
