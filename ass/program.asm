@@ -18,43 +18,13 @@
 #r7: current ones place
 #r8: current tens place
 #r9: current hundreds place
-#r15: address of 7seg display
-#r10-r14: temporary registers
+#r10-r15: temporary registers
 
 #Address calculation
-LUI $-1 %r1
-ORI $-1 %r1
 
-LUI $16 %r2
-
-MOV %r2 %r3
-ADDI $1 %r3
-
-MOV %r3 %r4
-ADDI $1 %r4
-
-LUI $-1 %r15
-ORI $-5 %r15
 
 #Main loop:
 .main
-#Put current values on the hex to 7 seg displays
-LOAD %r7 %r2
-LOAD %r8 %r3
-LOAD %r9 %r4
-
-MOV %r15 %r14
-SUBI $1 %r14
-
-LSHI $8 %r7
-LSHI $12 %r8
-
-MOVI $0 %r13
-OR %r7 %r13
-OR %r8 %r13
-STOR %r13 %r14
-STOR %r9 %r15
-
 #Get gpio
 LOAD %r6 %r1
 

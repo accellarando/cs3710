@@ -33,8 +33,7 @@ module datapath #(parameter SIZE = 16) (
 	input[3:0] buttons,
 	input[9:0] switches,
 
-	output[9:0] leds,
-	output[41:0] sevSegs
+	output[9:0] leds
 	);
 
 	/* Instantiate internal nets */
@@ -81,8 +80,7 @@ module datapath #(parameter SIZE = 16) (
 		//Memory mapped IO:
 		.gpi(gpi), .gpo(gpo),
 		.buttons(buttons), .switches(switches),
-		.leds(leds),
-		.sevSegs(sevSegs)
+		.leds(leds)
 	);
 	
 	// Register File

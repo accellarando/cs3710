@@ -19,6 +19,7 @@ parameter TEN_START = 200;
 parameter TEN_END = 360;
 parameter ONE_START = 380;
 parameter ONE_END = 540;
+<<<<<<< HEAD
 
 reg[3:0] thisState, nextState;
 reg[2:0] pixelCounter;
@@ -44,6 +45,33 @@ parameter FETCH_TEN_WB = 4'd5;
 parameter FETCH_ONE = 4'd6;
 parameter FETCH_ONE_WB = 4'd7;
 
+=======
+
+reg[3:0] thisState, nextState;
+reg[2:0] pixelCounter;
+reg[3:0] digitOne, digitTen, digitHun;
+reg[3:0] digit;
+reg[9:0] start;
+reg[15:0] pixelAddr;
+reg[15:0] pixels;
+reg[14:0] nextPixels;
+reg[3:0] i; //keeps track of what pixel in the 5-set we're on (write)
+reg[9:0] j;
+reg[3:0] k; //keeps track of how many pixels in we are (read)
+reg[9:0] oldHc;
+reg[9:0] oldVc;
+reg isGlyph;
+
+parameter FETCH_PIX = 4'd0;
+parameter WRITE_PIX = 4'd1;
+parameter FETCH_HUN = 4'd2;
+parameter FETCH_HUN_WB = 4'd3;
+parameter FETCH_TEN = 4'd4;
+parameter FETCH_TEN_WB = 4'd5;
+parameter FETCH_ONE = 4'd6;
+parameter FETCH_ONE_WB = 4'd7;
+
+>>>>>>> parent of 2e22c66 (oops)
 always@(posedge clk) begin
 	thisState <= nextState;
 end
@@ -102,7 +130,11 @@ always@(posedge clk) begin
 					isGlyph <= 1'b1;
 					if(hCount == HUN_START) begin
 						j <= 10'b0;
+<<<<<<< HEAD
 						k <= 5'b0;
+=======
+						k <= 4'b0;
+>>>>>>> parent of 2e22c66 (oops)
 					end
 					else begin
 						if(k==4'd4)
