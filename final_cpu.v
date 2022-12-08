@@ -9,7 +9,8 @@ module final_cpu(
 	input[17:0] GPI, output[17:0] GPO,
 	input[3:0] buttons,
 	input[9:0] switches,
-	output[9:0] leds
+	output[9:0] leds,
+	output[41:0] segs
 	);
 	
 	wire[15:0] instr;
@@ -21,7 +22,7 @@ module final_cpu(
 	wire[2:0] flags2out;
 	
 	//Memory mapping parameters
-	parameter GLYPHS_START_ADDR = 16'h37FB;
+	parameter GLYPHS_START_ADDR = 16'h87F0;
 	parameter PEOPLE_COUNT_ADDR = 16'h1000;
 	
 	//assign leds = 10'b0;
@@ -53,7 +54,7 @@ input clk, reset,
 		
 		.gpi(GPI), .gpo(GPO),
 		.buttons(buttons), .switches(switches),
-		.leds(leds)
+		.leds(leds), .sevSegs(segs)
 	);
 	
 	controller cont(.clk(clk), .reset(reset),

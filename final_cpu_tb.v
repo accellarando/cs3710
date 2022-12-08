@@ -9,6 +9,7 @@ module final_cpu_tb();
 	reg[3:0] buttons;
 	reg[9:0] switches;
 	wire[9:0] leds;
+	integer counter;
 	
 	final_cpu uut (
 		clk,
@@ -36,6 +37,13 @@ module final_cpu_tb();
 	/* Generate clock */
 	always #20 begin		// clock changes edge every 50 ns
 		clk = ~clk;
+		if(!hSync) 
+			counter <= counter + 1'b1;
+		else
+			counter <= 0;
 	end
+	
+	always@(posedge hSync)
+		$display(counter);
 
 endmodule
