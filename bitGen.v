@@ -1,7 +1,7 @@
 module bitGen(
 	input clk, bright, reset,
-	input [9:0] hCount,
-	input [9:0] vCount,
+	input unsigned [9:0] hCount,
+	input unsigned [9:0] vCount,
 	input [15:0] memData,
 	input [15:0] glyphs,
 	input [15:0] count_addr,
@@ -28,7 +28,7 @@ reg[9:0] start;
 reg[15:0] pixelAddr;
 reg[15:0] pixels;
 reg[14:0] nextPixels;
-reg[5:0] i; //keeps track of what pixel in the 5-set we're on (write)
+reg[4:0] i; //keeps track of what pixel in the 5-set we're on (write)
 reg[9:0] j;
 reg[3:0] k; //keeps track of how many pixels in we are (read)
 reg[9:0] oldHc;
@@ -98,7 +98,9 @@ always@(posedge clk) begin
 		end
 
 		FETCH_PIX: begin
-			i <= 4'd15; //-1
+			i <= 5'd31; //-1
+			//$display("vCount>=TOP: %b",vCount >= TOP);
+			//$display("vCount<=bottom: %b",vCount <= BOTTOM);
 			if(vCount >= TOP && vCount <= BOTTOM) begin
 				if(hCount >= HUN_START && hCount <= HUN_END) begin
 					isGlyph <= 1'b1;
@@ -165,8 +167,6 @@ always@(posedge clk) begin
 		WRITE_PIX: begin
 			if(isGlyph)
 				pixels <= memData;
-			else
-				pixels <= BG_COLOR;
 			if(oldHc != hCount) begin
 				//update...
 				i <= i+1'b1;
