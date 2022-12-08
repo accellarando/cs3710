@@ -12,9 +12,10 @@ module bram
 
 	input [17:0] gpi, 
 	output reg[17:0] gpo,
-	input[3:0] buttons,
+	input[2:0] buttons,
 	input[9:0] switches,
-	output reg[9:0] leds
+	output reg[9:0] leds,
+	output reg[41:0] sevSegs
 );
 
 	// Declare the RAM variable
@@ -27,7 +28,16 @@ module bram
 		$readmemb("/home/emoss/Documents/cs3710/ram.dat",ram);
 		$display("Done.");
 	end
+	
 	reg[15:0] io, mem;
+	reg[3:0] a, b, c, d, e, f;
+
+	hexTo7Seg hex5(a, sevSegs[41:35]);
+	hexTo7Seg hex4(b, sevSegs[34:28]);
+	hexTo7Seg hex3(c, sevSegs[27:21]);
+	hexTo7Seg hex2(d, sevSegs[20:14]);
+	hexTo7Seg hex1(e, sevSegs[13:7]);
+	hexTo7Seg hex0(f, sevSegs[6:0]);
 	
 	always @ (negedge clk) begin
 		case(addr_a)
@@ -38,17 +48,32 @@ module bram
 			end
 			16'hFFFE: begin
 				if(we_a)
-					gpo[1:0] <= data_a;
-				io[1:0] <= gpi[15:14];
-				io[15:2] <= 14'b0;
+					gpo[1:0] <= data_a[15:14];
+				io[15:14] <= gpi[1:0];
+				io[13:0] <= 14'b0;
 			end
-			16'hFFFD: io[15:12] <= buttons;
+			16'hFFFD: begin
+				io[15:13] <= buttons; //read only
+				io[11:0] <= 12'b0;
+			end
 			16'hFFFC: begin
 				if(we_a)
 					leds <= data_a[15:6];
 				io[15:6] <= switches;
 				io[5:0] <= 6'b0;
 			end
+			16'hFFFB: //write only
+				if(we_a) begin
+					a <= data_a[15:12];
+					b <= data_a[11:8];
+					c <= data_a[7:4];
+					d <= data_a[3:0];
+				end
+			16'hFFFA:
+				if(we_a) begin
+					e <= data_a[15:12];
+					f <= data_a[11:8];
+				end
 		endcase
 	end
 				
