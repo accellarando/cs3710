@@ -9,7 +9,7 @@ module bitGen(
 	output reg[15:0] memAddr,
 	output reg[23:0] rgb);
 
-parameter BG_COLOR = ~16'b1111111111111111;
+parameter BG_COLOR = 16'b1111111111111111;
 
 parameter TOP = 160;
 parameter BOTTOM = 320;
@@ -19,7 +19,6 @@ parameter TEN_START = 200;
 parameter TEN_END = 360;
 parameter ONE_START = 380;
 parameter ONE_END = 540;
-<<<<<<< HEAD
 
 reg[3:0] thisState, nextState;
 reg[2:0] pixelCounter;
@@ -29,33 +28,7 @@ reg[9:0] start;
 reg[15:0] pixelAddr;
 reg[15:0] pixels;
 reg[14:0] nextPixels;
-reg[3:0] i; //keeps track of what pixel in the 4-set we're on (write)
-reg[9:0] j;
-reg[4:0] k; //keeps track of how many pixels in we are (read)
-reg[9:0] oldHc;
-reg[9:0] oldVc;
-reg isGlyph;
-
-parameter FETCH_PIX = 4'd0;
-parameter WRITE_PIX = 4'd1;
-parameter FETCH_HUN = 4'd2;
-parameter FETCH_HUN_WB = 4'd3;
-parameter FETCH_TEN = 4'd4;
-parameter FETCH_TEN_WB = 4'd5;
-parameter FETCH_ONE = 4'd6;
-parameter FETCH_ONE_WB = 4'd7;
-
-=======
-
-reg[3:0] thisState, nextState;
-reg[2:0] pixelCounter;
-reg[3:0] digitOne, digitTen, digitHun;
-reg[3:0] digit;
-reg[9:0] start;
-reg[15:0] pixelAddr;
-reg[15:0] pixels;
-reg[14:0] nextPixels;
-reg[3:0] i; //keeps track of what pixel in the 5-set we're on (write)
+reg[5:0] i; //keeps track of what pixel in the 5-set we're on (write)
 reg[9:0] j;
 reg[3:0] k; //keeps track of how many pixels in we are (read)
 reg[9:0] oldHc;
@@ -71,7 +44,6 @@ parameter FETCH_TEN_WB = 4'd5;
 parameter FETCH_ONE = 4'd6;
 parameter FETCH_ONE_WB = 4'd7;
 
->>>>>>> parent of 2e22c66 (oops)
 always@(posedge clk) begin
 	thisState <= nextState;
 end
@@ -92,7 +64,7 @@ always@(*) begin
 		WRITE_PIX:
 			if(!vSync)
 				nextState <= FETCH_HUN;
-			else if(i >= 3'd4)
+			else if(i >= 5'd16)
 				nextState <= FETCH_PIX;
 			else
 				nextState <= WRITE_PIX;
@@ -130,11 +102,6 @@ always@(posedge clk) begin
 					isGlyph <= 1'b1;
 					if(hCount == HUN_START) begin
 						j <= 10'b0;
-<<<<<<< HEAD
-						k <= 5'b0;
-=======
-						k <= 4'b0;
->>>>>>> parent of 2e22c66 (oops)
 					end
 					else begin
 						if(k==4'd4)
@@ -143,9 +110,9 @@ always@(posedge clk) begin
 							k <= k + 1'b1;
 					end
 					//in the hundreds region
-					memAddr <= glyphs + (digitHun << 4'd12) + (digitHun << 4'd10) //base glyph addr
-						+ (vCount - TOP) * (2'd2 << 5) //row
-						+ j;
+					memAddr <= glyphs + (digitHun << 4'd10) //base glyph addr
+						+ ((vCount - TOP) << 3) //row
+						+ (j>>2);
 					pixels <= memData;
 				end
 				else if(hCount >= TEN_START && hCount <= TEN_END) begin
@@ -160,9 +127,9 @@ always@(posedge clk) begin
 						else
 							k <= k + 1'b1;
 					end
-					memAddr <= glyphs + (digitTen << 4'd12) + (digitTen << 4'd10) //base glyph addr
-						+ (vCount - TOP) * (2'd2 << 5) //row
-						+ j;
+					memAddr <= glyphs + (digitTen << 4'd10) //base glyph addr
+						+ ((vCount - TOP) <<3)//row
+						+ (j>>2);
 					pixels <= memData;
 				end
 				else if(hCount >= ONE_START && hCount <= ONE_END) begin
@@ -177,9 +144,9 @@ always@(posedge clk) begin
 						else
 							k <= k + 1'b1;
 					end
-					memAddr <= glyphs + (digitOne << 4'd12) + (digitOne << 4'd10) //base glyph addr
-						+ (vCount - TOP) * (2'd2 << 5) //row
-						+ j;
+					memAddr <= glyphs + (digitOne << 10) //base glyph addr
+						+ ((vCount - TOP) <<3) //row
+						+ (j>>2);
 					pixels <= memData;
 				end
 				else begin
@@ -201,9 +168,9 @@ always@(posedge clk) begin
 				i <= i+1'b1;
 				oldHc <= hCount;
 			end
-			rgb <= { {4'd8{pixels[3'd3 * i + 3'd3]}},
-				{4'd8{pixels[3'd3 * i + 3'd2]}},
-				{4'd8{pixels[3'd3 * i + 3'd1]}}};
+			rgb <= { {4'd8{pixels[3'd4 * (i>>2) + 3'd2]}},
+				{4'd8{pixels[3'd4 * (i>>2) + 3'd1]}},
+				{4'd8{pixels[3'd4 * (i>>2) + 3'd0]}}};
 			// j <= j+1'b1;
 		end
 		default: ;
