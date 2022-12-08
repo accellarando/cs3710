@@ -21,7 +21,7 @@ module final_cpu(
 	wire[2:0] flags2out;
 	
 	//Memory mapping parameters
-	parameter GLYPHS_START_ADDR = 16'h37FB;
+	parameter GLYPHS_START_ADDR = 16'hD7F0;
 	parameter PEOPLE_COUNT_ADDR = 16'h1000;
 	
 	//assign leds = 10'b0;
