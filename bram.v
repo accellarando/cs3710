@@ -23,7 +23,8 @@ module bram
 		$display("Loading memory...");
 		//$readmemb("D:/3710/Project/cs3710/ram.dat", ram); //change to correct path to .dat file
 		//$readmemb("/home/ella/Documents/cpu/ram.dat",ram);
-		$readmemb("/home/ella/Documents/School/CS3710/cpu/ram.dat",ram);
+		//$readmemb("/home/ella/Documents/School/CS3710/cpu/ram.dat",ram);
+		$readmemb("/home/emoss/Documents/cs3710/ram.dat",ram);
 		$display("Done.");
 	end
 	reg[15:0] io, mem;

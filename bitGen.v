@@ -35,6 +35,8 @@ reg[9:0] oldHc;
 reg[9:0] oldVc;
 reg isGlyph;
 
+reg[7:0] red, green, blue;
+
 parameter FETCH_PIX = 4'd0;
 parameter WRITE_PIX = 4'd1;
 parameter FETCH_HUN = 4'd2;
@@ -163,15 +165,17 @@ always@(posedge clk) begin
 		WRITE_PIX: begin
 			if(isGlyph)
 				pixels <= memData;
+			else
+				pixels <= BG_COLOR;
 			if(oldHc != hCount) begin
 				//update...
 				i <= i+1'b1;
 				oldHc <= hCount;
 			end
-			rgb <= { {4'd8{pixels[3'd4 * (i>>2) + 3'd2]}},
-				{4'd8{pixels[3'd4 * (i>>2) + 3'd1]}},
-				{4'd8{pixels[3'd4 * (i>>2) + 3'd0]}}};
-			// j <= j+1'b1;
+			red <= {4'd8{pixels[3'd4 * (i>>2) + 3'd2]}};
+			green <= {4'd8{pixels[3'd4 * (i>>2) + 3'd1]}};
+			blue <= {4'd8{pixels[3'd4 * (i>>2) + 3'd0]}};
+			rgb <= {red,green,blue};
 		end
 		default: ;
 	endcase
