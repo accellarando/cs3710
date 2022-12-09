@@ -40,9 +40,6 @@ ADDI $1 %r3
 MOV %r3 %r4
 ADDI $1 %r4
 
-#r14: reset button
-MOV %r1 %r14
-SUBI $2 %r14
 
 #r15: 7-segment displays
 LUI $-1 %r15
@@ -51,9 +48,13 @@ ORI $-5 %r15
 #Main loop:
 .main
 #Load button value from address
+#r14: reset button
+MOV %r1 %r14
+SUBI $2 %r14
 LOAD %r0 %r14
 #Check if enabled (remember they're active low)
 #get bit 16th bit 
+MOVI $0 %r10
 LUI $-128 %r10
 AND %r10 %r0
 CMP %r10 %r0
