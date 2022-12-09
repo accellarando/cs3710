@@ -21,8 +21,7 @@
 #r8: current tens place
 #r9: current hundreds place
 #r15: address of 7seg display
-#r10-r13: temporary registers
-#r14: address of reset button
+#r10-r14: temporary registers
 
 #Address calculation
 #r1: 0xFFFF (GPIO)
@@ -39,7 +38,6 @@ ADDI $1 %r3
 #r3: 0x1010 - people counter address (hundreds place)
 MOV %r3 %r4
 ADDI $1 %r4
-
 
 #r15: 7-segment displays
 LUI $-1 %r15
@@ -67,8 +65,8 @@ MOVI $0 %r9
 STOR %r7 %r2
 STOR %r8 %r3
 STOR %r9 %r4
-
-#Put current values on the hex to 7 seg displays
+#If so, set registers 7,8,9 to 0
+#Then stor those to addresses in registers 2,3,4
 LOAD %r7 %r2
 LOAD %r8 %r3
 LOAD %r9 %r4
@@ -133,7 +131,7 @@ MOV %r6 %r11
 ANDI $1 %r11 
 
 #if A==1, move to next state (1)
-CMPI $1 %r11
+CMPI $0 %r11
 #check this branch value...
 BNE $4
 #move to the next state
@@ -145,8 +143,7 @@ JUC %r10
 #get B - could move this to a function call but idk if it's worth it tbh
 #if B triggered, change state to 4
 ANDI $2 %r6
-CMPI $2 %r6
-
+CMPI $0 %r6
 
 BNE $2
 #if b is triggered, move to state 4
@@ -161,7 +158,7 @@ JUC %r10
 .one
 #if B triggered, change state to 2
 ANDI $2 %r6
-CMPI $2 %r6
+CMPI $0 %r6
 BNE $2
 MOVI $2 %r5
 
@@ -177,7 +174,7 @@ JUC %r10
 ANDI $3 %r6
 #See if it's 0
 MOVI .main %r10
-CMPI $0 %r6
+CMPI $3 %r6
 JNE %r10
 #else: (ie, ab==00)
 MOVI $3 %r5
@@ -223,12 +220,12 @@ MOVI $0 %r5
 MOVI .main %r10
 JUC %r10
 
-
 #Comes here from .zero - B was triggered, but A hasn't been yet.
 .four
 #if A triggered, change state to 5
+MOVI .main %r10
 ANDI $1 %r6
-CMPI $1 %r6
+CMPI $0 %r6
 BNE $2
 MOVI $5 %r5
 
@@ -239,7 +236,7 @@ JUC %r10
 .five
 #if a and b reset, change state to 6
 ANDI $3 %r6
-CMPI $0 %r6
+CMPI $3 %r6
 MOVI .main %r10
 JNE %r10
 MOVI $6 %r5
