@@ -246,8 +246,8 @@ JUC %r10
 .five
 #if a and b reset, change state to 6
 ANDI $3 %r6
-CMPI $0 %r6
 MOVI .main %r10
+CMPI $0 %r6
 JNE %r10
 MOVI $6 %r5
 
