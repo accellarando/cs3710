@@ -21,8 +21,7 @@
 #r8: current tens place
 #r9: current hundreds place
 #r15: address of 7seg display
-#r10-r13: temporary registers
-#r14: address of reset button
+#r10-r14: temporary registers
 
 #Address calculation
 #r1: 0xFFFF (GPIO)
@@ -40,43 +39,17 @@ ADDI $1 %r3
 MOV %r3 %r4
 ADDI $1 %r4
 
-
 #r15: 7-segment displays
 LUI $-1 %r15
 ORI $-5 %r15
 
 #Main loop:
 .main
-#Load button value from address
-#r14: reset button
-MOV %r1 %r14
-SUBI $2 %r14
-LOAD %r0 %r14
-#Check if enabled (remember they're active low)
-#get bit 16th bit 
-MOVI $0 %r10
-LUI $-128 %r10
-AND %r10 %r0
-CMP %r10 %r0
-BEQ $8
-#If so, set registers 7,8,9 to 0, set state to 0
-MOVI $0 %r7
-MOVI $0 %r8
-MOVI $0 %r9
-MOVI $0 %r5
-#Then stor those to addresses in registers 2,3,4
-STOR %r7 %r2
-STOR %r8 %r3
-STOR %r9 %r4
-
-#Display state on LEDs
-MOV %r1 %r10
-SUBI $3 %r10
-MOV %r5 %r11
-LSHI $7 %r11
-STOR %r11 %r10
-
 #Put current values on the hex to 7 seg displays
+#Load button value from address
+#Check if enabled (remember they're active low)
+#If so, set registers 7,8,9 to 0
+#Then stor those to addresses in registers 2,3,4
 LOAD %r7 %r2
 LOAD %r8 %r3
 LOAD %r9 %r4
@@ -167,7 +140,6 @@ JUC %r10
 
 #A has already been triggered
 .one
-LOAD %r6 %r1
 #if B triggered, change state to 2
 ANDI $2 %r6
 CMPI $2 %r6
@@ -181,7 +153,6 @@ JUC %r10
 
 #A and B have both been triggered, in that order
 .two
-LOAD %r6 %r1
 #if a and b reset, ie ab==00, change state to 3
 #Get 2 LSB
 ANDI $3 %r6
@@ -237,7 +208,6 @@ JUC %r10
 #Comes here from .zero - B was triggered, but A hasn't been yet.
 .four
 #if A triggered, change state to 5
-LOAD %r6 %r1
 ANDI $1 %r6
 CMPI $1 %r6
 BNE $2
@@ -249,10 +219,9 @@ JUC %r10
 
 .five
 #if a and b reset, change state to 6
-LOAD %r6 %r1
 ANDI $3 %r6
-MOVI .main %r10
 CMPI $0 %r6
+MOVI .main %r10
 JNE %r10
 MOVI $6 %r5
 
