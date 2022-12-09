@@ -21,7 +21,8 @@
 #r8: current tens place
 #r9: current hundreds place
 #r15: address of 7seg display
-#r10-r14: temporary registers
+#r10-r13: temporary registers
+#r14: address of reset button
 
 #Address calculation
 #r1: 0xFFFF (GPIO)
@@ -39,17 +40,33 @@ ADDI $1 %r3
 MOV %r3 %r4
 ADDI $1 %r4
 
+#r14: reset button
+MOV %r1 %r14
+SUBI $2 %r14
+
 #r15: 7-segment displays
 LUI $-1 %r15
 ORI $-5 %r15
 
 #Main loop:
 .main
-#Put current values on the hex to 7 seg displays
 #Load button value from address
+LOAD %r0 %r14
 #Check if enabled (remember they're active low)
+#get bit 16th bit 
+LUI $-128 %r10
+AND %r10 %r0
+CMP %r10 %r0
 #If so, set registers 7,8,9 to 0
+MOVI $0 %r7
+MOVI $0 %r8
+MOVI $0 %r9
 #Then stor those to addresses in registers 2,3,4
+STOR %r7 %r2
+STOR %r8 %r3
+STOR %r9 %r4
+
+#Put current values on the hex to 7 seg displays
 LOAD %r7 %r2
 LOAD %r8 %r3
 LOAD %r9 %r4
