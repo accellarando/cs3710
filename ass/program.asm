@@ -58,7 +58,7 @@ MOVI $0 %r10
 LUI $-128 %r10
 AND %r10 %r0
 CMP %r10 %r0
-BEQ $7
+BEQ $6
 #If so, set registers 7,8,9 to 0
 MOVI $0 %r7
 MOVI $0 %r8
