@@ -58,11 +58,12 @@ MOVI $0 %r10
 LUI $-128 %r10
 AND %r10 %r0
 CMP %r10 %r0
-BEQ $7
-#If so, set registers 7,8,9 to 0
+BEQ $8
+#If so, set registers 7,8,9 to 0, set state to 0
 MOVI $0 %r7
 MOVI $0 %r8
 MOVI $0 %r9
+MOVI $0 %r5
 #Then stor those to addresses in registers 2,3,4
 STOR %r7 %r2
 STOR %r8 %r3
