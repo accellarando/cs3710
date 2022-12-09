@@ -110,7 +110,7 @@ MOV %r6 %r11
 ANDI $1 %r11 
 
 #if A==1, move to next state (1)
-CMPI $1 %r1
+CMPI $1 %r11
 #check this branch value...
 BNE $4
 #move to the next state
@@ -193,6 +193,8 @@ MOVI $0 %r9
 STOR %r7 %r2
 STOR %r8 %r3
 STOR %r9 %r4
+#return to state 0
+MOVI $0 %r5
 
 #loop
 MOVI .main %r10

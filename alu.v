@@ -40,7 +40,7 @@ reg cOut;
 always@(posedge clk) begin//, posedge cOut, posedge aluIn1, posedge aluIn2) begin
 	if(setZNL) begin
 		cond_group2[2:0] <= 3'b0;
-		if(aluOut == {WIDTH{1'b0}})
+		if(aluIn1 == aluIn2)
 			cond_group2[1] <= 1'b1;
 	end
 

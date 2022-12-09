@@ -313,6 +313,7 @@ module controller (
 			IEX: begin
 				//RFen <= 1'b1;
 				//PCen <= 1'b1;
+				PSRen <= 1'b1;
 				case(op)
 					AND:  AluOp <= ALU_AND;
 					OR:   AluOp <= ALU_OR;
@@ -447,6 +448,7 @@ module controller (
 			end
 			IWB: begin
 				MAm <= 1'b0;
+				PSRen <= 1'b1;
 				if(op != CMP)
 					RFen <= 1'b1;
 
@@ -475,7 +477,7 @@ module controller (
 				A1m <= 1'b0;
 
 				//prepare the pc
-				PCm <= 2'b0;
+				//PCm <= 2'b0;
 				PCen <= 1'b1;
 
 				//set mov mux
@@ -549,7 +551,7 @@ module controller (
 				A2m <= 2'd2;
 				//set aluop to add
 				AluOp <= ALU_ADD;
-				PCm <= 2'b10;
+				//PCm <= 2'b10;
 
 			end
 			default: PCen <= 1'b0; //idk lol

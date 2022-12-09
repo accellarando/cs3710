@@ -9,6 +9,7 @@ module laser_tb();
 	reg[3:0] buttons;
 	reg[9:0] switches;
 	wire[9:0] leds;
+	wire[41:0] sevseg;
 	
 	final_cpu uut (
 		clk,
@@ -16,7 +17,7 @@ module laser_tb();
 		rgb,
 		hSync, vSync, vgaBlank, vgaClk,
 		gpi, gpo,
-		buttons, switches, leds
+		buttons, switches, leds, sevseg
 	);
 	
 	initial begin
@@ -27,9 +28,13 @@ module laser_tb();
 		#100;
 		reset		<= 1'b1;
 		#100;
-		switches <= 10'b101010101;
-		#200;
-		switches <= 10'b101010101;
+		gpi 		<= 18'b0;
+		#10000;
+		gpi 		<= 18'b100; //trigger A
+		#10000;
+		gpi		<= 18'b1100; //trigger B, A still triggered
+		#10000;
+		gpi 		<= 18'b0; //release both
 	end
 	
 	

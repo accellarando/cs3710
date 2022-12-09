@@ -15,7 +15,7 @@ module bram
 	input[2:0] buttons,
 	input[9:0] switches,
 	output reg[9:0] leds,
-	output reg[41:0] sevSegs
+	output [41:0] sevSegs
 );
 
 	// Declare the RAM variable

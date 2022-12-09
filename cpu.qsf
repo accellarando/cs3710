@@ -80,7 +80,6 @@ set_global_assignment -name EDA_TEST_BENCH_FILE registerFile_tb.v -section_id re
 set_global_assignment -name EDA_TEST_BENCH_FILE aluTb.v -section_id aluTb
 set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id final_cpu_tb
 set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME final_cpu_tb -section_id final_cpu_tb
-set_global_assignment -name EDA_TEST_BENCH_FILE final_cpu_tb.v -section_id final_cpu_tb
 
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -entity cpuWithAlu -section_id Top
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -entity controller -section_id Top
@@ -194,6 +193,11 @@ set_global_assignment -name USE_SIGNALTAP_FILE output_files/stp1.stp
 set_global_assignment -name EDA_OUTPUT_DATA_FORMAT "VERILOG HDL" -section_id eda_simulation
 set_global_assignment -name EDA_TIME_SCALE "1 ps" -section_id eda_simulation
 set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS TEST_BENCH_MODE -section_id eda_simulation
-set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH final_cpu_tb -section_id eda_simulation
+set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH laser -section_id eda_simulation
 set_global_assignment -name EDA_TEST_BENCH_NAME final_cpu_tb -section_id eda_simulation
+set_global_assignment -name EDA_TEST_BENCH_FILE final_cpu_tb.v -section_id final_cpu_tb
+set_global_assignment -name EDA_TEST_BENCH_NAME laser -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME NA -section_id laser
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME laser_tb -section_id laser
+set_global_assignment -name EDA_TEST_BENCH_FILE laser_tb.v -section_id laser
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
