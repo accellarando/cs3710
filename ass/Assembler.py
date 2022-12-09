@@ -273,7 +273,7 @@ class Assembler():
                         Immd = parts.pop(0)
                         secondReg = parts.pop(0)
                         if ((Immd[0] in '$') and (secondReg in self.REGISTERS)):
-                            immdInt = int(Immd.replace('$', ''))
+                            immdInt = int(float(Immd.replace('$', '')))
                             if ((immdInt > 127) or (-128 > immdInt)):
                                 print('issue with ', line)
                                 sys.exit('Syntax Error: Immediate can not be larger then 127 or less then -128, got ' + str(immdInt))

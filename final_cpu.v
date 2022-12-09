@@ -7,7 +7,7 @@ module final_cpu(
 	
 	//Memory mapped IO devices.
 	input[17:0] GPI, output[17:0] GPO,
-	input[3:0] buttons,
+	input[2:0] buttons,
 	input[9:0] switches,
 	output[9:0] leds,
 	output[41:0] segs

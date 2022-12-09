@@ -6,7 +6,7 @@ module laser_tb();
 	wire hSync, vSync, vgaBlank, vgaClk;
 	reg[17:0] gpi;
 	wire[17:0] gpo;
-	reg[3:0] buttons;
+	reg[2:0] buttons;
 	reg[9:0] switches;
 	wire[9:0] leds;
 	wire[41:0] sevseg;
@@ -23,6 +23,7 @@ module laser_tb();
 	initial begin
 		clk		<= 1'b0;
 		reset		<= 1'b1;		// active-low reset
+		buttons  <= 3'b111;
 		#100;
 		reset		<= 1'b0;
 		#100;
@@ -35,6 +36,11 @@ module laser_tb();
 		gpi		<= 18'b1100; //trigger B, A still triggered
 		#10000;
 		gpi 		<= 18'b0; //release both
+		#10000;
+		buttons  <= 3'b011;
+		#10000;
+		buttons  <= 3'b111;
+		
 	end
 	
 	

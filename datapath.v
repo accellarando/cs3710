@@ -30,7 +30,7 @@ module datapath #(parameter SIZE = 16) (
 	input[17:0] gpi,
 	output[17:0] gpo,
 
-	input[3:0] buttons,
+	input[2:0] buttons,
 	input[9:0] switches,
 
 	output[9:0] leds,
