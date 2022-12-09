@@ -58,7 +58,7 @@ MOVI $0 %r10
 LUI $-128 %r10
 AND %r10 %r0
 CMP %r10 %r0
-BEQ $6
+BEQ $7
 #If so, set registers 7,8,9 to 0
 MOVI $0 %r7
 MOVI $0 %r8
@@ -67,6 +67,11 @@ MOVI $0 %r9
 STOR %r7 %r2
 STOR %r8 %r3
 STOR %r9 %r4
+
+#Display state on LEDs
+MOV %r1 %r10
+SUBI $3 %r10
+STOR %r5 %r10
 
 #Put current values on the hex to 7 seg displays
 LOAD %r7 %r2
