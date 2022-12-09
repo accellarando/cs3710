@@ -46,6 +46,10 @@ ORI $-5 %r15
 #Main loop:
 .main
 #Put current values on the hex to 7 seg displays
+#Load button value from address
+#Check if enabled (remember they're active low)
+#If so, set registers 7,8,9 to 0
+#Then stor those to addresses in registers 2,3,4
 LOAD %r7 %r2
 LOAD %r8 %r3
 LOAD %r9 %r4
