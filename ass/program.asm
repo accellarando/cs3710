@@ -114,7 +114,7 @@ MOV %r6 %r11
 ANDI $1 %r11 
 
 #if A==1, move to next state (1)
-CMPI $1 %r11
+CMPI $0 %r11
 #check this branch value...
 BNE $4
 #move to the next state
@@ -126,8 +126,7 @@ JUC %r10
 #get B - could move this to a function call but idk if it's worth it tbh
 #if B triggered, change state to 4
 ANDI $2 %r6
-CMPI $2 %r6
-
+CMPI $0 %r6
 
 BNE $2
 #if b is triggered, move to state 4
@@ -142,7 +141,7 @@ JUC %r10
 .one
 #if B triggered, change state to 2
 ANDI $2 %r6
-CMPI $2 %r6
+CMPI $0 %r6
 BNE $2
 MOVI $2 %r5
 
@@ -158,7 +157,7 @@ JUC %r10
 ANDI $3 %r6
 #See if it's 0
 MOVI .main %r10
-CMPI $0 %r6
+CMPI $3 %r6
 JNE %r10
 #else: (ie, ab==00)
 MOVI $3 %r5
@@ -208,8 +207,9 @@ JUC %r10
 #Comes here from .zero - B was triggered, but A hasn't been yet.
 .four
 #if A triggered, change state to 5
+MOVI .main %r10
 ANDI $1 %r6
-CMPI $1 %r6
+CMPI $0 %r6
 BNE $2
 MOVI $5 %r5
 
@@ -220,7 +220,7 @@ JUC %r10
 .five
 #if a and b reset, change state to 6
 ANDI $3 %r6
-CMPI $0 %r6
+CMPI $3 %r6
 MOVI .main %r10
 JNE %r10
 MOVI $6 %r5
