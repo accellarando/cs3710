@@ -203,7 +203,7 @@ MOVI $0 %r5
 MOVI .main %r10
 JUC %r10
 
-
+#WORKING
 #Comes here from .zero - B was triggered, but A hasn't been yet.
 .four
 #if A triggered, change state to 5
