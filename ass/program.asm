@@ -167,6 +167,7 @@ JUC %r10
 
 #A has already been triggered
 .one
+LOAD %r6 %r1
 #if B triggered, change state to 2
 ANDI $2 %r6
 CMPI $2 %r6
@@ -180,6 +181,7 @@ JUC %r10
 
 #A and B have both been triggered, in that order
 .two
+LOAD %r6 %r1
 #if a and b reset, ie ab==00, change state to 3
 #Get 2 LSB
 ANDI $3 %r6
@@ -235,6 +237,7 @@ JUC %r10
 #Comes here from .zero - B was triggered, but A hasn't been yet.
 .four
 #if A triggered, change state to 5
+LOAD %r6 %r1
 ANDI $1 %r6
 CMPI $1 %r6
 BNE $2
@@ -246,6 +249,7 @@ JUC %r10
 
 .five
 #if a and b reset, change state to 6
+LOAD %r6 %r1
 ANDI $3 %r6
 MOVI .main %r10
 CMPI $0 %r6
