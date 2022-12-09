@@ -71,7 +71,9 @@ STOR %r9 %r4
 #Display state on LEDs
 MOV %r1 %r10
 SUBI $3 %r10
-STOR %r5 %r10
+MOV %r5 %r11
+LSHI $7 %r11
+STOR %r11 %r10
 
 #Put current values on the hex to 7 seg displays
 LOAD %r7 %r2
