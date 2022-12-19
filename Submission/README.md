@@ -134,3 +134,15 @@ Register file for the CPU. Note it has two read ports but only one write port - 
 
 ### vgaController.v
 Manages timing and signal generation for VGA output. See bitGen.v for the actual RGB values.
+
+## CAD
+These are the files used to design and print the mounts for the project.
+
+### 3710-\*.stl
+Sliced files for the Marriott Library PRUSA 3d printer.
+
+### 3710-photoresistors.ipt
+Inventor part file for the photoresistor mount/cover.
+
+### 3710-lasers.ipt
+Inventor part file for the laser mount.
